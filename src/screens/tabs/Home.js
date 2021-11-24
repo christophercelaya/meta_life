@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import SchemaStyles from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
+import nodejs from 'nodejs-mobile-react-native';
 
 const Home = ({navigation}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
@@ -23,6 +24,14 @@ const Home = ({navigation}) => {
           <Button
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
+          />
+          <Button
+            title={'node info'}
+            onPress={() => nodejs.channel.send('nodeInfo')}
+          />
+          <Button
+            title={'start SSB'}
+            onPress={() => nodejs.channel.send('startSsb')}
           />
         </View>
       </ScrollView>

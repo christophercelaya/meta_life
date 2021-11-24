@@ -1,0 +1,26 @@
+{
+  "name": "node-project",
+  "repository": {},
+  "version": "0.0.1",
+  "description": "node part of the project",
+  "main": "main.js",
+  "author": "janeasystems",
+  "license": "MIT",
+  "dependencies": {
+    "multiserver": "^3.7.2",
+    "multiserver-rn-channel": "^1.3.0",
+    "secret-stack": "^6.4.0",
+    "ssb-backlinks": "^2.1.1",
+    "ssb-blobs": "^2.0.1",
+    "ssb-caps": "^1.1.0",
+    "ssb-config": "^3.4.6",
+    "ssb-conn": "^6.0.1",
+    "ssb-db": "^20.4.1",
+    "ssb-ebt": "^8.1.0",
+    "ssb-gossip": "^1.1.1",
+    "ssb-keys": "^8.2.0",
+    "ssb-master": "^1.0.3",
+    "ssb-replicate": "^1.3.3",
+    "ssb-server": "^15.3.0"
+  }
+}
