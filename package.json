@@ -7,6 +7,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "ios iPhone": "react-native run-ios --device \"iPhone\"",
+    "ios Lonmee’s iPhone": "react-native run-ios --device \"Lonmee’s iPhone\"",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
