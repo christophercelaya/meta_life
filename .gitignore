@@ -62,3 +62,4 @@ buck-out/
 /nodejs-assets/build-native-modules-MacOS-helper-script-node.sh
 /nodejs-assets/build-native-modules-MacOS-helper-script-npm.sh
 /nodejs-assets/nodejs-project/package-lock.json
+/package-lock.json
