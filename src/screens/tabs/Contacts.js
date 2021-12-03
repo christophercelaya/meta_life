@@ -110,6 +110,11 @@ const Contacts = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  item: {
+    height: 112,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
   contactItemContainer: {
     flex: 1,
     marginHorizontal: 16,
