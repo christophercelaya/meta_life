@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "n&p": "npm install && npx pod-install",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "ios iPhone": "react-native run-ios --device \"iPhone\"",
-    "ios Lonmee’s iPhone": "react-native run-ios --device \"Lonmee’s iPhone\"",
+    "clean-android": "cd android && ./gradlew clean && cd ..",
+    "run-android": "react-native run-android",
+    "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
+    "run-ios": "react-native run-ios",
+    "run-ios iPhone": "react-native run-ios --device \"iPhone\"",
+    "run-ios Lonmee’s iPhone": "react-native run-ios --device \"Lonmee’s iPhone\"",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
