@@ -10,7 +10,7 @@ import {connect} from 'react-redux/lib/exports';
 import SchemaStyles from './shared/SchemaStyles';
 import Setting from './screens/tabs/profiles/Setting';
 
-const App = ({lang}) => {
+const App = () => {
   const {theme} = SchemaStyles();
   const Stack = createNativeStackNavigator();
   return (

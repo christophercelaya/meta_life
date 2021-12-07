@@ -111,7 +111,7 @@ const Contacts = ({navigation}) => {
 
 const styles = StyleSheet.create({
   item: {
-    height: 112,
+    height: 162,
     marginVertical: 8,
     marginHorizontal: 16,
   },
