@@ -55,4 +55,4 @@ const config = makeConfig('ssb', {
     },
   },
 });
-channel.send('SSB prepared.');
+channel.send('SSB ready.');

@@ -1,7 +1,7 @@
 /**
  * Created on 07 Dec 2021 by lonmee
  */
-const {app, channel} = require('rn_bridge');
+const {channel} = require('rn-bridge');
 
 // Report JS backend crashes to Java, and in turn, to ACRA
 process.on('unhandledRejection', reason => {
@@ -20,5 +20,3 @@ process.on('uncaughtExceptionMonitor', err => {
     channel.post('exception', err.message + '\n' + err.stack);
   }
 });
-
-export default;

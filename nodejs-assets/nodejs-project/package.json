@@ -6,7 +6,6 @@
   "main": "main.js",
   "author": "janeasystems",
   "license": "MIT",
-  "type": "commonjs",
   "scripts": {
     "test": "node test.js",
     "n": "npm install"

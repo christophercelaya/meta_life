@@ -1,1 +1,2 @@
-console.log(process.moduleLoadList);
+const {start} = require('./src/ssb');
+start();

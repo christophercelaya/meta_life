@@ -1,9 +1,5 @@
-// import {createRequire} from 'module';
-//
-// const {app} = createRequire('rn_bridge');
-// console.log(app);
-// import {channel} from './rn_bridge/index';
-const {app, channel} = require('rn_bridge');
+const {app, channel} = require('rn-bridge');
+const {start} = require('./src/ssb');
 
 channel.on('message', msg => {
   switch (msg) {
