@@ -1,7 +1,7 @@
 /**
- * Created on 03 Dec 2021 by lonmee
+ * Created on 07 Dec 2021 by lonmee
  */
-
+const {channel} = require('src/rn-bridge.js');
 const mkdirp = require('mkdirp');
 const path = require('path');
 
@@ -55,3 +55,4 @@ const config = makeConfig('ssb', {
     },
   },
 });
+channel.send('SSB prepared.');
