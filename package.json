@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "clean-npm": "clean-install",
     "n&p": "npm install && npx pod-install",
     "clean-android": "cd android && ./gradlew clean && cd ..",
     "run-android": "react-native run-android",
