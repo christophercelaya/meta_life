@@ -31,7 +31,7 @@ const Home = ({navigation}) => {
           />
           <Button
             title={'start SSB'}
-            onPress={() => nodejs.channel.send('startSsb')}
+            onPress={() => nodejs.channel.post('identity', 'CREATE')}
           />
         </View>
       </ScrollView>

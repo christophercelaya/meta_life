@@ -9,7 +9,8 @@
     "run-android": "react-native run-android",
     "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
     "run-ios": "react-native run-ios",
-    "run-ios iPhone": "react-native run-ios --device \"iPhone\"",
+    "deploy iPhone": "ios-deploy --id 70bf1f5287fd7166e2ca66ac061586535fafd4b9 --bundle  /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
+    "run-ios iPhone": "react-native run-ios --verbose --device \"iPhone\"",
     "run-ios Lonmee’s iPhone": "react-native run-ios --device \"Lonmee’s iPhone\"",
     "start": "react-native start",
     "test": "jest",
@@ -36,7 +37,6 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
-    "ssb-typescript": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
