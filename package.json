@@ -5,19 +5,19 @@
   "scripts": {
     "clean-npm": "npm clean-install",
     "n&p": "npm install && npx pod-install",
+    "lib": "tsc",
     "clean-android": "cd android && ./gradlew clean && cd ..",
+    "build-backend-android": "./tools/build-backend.js --android --no-rust",
     "run-android": "react-native run-android",
     "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
+    "build-backend-ios": "./tools/build-backend.js --ios --no-rust",
     "run-ios": "react-native run-ios",
-    "deploy iPhone": "ios-deploy --id 70bf1f5287fd7166e2ca66ac061586535fafd4b9 --bundle /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
     "run-ios iPhone": "react-native run-ios --verbose --device \"iPhone\"",
     "run-ios Lonmee’s iPhone": "react-native run-ios --verbose --device \"Lonmee’s iPhone\"",
+    "deploy iPhone": "ios-deploy --id 70bf1f5287fd7166e2ca66ac061586535fafd4b9 --bundle /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint .",
-    "lib": "tsc",
-    "build-backend-ios": "./tools/build-backend.js --ios --no-rust",
-    "build-backend-android": "./tools/build-backend.js --android --no-rust"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",

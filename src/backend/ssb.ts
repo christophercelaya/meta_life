@@ -12,12 +12,15 @@ const makeConfig = require('ssb-config/inject');
 const SecretStack = require('secret-stack');
 import settingsUtils = require('./plugins/settingsUtils');
 import bluetoothTransport = require('./plugins/bluetooth');
+const {channel} = require('rn-bridge');
 
 if (!process.env.APP_DATA_DIR || !process.env.SSB_DIR) {
   throw new Error('misconfigured default paths for the backend');
 }
 
-if (!fs.existsSync(process.env.SSB_DIR)) mkdirp.sync(process.env.SSB_DIR);
+if (!fs.existsSync(process.env.SSB_DIR)) {
+  mkdirp.sync(process.env.SSB_DIR);
+}
 const KEYS_PATH = path.join(process.env.SSB_DIR, 'secret');
 
 // One-time fixes for special issues
@@ -46,6 +49,7 @@ if (fs.existsSync(KEYS_PATH) && fs.lstatSync(KEYS_PATH).isDirectory()) {
 }
 
 const keys = ssbKeys.loadOrCreateSync(KEYS_PATH);
+channel.post('message', JSON.stringify(keys));
 
 const config = makeConfig('ssb', {
   caps,

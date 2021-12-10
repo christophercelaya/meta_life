@@ -1,5 +1,12 @@
-import React, {useEffect} from 'react';
-import {Button, SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import SchemaStyles from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import nodejs from 'nodejs-mobile-react-native';
@@ -7,12 +14,16 @@ import nodejs from 'nodejs-mobile-react-native';
 const Home = ({navigation}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
 
+  const [nodeLog, setNodeLog] = useState('');
+
   useEffect(() => {
-    // console.log('subscribe');
+    nodejs.channel.addListener('message', log =>
+      setNodeLog(nodeLog + '\n' + log),
+    );
     return () => {
       // console.log('componentDidUpdate');
     };
-  }, []);
+  }, [nodeLog]);
 
   return (
     <SafeAreaView style={[flex1]}>
@@ -34,6 +45,7 @@ const Home = ({navigation}) => {
             onPress={() => nodejs.channel.post('identity', 'CREATE')}
           />
         </View>
+        <Text style={{color: 'white'}}>{nodeLog}</Text>
       </ScrollView>
     </SafeAreaView>
   );

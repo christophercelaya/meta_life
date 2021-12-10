@@ -10,8 +10,7 @@ import {makeClient} from './src/remote/ssb/Client';
 
 const WrappedApp = () => {
   useEffect(() => {
-    nodejs.start('loader');
-    nodejs.channel.addListener('message', console.log);
+    nodejs.start('loader.js');
     nodejs.channel.addListener('identity', msg => {
       console.log(msg);
       msg === 'IDENTITY_READY' && makeClient();

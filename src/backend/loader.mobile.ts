@@ -8,6 +8,8 @@ import path = require('path');
 // import * as PH from 'perf_hooks';
 const rnBridge = require('rn-bridge');
 
+rnBridge.channel.post('message', 'start loader');
+
 process.env ??= {};
 
 // Set default directories
@@ -25,7 +27,7 @@ if (fs.existsSync(path.join(process.env.SSB_DIR, 'DETAILED_LOGS'))) {
 }
 
 // Report JS backend crashes to Java, and in turn, to ACRA
-process.on('unhandledRejection', (reason) => {
+process.on('unhandledRejection', reason => {
   console.error(reason);
   rnBridge.channel.post('exception', reason);
   setTimeout(() => {

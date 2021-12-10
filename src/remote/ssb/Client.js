@@ -17,4 +17,6 @@ export const makeClient = () =>
     // .use(hooksPlugin)
     // .use(connUtils)
     // .use(threadsUtils)
-    .callPromise();
+    .call(null, (err, ssb) => {
+      console.log(ssb);
+    });
