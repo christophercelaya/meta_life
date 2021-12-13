@@ -48,10 +48,6 @@ if (process.env.MANYVERSE_PLATFORM === 'desktop') {
   require('./plugins/electron/wifi-is-enabled');
 }
 
-channel.addListener('message', () => {
-  channel.post('message', process.arch);
-});
-
 // Setup initial communication with the frontend, to create or restore identity
 channel.addListener('identity', request => {
   const startSSB = () => require('./ssb');

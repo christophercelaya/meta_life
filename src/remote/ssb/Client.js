@@ -3,20 +3,25 @@
  */
 
 import ssbClient from 'react-native-ssb-client';
-import manifest from './Manifest';
-// import {cachedAboutSelf} from './plugins/CachedAboutSelf';
-// import {hooksPlugin} from './plugins/hooks';
-// import {connUtils} from './plugins/connUtils';
-// import threadsUtils from './plugins/threadsUtils';
-// import consumer from 'ssb-deweird/consumer';
+import manifest from './manifest';
+import {cachedAboutSelf} from './plugins/CachedAboutSelf';
+import {hooksPlugin} from './plugins/hooks';
+import {connUtils} from './plugins/connUtils';
+import consumer from 'ssb-deweird/consumer';
+import {threadsUtils} from './plugins/threadsUtils';
 
 export const makeClient = () =>
   ssbClient(manifest)
-    // .use(consumer)
-    // .use(cachedAboutSelf)
-    // .use(hooksPlugin)
-    // .use(connUtils)
-    // .use(threadsUtils)
+    .use(consumer)
+    .use(cachedAboutSelf)
+    .use(hooksPlugin)
+    .use(connUtils)
+    .use(threadsUtils)
     .call(null, (err, ssb) => {
-      console.log(ssb);
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(ssb);
+        window.ssb = ssb;
+      }
     });

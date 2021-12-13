@@ -2,9 +2,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-import pull from 'pull-stream';
-import Ref from 'ssb-ref';
-import run from 'promisify-tuple';
+const pull = require('pull-stream');
+const Ref = require('ssb-ref');
+import xs, {Stream} from 'xstream';
+import {Thread as ThreadData} from 'ssb-threads/types';
+import {Msg, Content, FeedId} from 'ssb-typescript';
+import {isMsg, isContactMsg} from 'ssb-typescript/utils';
+const run = require('promisify-tuple');
 import {
   AnyThread,
   MsgAndExtras,
@@ -16,6 +20,7 @@ import {
 } from '../types';
 import {imageToImageUrl, voteExpressionToReaction} from '../utils/from-ssb';
 import {Callback} from 'pull-stream';
+import xsFromPullStream from 'xstream-from-pull-stream';
 import {ClientAPI, AnyFunction} from 'react-native-ssb-client';
 import manifest from '../manifest';
 
@@ -31,8 +36,6 @@ type SSB = ClientAPI<
   },
 >;
 
-const xsFromPullStream = console.log;
-
 function getRecipient(recp: string | Record<string, any>): string | undefined {
   if (typeof recp === 'object' && Ref.isFeed(recp.link)) {
     return recp.link;
@@ -42,9 +45,9 @@ function getRecipient(recp: string | Record<string, any>): string | undefined {
   }
 }
 
-async function mutateMsgWithLiveExtras(ssb, includeReactions: boolean = true) {
+function mutateMsgWithLiveExtras(ssb: SSB, includeReactions: boolean = true) {
   return async (msg: Msg, cb: Callback<MsgAndExtras>) => {
-    if (!msg.value) {
+    if (!isMsg(msg) || !msg.value) {
       return cb(null, msg);
     }
 
@@ -58,7 +61,7 @@ async function mutateMsgWithLiveExtras(ssb, includeReactions: boolean = true) {
     const reactions: Stream<Reactions> = includeReactions
       ? xsFromPullStream(ssb.votes.voterStream(msg.key))
           .startWith([])
-          .map((arr: Array<unknown>) =>
+          .map(arr =>
             arr
               .reverse() // recent ones first
               .map(([feedId, expression]) => {
@@ -66,7 +69,7 @@ async function mutateMsgWithLiveExtras(ssb, includeReactions: boolean = true) {
                 return [feedId, reaction];
               }),
           )
-      : console.log('todo');
+      : xs.never();
 
     // Create msg object
     const m = msg;
@@ -106,7 +109,7 @@ function mutateThreadSummaryWithLiveExtras(ssb: SSB) {
   };
 }
 
-async function mutatePrivateThreadWithLiveExtras(ssb: SSB) {
+function mutatePrivateThreadWithLiveExtras(ssb: SSB) {
   return async (thread: ThreadData, cb: Callback<PrivateThreadAndExtras>) => {
     for (const msg of thread.messages) {
       await run(mutateMsgWithLiveExtras(ssb, false))(msg);
@@ -137,7 +140,7 @@ async function mutatePrivateThreadWithLiveExtras(ssb: SSB) {
 const ALLOW_POSTS = ['post'];
 const ALLOW_POSTS_AND_CONTACTS = ['post', 'contact'];
 
-const threadsUtils = {
+export const threadsUtils = {
   name: 'threadsUtils',
 
   init: function init(ssb: SSB) {
@@ -181,7 +184,7 @@ const threadsUtils = {
             ...opts,
           }),
           pull.filter((summary: ThreadSummary) => {
-            if (summary.root) {
+            if (isContactMsg(summary.root)) {
               // Only accept blocking or unblocking messages
               const content = summary.root?.value?.content;
               return (
@@ -248,10 +251,8 @@ const threadsUtils = {
       selfPublicRoots(opts: any) {
         return pull(
           ssb.dbUtils.selfPublicRoots(opts),
-          pull.map(
-            (root: Msg) => ({root, replyCount: 0}),
-            pull.asyncMap(mutateThreadSummaryWithLiveExtras(ssb)),
-          ),
+          pull.map(root => ({root, replyCount: 0})),
+          pull.asyncMap(mutateThreadSummaryWithLiveExtras(ssb)),
         );
       },
 
@@ -276,7 +277,7 @@ const threadsUtils = {
         );
       },
 
-      threadUpdates(opts: {root: FeedId, private: boolean}) {
+      threadUpdates(opts) {
         return pull(
           ssb.threads.threadUpdates(opts),
           pull.asyncMap(mutateMsgWithLiveExtras(ssb)),
@@ -284,7 +285,7 @@ const threadsUtils = {
       },
 
       rehydrateLiveExtras(msg: MsgAndExtras, cb: Callback<MsgAndExtras>) {
-        if (!msg.value) {
+        if (!isMsg(msg) || !msg.value) {
           return cb(new Error('not a msg'));
         }
         if (!msg.value._$manyverse$metadata) {
@@ -294,7 +295,7 @@ const threadsUtils = {
           ssb.votes.voterStream(msg.key),
         )
           .startWith([])
-          .map((arr: Array<unknown>) =>
+          .map(arr =>
             arr
               .reverse() // recent ones first
               .map(([feedId, expression]) => {
@@ -325,5 +326,3 @@ const threadsUtils = {
     };
   },
 };
-
-export default () => threadsUtils;
