@@ -19,7 +19,10 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = createStore(persistedReducer, devToolsEnhancer());
 
-export const persistor = persistStore(store, [null, a => console.log('a:', a)]);
+export const persistor = persistStore(store, [
+  {manualPersist: false},
+  a => console.log('rehydration finished with: ', a),
+]);
 
 store.subscribe(() => {
   const {

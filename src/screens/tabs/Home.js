@@ -10,8 +10,9 @@ import {
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import nodejs from 'nodejs-mobile-react-native';
+import {client} from '../../remote/ssb/Client';
 
-const Home = ({navigation, id}) => {
+const Home = ({navigation, selfFeedId, setFeedId}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
   const [nodeLog, setNodeLog] = useState('');
 
@@ -35,8 +36,18 @@ const Home = ({navigation, id}) => {
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
+          <Button
+            title={'who am i'}
+            onPress={() => client.instance.whoami().then(setFeedId)}
+          />
+          <Button
+            title={'peers'}
+            onPress={() =>
+              client.instance.connUtils.peers().then((e, v) => console.log(v))
+            }
+          />
         </View>
-        <Text style={{color: colorsSchema.primary}}>id: {id}</Text>
+        <Text style={{color: colorsSchema.primary}}>id: {selfFeedId}</Text>
         <Text style={{color: 'white'}}>{nodeLog}</Text>
       </ScrollView>
     </SafeAreaView>
@@ -48,6 +59,7 @@ const msp = s => s.ssb;
 const mdp = d => {
   return {
     setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
+    setFeedId: ({id}) => d({type: 'setFeedId', payload: id}),
   };
 };
 
