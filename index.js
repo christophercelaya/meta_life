@@ -12,9 +12,13 @@ const WrappedApp = () => {
   useEffect(() => {
     nodejs.start('loader.js');
     nodejs.channel.addListener('identity', msg => {
-      console.log(msg);
       msg === 'IDENTITY_READY' && makeClient();
     });
+    nodejs.channel.addListener('exception', msg => {
+      console.error('node:', msg);
+    });
+    // ask to start ssb
+    nodejs.channel.post('identity', 'CREATE');
   }, []);
   return (
     <Provider store={store}>

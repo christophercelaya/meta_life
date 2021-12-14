@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {client} from '../remote/ssb/Client';
 
 export const cfgInitState = {lang: 'en', darkMode: true};
 export const cfgReducer = (state = cfgInitState, {type, payload}) => {
@@ -26,6 +27,20 @@ export const userReducer = (state = userInitState, {type, payload}) => {
   }
 };
 
+export const ssbInitState = {instance: null, id: 'ssb id'};
+export const ssbReducer = (state = ssbInitState, {type, payload}) => {
+  switch (type) {
+    case 'setInstance':
+      return {...state, instance: payload};
+    case 'setId':
+      return {...state, id: payload};
+    case 'delete':
+      return ssbInitState;
+    default:
+      return state;
+  }
+};
+
 const daoInitValue = [];
 const daoReducer = (state = daoInitValue, {type, payload}) => {
   switch (type) {
@@ -43,6 +58,7 @@ const daoReducer = (state = daoInitValue, {type, payload}) => {
 const reducer = combineReducers({
   cfg: cfgReducer,
   user: userReducer,
+  ssb: ssbReducer,
   dao: daoReducer,
 });
 

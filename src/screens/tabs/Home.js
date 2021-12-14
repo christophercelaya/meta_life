@@ -7,17 +7,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import SchemaStyles from '../../shared/SchemaStyles';
+import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import nodejs from 'nodejs-mobile-react-native';
 
-const Home = ({navigation}) => {
+const Home = ({navigation, id}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
-
   const [nodeLog, setNodeLog] = useState('');
 
   useEffect(() => {
-    nodejs.channel.addListener('message', log =>
+    nodejs.channel.addListener('nodeLog', log =>
       setNodeLog(nodeLog + '\n' + log),
     );
     return () => {
@@ -36,22 +35,15 @@ const Home = ({navigation}) => {
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
-          <Button
-            title={'node info'}
-            onPress={() => nodejs.channel.send('nodeInfo')}
-          />
-          <Button
-            title={'start SSB'}
-            onPress={() => nodejs.channel.post('identity', 'CREATE')}
-          />
         </View>
+        <Text style={{color: colorsSchema.primary}}>id: {id}</Text>
         <Text style={{color: 'white'}}>{nodeLog}</Text>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const msp = s => s.cfg;
+const msp = s => s.ssb;
 
 const mdp = d => {
   return {

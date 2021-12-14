@@ -8,8 +8,6 @@ import path = require('path');
 // import * as PH from 'perf_hooks';
 const rnBridge = require('rn-bridge');
 
-rnBridge.channel.post('message', 'start loader');
-
 process.env ??= {};
 
 // Set default directories

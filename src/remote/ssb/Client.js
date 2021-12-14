@@ -9,11 +9,15 @@ import {hooksPlugin} from './plugins/hooks';
 import {connUtils} from './plugins/connUtils';
 import consumer from 'ssb-deweird/consumer';
 import {threadsUtils} from './plugins/threadsUtils';
+import {publishUtilsPlugin} from './plugins/publishUtils';
+
+export const client = {instance: null};
 
 export const makeClient = () =>
   ssbClient(manifest)
     .use(consumer)
     .use(cachedAboutSelf)
+    .use(publishUtilsPlugin)
     .use(hooksPlugin)
     .use(connUtils)
     .use(threadsUtils)
@@ -21,7 +25,6 @@ export const makeClient = () =>
       if (err) {
         console.error(err);
       } else {
-        console.log(ssb);
-        window.ssb = ssb;
+        window.ssb = client.instance = ssb;
       }
     });
