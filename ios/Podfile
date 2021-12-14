@@ -12,6 +12,8 @@ target 'meta_life' do
     :hermes_enabled => false
   )
 
+  pod 'RNOS', :path => '../node_modules/react-native-os-staltz'
+
   target 'meta_lifeTests' do
     inherit! :complete
     # Pods for testing
