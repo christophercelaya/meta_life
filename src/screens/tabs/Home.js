@@ -7,12 +7,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
+import SchemaStyles, {
+  colorsBasics,
+  colorsSchema,
+} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import nodejs from 'nodejs-mobile-react-native';
 import {client} from '../../remote/ssb/Client';
 
-const Home = ({navigation, selfFeedId, setFeedId}) => {
+const Home = ({navigation, selfFeedId, followers, setFeedId}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
   const [nodeLog, setNodeLog] = useState('');
 
@@ -51,6 +54,9 @@ const Home = ({navigation, selfFeedId, setFeedId}) => {
           />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {selfFeedId}</Text>
+        <Text style={{color: colorsBasics.lighter}}>
+          followers: {followers}
+        </Text>
         <Text style={{color: 'white'}}>{nodeLog}</Text>
       </ScrollView>
     </SafeAreaView>

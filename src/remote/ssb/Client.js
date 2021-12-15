@@ -10,13 +10,11 @@ import {connUtils} from './plugins/connUtils';
 import consumer from 'ssb-deweird/consumer';
 import {threadsUtils} from './plugins/threadsUtils';
 import {publishUtilsPlugin} from './plugins/publishUtils';
-import {greeterPlugin} from './plugins/greeterPlugin';
 
 export const client = {instance: null};
 
 export const makeClient = () =>
   ssbClient(manifest)
-    // .use(greeterPlugin)
     .use(consumer)
     .use(cachedAboutSelf)
     .use(publishUtilsPlugin)
@@ -27,6 +25,7 @@ export const makeClient = () =>
       if (err) {
         console.error(err);
       } else {
+        // todo: when hmr active updating, the reference of ssb-server will be null
         window.ssb = client.instance = ssb;
       }
     });
