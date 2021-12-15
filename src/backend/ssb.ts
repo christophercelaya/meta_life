@@ -12,6 +12,7 @@ const makeConfig = require('ssb-config/inject');
 const SecretStack = require('secret-stack');
 import settingsUtils = require('./plugins/settingsUtils');
 import bluetoothTransport = require('./plugins/bluetooth');
+import {NodeLog} from './NodeLog';
 
 if (!process.env.APP_DATA_DIR || !process.env.SSB_DIR) {
   throw new Error('misconfigured default paths for the backend');
@@ -48,6 +49,8 @@ if (fs.existsSync(KEYS_PATH) && fs.lstatSync(KEYS_PATH).isDirectory()) {
 }
 
 const keys = ssbKeys.loadOrCreateSync(KEYS_PATH);
+
+NodeLog(keys);
 
 const config = makeConfig('ssb', {
   caps,

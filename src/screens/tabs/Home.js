@@ -20,6 +20,9 @@ const Home = ({navigation, selfFeedId, setFeedId}) => {
     nodejs.channel.addListener('nodeLog', log =>
       setNodeLog(nodeLog + '\n' + log),
     );
+    nodejs.channel.addListener('exception', log =>
+      setNodeLog(nodeLog + '\n' + 'exception!!!:' + log),
+    );
     return () => {
       // console.log('componentDidUpdate');
     };
@@ -43,7 +46,7 @@ const Home = ({navigation, selfFeedId, setFeedId}) => {
           <Button
             title={'peers'}
             onPress={() =>
-              client.instance.connUtils.peers().then((e, v) => console.log(v))
+              client.instance.connUtils.peers((e, r) => console.log(r))
             }
           />
         </View>
