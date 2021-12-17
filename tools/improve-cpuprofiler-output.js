@@ -12,7 +12,7 @@ const pathToIndexJs = process.argv[3];
 if (process.argv.length !== 4) {
   console.error(
     'Usage:\n\tnode improve-cpuprofiler-output.js ' +
-      '<path-to-profile.json> <path-to-nodejs-project-index.js>',
+      '<path-to-profile.json> <path-to-nodejs-project-ssbOP.js>',
   );
   process.exit(1);
 }
@@ -20,7 +20,9 @@ if (process.argv.length !== 4) {
 function measurePreludeLines(filename) {
   const bundleContent = fs.readFileSync(filename, {encoding: 'utf-8'});
   const results = bundleContent.match(/([^"]*(?=\n")){1}/);
-  if (!results) return 0;
+  if (!results) {
+    return 0;
+  }
   return results[0].split('\n').length;
 }
 
@@ -55,7 +57,7 @@ function loadBundleLines(filename, cb) {
   });
 
   const lines = [];
-  rl.on('line', function(line) {
+  rl.on('line', function (line) {
     lines.push(line);
   });
 
@@ -78,7 +80,7 @@ function improveNames(nodes, preludeHeight, hashmap, lines) {
     if (
       node.callFrame &&
       node.callFrame.url &&
-      node.callFrame.url.endsWith('nodejs-project/index.js') &&
+      node.callFrame.url.endsWith('nodejs-project/ssbOP.js') &&
       node.callFrame.lineNumber > preludeHeight
     ) {
       const hash = findHashAboveLine(node.callFrame.lineNumber, lines);

@@ -37,6 +37,7 @@
     "pull-switch-map": "^1.0.0",
     "react": "17.0.2",
     "react-native": "0.66.3",
+    "react-native-bluetooth-socket-bridge": "^1.2.0",
     "react-native-device-info": "^8.4.5",
     "react-native-i18n": "^2.0.15",
     "react-native-safe-area-context": "^3.3.2",

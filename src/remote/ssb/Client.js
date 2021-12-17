@@ -11,8 +11,6 @@ import consumer from 'ssb-deweird/consumer';
 import {threadsUtils} from './plugins/threadsUtils';
 import {publishUtilsPlugin} from './plugins/publishUtils';
 
-export const client = {instance: null};
-
 export const makeClient = () =>
   ssbClient(manifest)
     .use(consumer)
@@ -21,11 +19,4 @@ export const makeClient = () =>
     .use(hooksPlugin)
     .use(connUtils)
     .use(threadsUtils)
-    .call(null, (err, ssb) => {
-      if (err) {
-        console.error(err);
-      } else {
-        // todo: when hmr active updating, the reference of ssb-server will be null
-        window.ssb = client.instance = ssb;
-      }
-    });
+    .callPromise();

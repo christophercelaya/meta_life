@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {ssbReducer} from './ssb';
 
 export const cfgInitState = {lang: 'en', darkMode: true};
 export const cfgReducer = (state = cfgInitState, {type, payload}) => {
@@ -21,36 +22,6 @@ export const userReducer = (state = userInitState, {type, payload}) => {
       return {...state, name: payload};
     case 'delete':
       return userInitState;
-    default:
-      return state;
-  }
-};
-
-export const ssbInitState = {
-  selfFeedId: '',
-  lastSessionTimestamp: 0,
-  preferredReactions: [],
-  selfAvatarUrl: '',
-  reason: 'connection-attempt',
-  displayFeedId: '',
-  about: {},
-  aliases: [],
-  following: null,
-  followers: null,
-  followsYou: null,
-  youFollow: null,
-  youBlock: null,
-  connection: undefined,
-  getFeedReadable: null,
-};
-export const ssbReducer = (state = ssbInitState, {type, payload}) => {
-  switch (type) {
-    case 'setInstance':
-      return {...state, instance: payload};
-    case 'setFeedId':
-      return {...state, selfFeedId: payload};
-    case 'delete':
-      return ssbInitState;
     default:
       return state;
   }
