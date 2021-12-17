@@ -12,48 +12,15 @@ import SchemaStyles, {
   colorsSchema,
 } from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
-import nodejs from 'nodejs-mobile-react-native';
-import {makeClient} from '../../remote/ssb/Client';
-import {connectedPeersStream} from '../../remote/ssbOP';
+import {ssbDriver} from '../../remote/ssbOP';
+import xs from 'xstream';
 
-const Home = ({
-  navigation,
-  instance,
-  status,
-  selfFeedId,
-  followers,
-  setInstance,
-}) => {
-  const {start, channel} = nodejs;
+const Home = ({navigation, selfFeedId, followers, setSource}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
-  const [nodeLog, setNodeLog] = useState('');
-  const [ssb, setSsb] = useState();
+  const [opLog, setOpLog] = useState('');
 
   useEffect(() => {
-    start('loader.js');
-    let identityListener, logListener, exceptionListener;
-    identityListener = channel.addListener('identity', msg => {
-      msg === 'IDENTITY_READY' &&
-        makeClient()
-          .then(ssb => {
-            setSsb(ssb);
-            setInstance(ssb);
-          })
-          .catch(console.error);
-    });
-    logListener = channel.addListener('nodeLog', log =>
-      setNodeLog(nodeLog + '\n' + log),
-    );
-    exceptionListener = channel.addListener('exception', log =>
-      setNodeLog(nodeLog + '\n' + 'exception!!!:' + log),
-    );
-    // ask to start ssb & adjust for hmr of RN
-    !ssb ? channel.post('identity', 'CREATE') : setInstance(ssb);
-    return () => {
-      identityListener.remove();
-      logListener.remove();
-      exceptionListener.remove();
-    };
+    setSource((window.ss = ssbDriver(xs.create())));
   }, []);
 
   return (
@@ -67,22 +34,14 @@ const Home = ({
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
-          <Button
-            title={status.closed ? 'closed' : 'running'}
-            onPress={() =>
-              status.closed ? instance.conn.start() : instance.conn.stop()
-            }
-          />
-          <Button
-            title={'peers'}
-            onPress={() => connectedPeersStream(instance)}
-          />
+          <Button title={'conn.start'} onPress={() => null} />
+          <Button title={'peers'} onPress={() => null} />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {selfFeedId}</Text>
         <Text style={{color: colorsBasics.lighter}}>
           followers: {followers}
         </Text>
-        <Text style={{color: colorsBasics.light}}>{nodeLog}</Text>
+        <Text style={{color: colorsBasics.light}}>{opLog}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -93,8 +52,7 @@ const msp = s => s.ssb;
 const mdp = d => {
   return {
     setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
-    setInstance: ssb => d({type: 'setInstance', payload: ssb}),
-    setFeedId: ({id}) => d({type: 'setFeedId', payload: id}),
+    setSource: source => d({type: 'setSource', payload: source}),
   };
 };
 

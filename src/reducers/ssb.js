@@ -2,7 +2,7 @@
  * Created on 16 Dec 2021 by lonmee
  */
 const ssbInitState = {
-  instance: null,
+  source: null,
   selfFeedId: '',
   status: {closed: true},
   info: {
@@ -24,9 +24,9 @@ const ssbInitState = {
 };
 export const ssbReducer = (state = ssbInitState, {type, payload}) => {
   switch (type) {
-    case 'setInstance':
-      window.ssb = payload;
-      return {...state, instance: payload, selfFeedId: payload.id};
+    case 'setSource':
+      window.source = payload;
+      return {...state, source: payload};
     case 'setFeedId':
       return {...state, selfFeedId: payload};
     case 'delete':
