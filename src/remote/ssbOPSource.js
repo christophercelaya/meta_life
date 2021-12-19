@@ -89,7 +89,7 @@ class SSBSource {
     return this.ssb$.map(fn).map(xsFromPullStream).flatten();
   }
   fromCallback(fn) {
-    return this.ssb$.map((0, xsFromCallback.default)(fn)).flatten();
+    return this.ssb$.map((0, xsFromCallback)(fn)).flatten();
   }
   thread$(rootMsgId, privately) {
     return this.fromCallback((ssb, cb) =>
@@ -155,7 +155,7 @@ class SSBSource {
   }
   profileImage$(id) {
     return this.ssb$
-      .map(ssb => (0, xsFromCallback.default)(ssb.cachedAboutSelf.get)(id))
+      .map(ssb => (0, xsFromCallback)(ssb.cachedAboutSelf.get)(id))
       .flatten()
       .map(output => (0, imageToImageUrl)(output.image));
   }
@@ -280,7 +280,7 @@ class SSBSource {
     }
     return this.ssb$
       .map(ssb =>
-        (0, xsFromCallback.default)(ssb.suggest.profile)(opts).map(arr =>
+        (0, xsFromCallback)(ssb.suggest.profile)(opts).map(arr =>
           arr
             .filter(suggestion => suggestion.id !== ssb.id)
             .map(suggestion =>
@@ -568,6 +568,6 @@ function waitForIdentity() {
 export function ssbDriver(sink) {
   const ssbP = waitForIdentity().then(makeClient);
   const source = new SSBSource(ssbP);
-  consumeSink(sink, source, ssbP);
+  consumeSink(sink, source, ssbP).then(r => console.log(r));
   return source;
 }
