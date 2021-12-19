@@ -568,6 +568,6 @@ function waitForIdentity() {
 export function ssbDriver(sink) {
   const ssbP = waitForIdentity().then(makeClient);
   const source = new SSBSource(ssbP);
-  consumeSink(sink, source, ssbP).then(r => console.log(r));
+  consumeSink(sink, source, ssbP);
   return source;
 }

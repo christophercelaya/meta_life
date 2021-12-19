@@ -14,13 +14,15 @@ import SchemaStyles, {
 import {connect} from 'react-redux/lib/exports';
 import {ssbDriver} from '../../remote/ssbOPSource';
 import xs from 'xstream';
+import nodejs from 'nodejs-mobile-react-native';
 
 const Home = ({navigation, selfFeedId, followers, setSource}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
   const [opLog, setOpLog] = useState('');
 
   useEffect(() => {
-    setSource((window.ss = ssbDriver(xs.create())));
+    setSource((window.ss = ssbDriver((window.xs = xs.create()))));
+    nodejs.channel.post('identity', 'CREATE');
   }, []);
 
   return (

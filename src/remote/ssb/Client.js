@@ -19,4 +19,4 @@ export const makeClient = () =>
     .use(hooksPlugin)
     .use(connUtils)
     .use(threadsUtils)
-    .callPromise();
+    .call(null, (err, ssb) => (err ? console.error(err) : (window.ssb = ssb)));
