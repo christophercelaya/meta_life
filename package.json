@@ -30,7 +30,7 @@
     "color-hash": "^2.0.1",
     "ios-deploy": "^1.11.4",
     "node-gyp": "^8.4.1",
-    "nodejs-mobile-react-native": "^0.6.3",
+    "nodejs-mobile-react-native": "~0.6.3",
     "ora": "^5.1.0",
     "promisify-tuple": "^1.2.0",
     "pull-backoff": "^1.0.0",
