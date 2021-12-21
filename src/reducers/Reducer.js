@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 import {ssbReducer} from './ssb';
+import {msgReducer} from './msg';
+import {contactsReducer} from './contacts';
 
 export const cfgInitState = {lang: 'en', darkMode: true};
 export const cfgReducer = (state = cfgInitState, {type, payload}) => {
@@ -45,6 +47,8 @@ const reducer = combineReducers({
   cfg: cfgReducer,
   user: userReducer,
   ssb: ssbReducer,
+  msg: msgReducer,
+  contacts: contactsReducer,
   dao: daoReducer,
 });
 

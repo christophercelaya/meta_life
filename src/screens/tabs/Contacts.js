@@ -1,16 +1,15 @@
-import React from 'react';
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
-import SearchBar from '../../shared/comps/SearchBar';
 import Section from '../../shared/comps/Section';
+import {useTimer} from '../../shared/Hooks';
+import {
+  follow,
+  isFollowing,
+  reqConnectedPeers,
+  reqStagedPeers,
+} from '../../remote/ssbOP';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -23,59 +22,26 @@ const DATA_sn = [{icon: iconDic.fb}, {icon: iconDic.nf}, {icon: iconDic.tt}];
 const DATA_contact = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: '3 mutual friends',
+    type: 'Maud Newman',
+    key: '3 mutual friends',
     icon: iconDic.photo,
   },
 ];
 
-const Contacts = ({navigation}) => {
+const Contacts = ({
+  navigation,
+  stagedPeers,
+  setStagedPeers,
+  connectedPeers,
+  setConnectedPeers,
+}) => {
   const {textHolder} = colorsSchema;
   const {BG, row, text} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
 
+  const {ssb} = window;
+  useTimer(() => reqStagedPeers(ssb, setStagedPeers), 3000);
+  useTimer(() => reqConnectedPeers(ssb, setConnectedPeers), 3000);
   const snItem = ({item: {icon}}) => (
     <View style={styles.item}>
       <Image source={icon} />
@@ -91,20 +57,35 @@ const Contacts = ({navigation}) => {
     </View>
   );
 
+  const peerItem = ([add, {type, key}], index) => (
+    <View key={index} style={[row, contactItemContainer]}>
+      <View style={[textView]}>
+        <Text style={[nameTF, text]}>{type}</Text>
+        <Text style={[descTF, {color: textHolder}]}>{key}</Text>
+        <Button
+          title={'follow'}
+          onPress={() => follow(window.ssb, key, null, console.log)}
+        />
+      </View>
+    </View>
+  );
+
   return (
     <ScrollView style={BG}>
-      <SearchBar style={[searchBar]} />
-      <Section title={'Connect to find more friends'}>
-        <FlatList
-          keyExtractor={(item, index) => index}
-          data={DATA_sn}
-          renderItem={snItem}
-          horizontal={true}
-          ItemSeparatorComponent={null}
-          showsHorizontalScrollIndicator={false}
-        />
-      </Section>
-      <Section title={'List'}>{DATA_contact.map(contactItem)}</Section>
+      {/*<SearchBar style={[searchBar]} />*/}
+      {/*<Section title={'Connect to find more friends'}>*/}
+      {/*  <FlatList*/}
+      {/*    keyExtractor={(item, index) => index}*/}
+      {/*    data={DATA_sn}*/}
+      {/*    renderItem={snItem}*/}
+      {/*    horizontal={true}*/}
+      {/*    ItemSeparatorComponent={null}*/}
+      {/*    showsHorizontalScrollIndicator={false}*/}
+      {/*  />*/}
+      {/*</Section>*/}
+      {/*<Section title={'List'}>{DATA_contact.map(contactItem)}</Section>*/}
+      <Section title={'stagedPeers'}>{stagedPeers.map(peerItem)}</Section>
+      <Section title={'connectedPeers'}>{connectedPeers.map(peerItem)}</Section>
     </ScrollView>
   );
 };
@@ -134,11 +115,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const msp = s => s.cfg;
+const msp = s => s.contacts;
 
 const mdp = d => {
   return {
-    setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
+    setStagedPeers: v => d({type: 'setStagedPeers', payload: v}),
+    setConnectedPeers: v => d({type: 'setConnectedPeers', payload: v}),
   };
 };
 

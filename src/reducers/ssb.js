@@ -2,9 +2,8 @@
  * Created on 16 Dec 2021 by lonmee
  */
 const ssbInitState = {
+  instance: null,
   source: null,
-  selfFeedId: '',
-  status: {closed: true},
   info: {
     lastSessionTimestamp: 0,
     preferredReactions: [],
@@ -22,8 +21,11 @@ const ssbInitState = {
     getFeedReadable: null,
   },
 };
+
 export const ssbReducer = (state = ssbInitState, {type, payload}) => {
   switch (type) {
+    case 'setInstance':
+      return {...state, instance: payload};
     case 'setSource':
       return {...state, source: payload};
     case 'setFeedId':

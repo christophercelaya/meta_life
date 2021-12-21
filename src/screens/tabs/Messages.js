@@ -18,60 +18,8 @@ const iconDic = {
   tt: require('../../assets/image/profiles/Twitter.png'),
 };
 
-const DATA_sn = [
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-  {name: 'Christopher', icon: iconDic.photo},
-];
+const DATA_sn = [{name: 'Christopher', icon: iconDic.photo}];
 const DATA_contact = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     name: 'Maud Newman',
@@ -80,10 +28,17 @@ const DATA_contact = [
   },
 ];
 
-const Messages = ({navigation}) => {
+const Messages = ({
+  navigation,
+  stagePeers,
+  setStagePeers,
+  connectedPeers,
+  setConnectedPeers,
+}) => {
   const {textHolder} = colorsSchema;
   const {FG, BG, row, text, alignItemsCenter, marginTop10} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
+  const {ssb} = window;
 
   const snItem = ({item: {name, icon}}) => (
     <View
@@ -98,7 +53,7 @@ const Messages = ({navigation}) => {
       <Text style={[{color: textHolder, marginTop: 13}]}>{name}</Text>
     </View>
   );
-  const contactItem = ({id, name, desc, icon}, index) => (
+  const recentItem = ({id, name, desc, icon}, index) => (
     <View key={index} style={[FG, row, contactItemContainer]}>
       <Image source={icon} />
       <View style={[textView]}>
@@ -124,7 +79,7 @@ const Messages = ({navigation}) => {
         />
       </View>
       <View style={[marginTop10]} />
-      {DATA_contact.map(contactItem)}
+      {DATA_contact.map(recentItem)}
     </ScrollView>
   );
 };
@@ -149,11 +104,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const msp = s => s.cfg;
+const msp = s => s.msg;
 
 const mdp = d => {
   return {
-    setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
+    setStagePeers: v => d({type: 'setStagePeers', payload: v}),
+    setConnectedPeers: v => d({type: 'setConnectedPeers', payload: v}),
   };
 };
 

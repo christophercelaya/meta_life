@@ -15,6 +15,7 @@ import {connect} from 'react-redux/lib/exports';
 import {ssbDriver} from '../../remote/ssbOPSource';
 import xs from 'xstream';
 import nodejs from 'nodejs-mobile-react-native';
+import {connStart} from '../../remote/ssbOP';
 
 const Home = ({navigation, selfFeedId, followers, setSource}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
@@ -36,7 +37,7 @@ const Home = ({navigation, selfFeedId, followers, setSource}) => {
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
-          <Button title={'conn.start'} onPress={() => null} />
+          <Button title={'conn.start'} onPress={() => connStart(window.ssb)} />
           <Button title={'peers'} onPress={() => null} />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {selfFeedId}</Text>
@@ -53,7 +54,6 @@ const msp = s => s.ssb;
 
 const mdp = d => {
   return {
-    setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
     setSource: source => d({type: 'setSource', payload: source}),
   };
 };
