@@ -3,7 +3,7 @@
  */
 const ssbInitState = {
   instance: null,
-  source: null,
+  feedId: {id: ''},
   info: {
     lastSessionTimestamp: 0,
     preferredReactions: [],
@@ -25,11 +25,9 @@ const ssbInitState = {
 export const ssbReducer = (state = ssbInitState, {type, payload}) => {
   switch (type) {
     case 'setInstance':
-      return {...state, instance: payload};
-    case 'setSource':
-      return {...state, source: payload};
+      return {...state, instance: payload, feedId: {id: payload.id}};
     case 'setFeedId':
-      return {...state, selfFeedId: payload};
+      return {...state, feedId: payload};
     case 'delete':
       return ssbInitState;
     default:

@@ -10,13 +10,15 @@ import {connUtils} from './plugins/connUtils';
 import consumer from 'ssb-deweird/consumer';
 import {threadsUtils} from './plugins/threadsUtils';
 import {publishUtilsPlugin} from './plugins/publishUtils';
+import {starter} from './plugins/starter';
 
 export const makeClient = () =>
   ssbClient(manifest)
+    .use(starter)
     .use(consumer)
     .use(cachedAboutSelf)
     .use(publishUtilsPlugin)
     .use(hooksPlugin)
     .use(connUtils)
     .use(threadsUtils)
-    .call(null, (err, ssb) => (err ? console.error(err) : (window.ssb = ssb)));
+    .callPromise();
