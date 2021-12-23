@@ -4,21 +4,15 @@
 
 import ssbClient from 'react-native-ssb-client';
 import manifest from './manifest';
-import {cachedAboutSelf} from './plugins/CachedAboutSelf';
-import {hooksPlugin} from './plugins/hooks';
-import {connUtils} from './plugins/connUtils';
-import consumer from 'ssb-deweird/consumer';
-import {threadsUtils} from './plugins/threadsUtils';
-import {publishUtilsPlugin} from './plugins/publishUtils';
 import {starter} from './plugins/starter';
 
 export const makeClient = () =>
   ssbClient(manifest)
     .use(starter)
-    .use(consumer)
-    .use(cachedAboutSelf)
-    .use(publishUtilsPlugin)
-    .use(hooksPlugin)
-    .use(connUtils)
-    .use(threadsUtils)
+    // .use(consumer)
+    // .use(cachedAboutSelf)
+    // .use(publishUtilsPlugin)
+    // .use(hooksPlugin)
+    // .use(connUtils)
+    // .use(threadsUtils)
     .callPromise();

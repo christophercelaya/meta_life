@@ -65,3 +65,4 @@ buck-out/
 /package-lock.json
 /lib/
 /nodejs-assets/
+/ios/Podfile.lock
