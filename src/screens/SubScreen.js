@@ -6,10 +6,8 @@ import SchemaStyles from '../shared/SchemaStyles';
 const SubScreen = ({navigation, darkMode, setDarkMode}) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
-    // console.log('subscribe');
-    return () => {
-      // console.log('componentDidUpdate');
-    };
+    console.log('enter screen');
+    return () => console.log('exit screen');
   }, []);
 
   return (
