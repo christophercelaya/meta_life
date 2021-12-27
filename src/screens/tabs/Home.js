@@ -42,8 +42,6 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
-          <Button title={'some op'} onPress={() => null} />
-          <Button title={'peers'} onPress={() => null} />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {feedId.id}</Text>
         <Text style={{color: colorsBasics.light}}>{opLog}</Text>

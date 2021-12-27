@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
@@ -47,7 +47,11 @@ const Contacts = ({
     clearInterval(intervalId);
     intervalId = NaN;
   }
-
+  useEffect(
+    () =>
+      ssb.peers.stage((e, v) => (e ? console.warn(e) : console.log('staged'))),
+    [],
+  );
   // useTimer will not remove interval cause this is tab screen(never unmount)
   // useTimer(() => ssb.peers.staged(setStagedPeers), 3000);
   // useTimer(() => ssb.peers.connected(setConnectedPeers), 3000);
@@ -67,14 +71,17 @@ const Contacts = ({
   );
 
   function connectErrorHandler(e) {
-    alert(JSON.stringify(e));
+    console.log('conn error: ', e);
+    alert('connect reject');
   }
 
   function connectHandler(v) {
-    alert(JSON.stringify(v));
+    console.log('connected: ', v);
+    alert('follow succeed');
   }
   function fellowErrorHandler(e) {
-    alert(JSON.stringify(e));
+    console.log('conn error: ', e);
+    alert(e.value.content.following ? 'followed yet' : 'follow reject');
   }
 
   function fellowHandler(v) {
@@ -101,7 +108,7 @@ const Contacts = ({
           <Button
             title={'follow'}
             onPress={() =>
-              follow(window.ssb, key, {}, (e, v) =>
+              follow(ssb, key, {}, (e, v) =>
                 e ? fellowErrorHandler(e) : fellowHandler(v),
               )
             }

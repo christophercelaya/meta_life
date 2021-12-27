@@ -1,6 +1,7 @@
 /**
  * Created on 23 Dec 2021 by lonmee
  */
+
 export const starter = {
   name: 'starter',
   init: ssb => {
@@ -15,7 +16,8 @@ export const peers = {
   name: 'peers',
   init: ssb => {
     return {
-      // stage: cb => ssb.conn.stage()
+      stage: cb => ssb.conn.stage(cb),
+      unstage: cb => ssb.conn.unstage(cb),
       staged: cb =>
         ssb.conn.stagedPeers()(null, (e, v) => (e ? console.error(e) : cb(v))),
       connected: cb =>

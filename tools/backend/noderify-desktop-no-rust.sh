@@ -14,7 +14,7 @@ function onFailure() {
   exit 1
 }
 
-cd ./desktop/nodejs-project;
+cd ./desktop;
 
 # Why some packages are filter'd or replaced:
 #   node-extend: can't remember why we need to replace it, build seemed to fail
@@ -39,6 +39,7 @@ $(npm bin)/noderify \
   index.js > _index.js;
 rm index.js; mv _index.js index.js;
 
+rm one-time-fixes.js;
 rm restore.js;
 rm ssb.js;
 rm -rf plugins;
