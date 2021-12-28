@@ -17,17 +17,23 @@ import {reqStartSSB} from '../../remote/ssbOP';
 const Home = ({navigation, feedId, followers, setInstance}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
   const [opLog, setOpLog] = useState('');
-
   useEffect(() => {
+    let opLogCache: '';
     reqStartSSB(ssb => {
       setInstance((window.ssb = ssb));
       ssb.starter.start((e, v) =>
         e
           ? setOpLog(opLog + 'ssb server connect error: ' + e)
           : setOpLog(
-              opLog + 'ssb server connected with:  ' + JSON.stringify(v) + '\n',
+              (opLogCache =
+                opLog +
+                'ssb server connected with:  ' +
+                JSON.stringify(v) +
+                '\n'),
             ),
       );
+      // getMnemonic
+      ssb.keysUtils.getMnemonic((e, v) => setOpLog(opLogCache + v + '\n'));
     });
   }, []);
 
@@ -44,7 +50,9 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
           />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {feedId.id}</Text>
-        <Text style={{color: colorsBasics.light}}>{opLog}</Text>
+        <Text selectable={true} style={{color: colorsBasics.light}}>
+          {opLog}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );

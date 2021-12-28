@@ -3,6 +3,8 @@
 import nodejs from 'nodejs-mobile-react-native';
 import {makeClient} from './ssb/Client';
 
+const defaultCallBack = (e, v) => (e ? console.warn(e) : console.log(v));
+
 export const status = (ssb, cb) =>
   ssb.status((e, v) => (e ? console.error(e) : cb(v)));
 // conn
@@ -51,4 +53,6 @@ export const reqStartSSB = setInstance => {
         .catch(error => console.error('ssb start error: ' + error)),
   );
   channel.post('identity', 'CREATE');
+  // rn.send('RESTORE: word0 word1...');
+  // channel.post('identity', 'RESTORE: word0 word1...');
 };

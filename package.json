@@ -17,6 +17,7 @@
     "archive-ios-release": "npm run build-ios-assets && cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life archive && cd ..",
     "deploy iPhone": "ios-deploy --id 70bf1f5287fd7166e2ca66ac061586535fafd4b9 --bundle /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
     "deploy Lonmee’s iPhone": "ios-deploy --id 00008030-000635D902F9802E --bundle /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
+    "deploy Huooo’s iPhone": "ios-deploy --id 25b32ab84e5c01d74d2818a376f00570f55b0231 --bundle /Users/lonmee/Library/Developer/Xcode/DerivedData/meta_life-bnzedzxygwdaftgseyvytmarzlhx/Build/Products/Debug-iphoneos/meta_life.app",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."

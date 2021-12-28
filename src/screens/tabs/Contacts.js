@@ -1,10 +1,20 @@
 import React, {useEffect} from 'react';
-import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import Section from '../../shared/comps/Section';
 import {follow} from '../../remote/ssbOP';
 import {useNavigationState} from '@react-navigation/native';
+import {friendParser} from '../../Utils';
+import SearchBar from '../../shared/comps/SearchBar';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -27,14 +37,17 @@ let intervalId = NaN;
 const Contacts = ({
   navigation,
   ssb,
+  feedId,
   stagedPeers,
   setStagedPeers,
   connectedPeers,
   setConnectedPeers,
+  setFriendsGraph,
+  friendsGraph,
   addFollowing,
 }) => {
   const {textHolder} = colorsSchema;
-  const {BG, row, text} = SchemaStyles();
+  const {BG, row, flex1, text} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
   // refresh peers when tab index is 2 (contacts screen)
   const index = useNavigationState(state => state.index);
@@ -47,28 +60,13 @@ const Contacts = ({
     clearInterval(intervalId);
     intervalId = NaN;
   }
-  useEffect(
-    () =>
-      ssb.peers.stage((e, v) => (e ? console.warn(e) : console.log('staged'))),
-    [],
-  );
+  useEffect(() => {
+    ssb.peers.stage((e, v) => (e ? console.warn(e) : console.log('staged')));
+    ssb.friends.graph((e, v) => (e ? console.warn(e) : setFriendsGraph(v)));
+  }, [ssb.peers]);
   // useTimer will not remove interval cause this is tab screen(never unmount)
   // useTimer(() => ssb.peers.staged(setStagedPeers), 3000);
   // useTimer(() => ssb.peers.connected(setConnectedPeers), 3000);
-  const snItem = ({item: {icon}}) => (
-    <View style={styles.item}>
-      <Image source={icon} />
-    </View>
-  );
-  const contactItem = ({id, name, desc, icon}, index) => (
-    <View key={index} style={[row, contactItemContainer]}>
-      <Image source={icon} />
-      <View style={[textView]}>
-        <Text style={[nameTF, text]}>{name}</Text>
-        <Text style={[descTF, {color: textHolder}]}>{desc}</Text>
-      </View>
-    </View>
-  );
 
   function connectErrorHandler(e) {
     console.log('conn error: ', e);
@@ -79,6 +77,7 @@ const Contacts = ({
     console.log('connected: ', v);
     alert('follow succeed');
   }
+
   function fellowErrorHandler(e) {
     console.log('conn error: ', e);
     alert(e.value.content.following ? 'followed yet' : 'follow reject');
@@ -118,24 +117,42 @@ const Contacts = ({
     </View>
   );
 
+  const friendItem = k => (
+    <View key={k} style={[styles.item, row, flex1]}>
+      <Image source={iconDic.photo} />
+      <Text style={[styles.key, text]}>key:{k}</Text>
+    </View>
+  );
+
+  const friends = friendParser(friendsGraph[feedId])[0];
   return (
     <ScrollView style={BG}>
-      {/*<SearchBar style={[searchBar]} />*/}
-      {/*<Section title={'Connect to find more friends'}>*/}
-      {/*  <FlatList*/}
-      {/*    keyExtractor={(item, index) => index}*/}
-      {/*    data={DATA_sn}*/}
-      {/*    renderItem={snItem}*/}
-      {/*    horizontal={true}*/}
-      {/*    ItemSeparatorComponent={null}*/}
-      {/*    showsHorizontalScrollIndicator={false}*/}
-      {/*  />*/}
-      {/*</Section>*/}
-      {/*<Section title={'List'}>{DATA_contact.map(contactItem)}</Section>*/}
-      <Section title={'stagedPeers'}>{stagedPeers?.map(peerItem)}</Section>
-      <Section title={'connectedPeers'}>
-        {connectedPeers?.map(peerItem)}
-      </Section>
+      <SearchBar style={[searchBar]} />
+      {/*<FlatList*/}
+      {/*  keyExtractor={(item, index) => index}*/}
+      {/*  data={stargedArr}*/}
+      {/*  renderItem={peerItem}*/}
+      {/*  horizontal={true}*/}
+      {/*  ItemSeparatorComponent={null}*/}
+      {/*  showsHorizontalScrollIndicator={false}*/}
+      {/*/>*/}
+      {stagedPeers.length > 0 && (
+        <Section title={'Staged Peers'}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {stagedPeers?.map(peerItem)}
+          </ScrollView>
+        </Section>
+      )}
+      {connectedPeers.length > 0 && (
+        <Section title={'connectedPeers'}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {connectedPeers?.map(peerItem)}
+          </ScrollView>
+        </Section>
+      )}
+      {friends.length > 0 && (
+        <Section title={'friends'}>{friends.map(friendItem)}</Section>
+      )}
     </ScrollView>
   );
 };
@@ -145,6 +162,9 @@ const styles = StyleSheet.create({
     height: 162,
     marginVertical: 8,
     marginHorizontal: 16,
+  },
+  key: {
+    width: '70%',
   },
   contactItemContainer: {
     flex: 1,
@@ -168,8 +188,10 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
+    feedId: s.ssb.feedId.id,
     stagedPeers: s.contacts.stagedPeers,
     setStagedPeers: s.contacts.setStagedPeers,
+    friendsGraph: s.contacts.friendsGraph,
     connectedPeers: s.contacts.connectedPeers,
     setConnectedPeers: s.contacts.setConnectedPeers,
   };
@@ -180,6 +202,7 @@ const mdp = d => {
     setStagedPeers: v => d({type: 'setStagedPeers', payload: v}),
     setConnectedPeers: v => d({type: 'setConnectedPeers', payload: v}),
     addFollowing: v => d({type: 'addFollowing', payload: v}),
+    setFriendsGraph: v => d({type: 'setFriendsGraph', payload: v}),
   };
 };
 

@@ -7,6 +7,7 @@ const contactsInitState = {
   connectedPeers: [],
   following: [],
   followers: [],
+  friendsGraph: {},
 };
 
 export const contactsReducer = (state = contactsInitState, {type, payload}) => {
@@ -16,13 +17,21 @@ export const contactsReducer = (state = contactsInitState, {type, payload}) => {
     case 'setConnectedPeers':
       return {...state, connectedPeers: payload};
     case 'addFollowing':
-      return state.following.concat(payload);
+      return {...state, following: state.following.concat(payload)};
     case 'removeFollowing':
-      return state.following.filter(p => p.key !== payload.key);
+      return {
+        ...state,
+        following: state.following.filter(p => p.key !== payload.key),
+      };
     case 'addFollowers':
-      return state.followers.concat(payload);
+      return {...state, following: state.followers.concat(payload)};
     case 'removeFollowers':
-      return state.followers.filter(p => p.key !== payload.key);
+      return {
+        ...state,
+        following: state.followers.filter(p => p.key !== payload.key),
+      };
+    case 'setFriendsGraph':
+      return {...state, friendsGraph: payload};
     default:
       return state;
   }
