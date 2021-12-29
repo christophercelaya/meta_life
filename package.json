@@ -9,6 +9,7 @@
     "clean-android": "cd android && ./gradlew clean && cd ..",
     "build-backend-android": "./tools/build-backend.js --android --no-rust",
     "run-android": "react-native run-android",
+    "install-android": "adb -r meta_life install ",
     "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
     "build-backend-ios": "./tools/build-backend.js --ios --no-rust",
     "run-ios": "react-native run-ios",
