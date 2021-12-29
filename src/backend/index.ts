@@ -43,13 +43,8 @@ if (process.env.MANYVERSE_PLATFORM === 'mobile') {
   };
 }
 
-// Install Desktop backend plugins
-if (process.env.MANYVERSE_PLATFORM === 'desktop') {
-  require('./plugins/electron/wifi-is-enabled');
-}
-
 // Setup initial communication with the frontend, to create or restore identity
-channel.addListener('identity', request => {
+channel.addListener('identity', (request) => {
   const startSSB = () => require('./ssb');
   let response;
   if (request === 'CREATE' || request === 'USE') {
@@ -59,9 +54,7 @@ channel.addListener('identity', request => {
     const words = request.split('RESTORE: ')[1].trim();
     const restore = require('./restore');
     response = restore(words);
-    if (response === 'IDENTITY_READY') {
-      startSSB();
-    }
+    if (response === 'IDENTITY_READY') startSSB();
   }
   channel.post('identity', response);
 });
