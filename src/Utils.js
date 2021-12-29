@@ -1,7 +1,4 @@
 export const friendParser = graph => {
-  if (graph == undefined) {
-    return [[], []];
-  }
   let fArr = [],
     bArr = [];
   Object.keys(graph).forEach(k =>

@@ -124,7 +124,7 @@ const Contacts = ({
     </View>
   );
 
-  const friends = friendParser(friendsGraph[feedId])[0];
+  const friends = friendsGraph ? friendParser(friendsGraph[feedId])[0] : [];
   return (
     <ScrollView style={BG}>
       <SearchBar style={[searchBar]} />

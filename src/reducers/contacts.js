@@ -14,7 +14,7 @@ export const contactsReducer = (state = contactsInitState, {type, payload}) => {
   switch (type) {
     case 'setStagedPeers':
       return {...state, stagedPeers: payload};
-    case 'setConnectedPeers':
+    case 'setConnectedPeer                                                    s':
       return {...state, connectedPeers: payload};
     case 'addFollowing':
       return {...state, following: state.following.concat(payload)};
