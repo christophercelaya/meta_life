@@ -152,6 +152,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('/Users/lonmee/WebstormProjects/meta_life/android/key/MLKey')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'key0'
+        }
     }
     buildTypes {
         debug {

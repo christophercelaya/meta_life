@@ -7,6 +7,7 @@
     "n&p": "npm install && npx pod-install",
     "lib": "tsc",
     "clean-android": "cd android && ./gradlew clean && cd ..",
+    "propagate-replacements": "propagate-replacement-fields --field=react-native",
     "build-backend-android": "./tools/build-backend.js --android --no-rust",
     "run-android": "react-native run-android",
     "install-android": "adb -r meta_life install ",

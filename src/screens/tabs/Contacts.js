@@ -63,7 +63,7 @@ const Contacts = ({
   useEffect(() => {
     ssb.peers.stage((e, v) => (e ? console.warn(e) : console.log('staged')));
     ssb.friends.graph((e, v) => (e ? console.warn(e) : setFriendsGraph(v)));
-  }, [ssb.peers]);
+  }, []);
   // useTimer will not remove interval cause this is tab screen(never unmount)
   // useTimer(() => ssb.peers.staged(setStagedPeers), 3000);
   // useTimer(() => ssb.peers.connected(setConnectedPeers), 3000);
