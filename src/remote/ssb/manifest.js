@@ -51,6 +51,7 @@ export default {
     more: 'async',
     close: 'async',
   },
+  //read: https://github.com/ssbc/ssb-friends
   friends: {
     isFollowing: 'async',
     isBlocking: 'async',
@@ -61,6 +62,7 @@ export default {
     graph: 'async',
     graphStream: 'source',
   },
+  //read: no reference https://github.com/ssbc/ssb-server/tree/99fad7c5f6e436cbd670346b4da20c57222a1419/plugins/blobs
   blobs: {
     get: 'source',
     getSlice: 'source',
@@ -75,6 +77,7 @@ export default {
     changes: 'source',
     createWants: 'source',
   },
+  //read: https://github.com/staltz/ssb-blobs-purge
   blobsPurge: {
     start: 'sync',
     stop: 'sync',
@@ -85,6 +88,7 @@ export default {
     unbox: 'sync',
     read: 'source',
   },
+  //read: https://github.com/ssb-ngi-pointer/ssb-db2
   aboutSelf: {
     get: 'async',
     stream: 'source',
@@ -96,6 +100,7 @@ export default {
   query: {
     read: 'source',
   },
+  //read: https://github.com/ssbc/ssb-threads
   threads: {
     public: 'source',
     publicSummary: 'source',
@@ -114,6 +119,7 @@ export default {
     makeDeviceDiscoverable: 'async',
     isEnabled: 'async',
   },
+  //read: https://github.com/staltz/ssb-conn
   conn: {
     remember: 'sync',
     forget: 'sync',
@@ -161,10 +167,11 @@ export default {
     get: 'async',
     stream: 'source',
   },
-  connUtilsBack: {
+  connUtils: {
     persistentConnect: 'async',
     persistentDisconnect: 'async',
-    isInDB: 'async',
+    peers: 'source',
+    stagedPeers: 'source',
   },
   dbUtils: {
     rawLogReversed: 'source',
@@ -174,6 +181,7 @@ export default {
     selfPublicRoots: 'source',
     selfPublicReplies: 'source',
     selfPrivateRootIdsLive: 'source',
+    exitReadOnlyMode: 'async',
   },
   publishUtilsBack: {
     publish: 'async',

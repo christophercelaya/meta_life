@@ -32,6 +32,19 @@ export const reqConnectedPeers = (ssb, cb) =>
 export const reqBlobsGet = (ssb, cb) =>
   ssb.blobs.get()(null, (e, v) => (e ? console.error(e) : cb(v)));
 
+// message
+/*ssb.threads.public({
+  reverse: true,
+  threadMaxSize: 3,
+})(null, (e,v)=>console.log(v))*/
+
+/*ssb.threads.private({
+  reverse: true,
+  threadMaxSize: 3,
+})(null, (e,v)=>console.log(v))*/
+// about self
+/*ssb.aboutSelf.get({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"},(e, v)=>console.log(v))*/
+/*ssb.aboutSelf.stream({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"})(null, (e,v)=>console.log(v))*/
 /* sink */
 // ssb.blobs.add()
 

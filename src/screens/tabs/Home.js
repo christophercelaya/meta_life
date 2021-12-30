@@ -48,6 +48,22 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
           />
+          <Button
+            title={'Change name: "dev"'}
+            onPress={() =>
+              window.ssb.aboutSelf.stream(
+                {
+                  id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
+                },
+                {
+                  id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
+                  name: 'dev',
+                  description: 'bio',
+                  imageUrl: 'xxx',
+                },
+              )(null, (e, v) => console.log(v))
+            }
+          />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {feedId.id}</Text>
         <Text selectable={true} style={{color: colorsBasics.light}}>

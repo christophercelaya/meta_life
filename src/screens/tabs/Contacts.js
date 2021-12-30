@@ -92,7 +92,11 @@ const Contacts = ({
     <View key={index} style={[row, contactItemContainer]}>
       <View style={[textView]}>
         <Text style={[nameTF, text]}>{type}</Text>
-        <Text style={[descTF, {color: textHolder}]}>{key}</Text>
+        <Text
+          style={[descTF, {color: textHolder, width: 140}]}
+          numberOfLines={1}>
+          {key}
+        </Text>
         <View style={[row]}>
           {state === 'connected' || (
             <Button
@@ -124,7 +128,9 @@ const Contacts = ({
     </View>
   );
 
-  const friends = friendsGraph ? friendParser(friendsGraph[feedId])[0] : [];
+  const friends = friendsGraph[feedId]
+    ? friendParser(friendsGraph[feedId])[0]
+    : [];
   return (
     <ScrollView style={BG}>
       <SearchBar style={[searchBar]} />
