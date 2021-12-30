@@ -48,6 +48,13 @@ export const reqBlobsGet = (ssb, cb) =>
 /* sink */
 // ssb.blobs.add()
 
+// profile
+/*ssb.publishUtilsBack.publishAbout({type: 'about',
+  about: "@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519",
+  name:'.zZ',
+  description:'bio',
+  image: ''},(e,v)=>console.log(v))*/
+
 /* duplex */
 export const ping = ssb =>
   ssb.conn.ping()(null, (e, v) => (e ? console.error(e) : console.log(v)));
