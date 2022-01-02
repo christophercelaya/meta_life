@@ -30,7 +30,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "buffer": "^6.0.3",
-    "nodejs-mobile-react-native": "~0.6.3",
+    "nodejs-mobile-react-native": "^0.6.4",
     "react": "17.0.2",
     "react-native": "0.66.3",
     "react-native-device-info": "^8.4.5",
