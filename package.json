@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean-npm": "npm clean-install",
-    "n&p": "npm install && npx pod-install",
+    "nAndp": "npm install && npx pod-install",
     "lib": "tsc",
     "clean-android": "cd android && ./gradlew clean && cd ..",
     "propagate-replacements": "propagate-replacement-fields --field=react-native",

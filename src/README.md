@@ -8,5 +8,4 @@ mode_modules/pull-reader/state.js
 * patch-package needed *
 
 at Android
-change: "import com.peel.react.RNOSModule; " in PackageList.java @ android/app/java/com.facebook.react
-delete: "import ...RNOSModule;" in MainApplication.java @ android/app/java/com.meta_life
+create folder named "rnos" under "node_modules/react-native-os-staltz/android/src/main/java/com/peel/react" and put RNOS.java / RNOSModule.java in it;
