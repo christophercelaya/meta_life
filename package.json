@@ -12,7 +12,7 @@
     "build-android-assets": "npm run lib && npm run propagate-replacements && npm run build-backend-android",
     "android-dev": "npm run build-android-assets && react-native run-android --variant=indieDebug",
     "run-android": "react-native run-android",
-    "install-android": "adb -r meta_life install ",
+    "install-android": "adb install -r android/app/release/app-release.apk",
     "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
     "build-backend-ios": "./tools/build-backend.js --ios --no-rust",
     "run-ios": "react-native run-ios",

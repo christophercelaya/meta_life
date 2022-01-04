@@ -128,10 +128,10 @@ def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitect
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.meta_life"
+        applicationId "io.meta_life"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
