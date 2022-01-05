@@ -43,7 +43,7 @@ export const reqBlobsGet = (ssb, cb) =>
   threadMaxSize: 3,
 })(null, (e,v)=>console.log(v))*/
 // about self
-/*ssb.aboutSelf.get({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"},(e, v)=>console.log(v))*/
+/*ssb.aboutSelf.get(@g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=.ed25519,(e, v)=>console.log(v))*/
 /*ssb.aboutSelf.stream({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"})(null, (e,v)=>console.log(v))*/
 /* sink */
 // ssb.blobs.add()
@@ -54,6 +54,9 @@ export const reqBlobsGet = (ssb, cb) =>
   name:'.zZ',
   description:'bio',
   image: ''},(e,v)=>console.log(v))*/
+
+// isFollowing
+/*ssb.friends.isFollowing({source:"@XKv0b06yUZ30Va8RZAnijtMl3MdrDgHX677yTE6cFDY=.ed25519",dest:"@azYm7/Ae3TPvpQynRPsc+Wc8TbGOlQoiipfQfM6PIxQ=.ed25519"},(e,v)=>console.log(v))*/
 
 /* duplex */
 export const ping = ssb =>

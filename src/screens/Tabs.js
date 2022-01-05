@@ -113,7 +113,7 @@ const Tabs = ({navigation, darkMode}) => {
           headerRight: props => (
             <HeaderRightBtn
               btnIcon={addIcon}
-              btnHandler={goScreen('SubScreen')}
+              btnHandler={goScreen('PeersScreen')}
             />
           ),
           headerRightContainerStyle: [{right: 19}],

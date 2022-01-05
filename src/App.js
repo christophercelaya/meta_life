@@ -9,6 +9,8 @@ import SubScreen from './screens/SubScreen';
 import {connect} from 'react-redux/lib/exports';
 import SchemaStyles from './shared/SchemaStyles';
 import Setting from './screens/tabs/profiles/Setting';
+import PeersScreen from './screens/tabs/contacts/PeersScreen';
+import DetailsScreen from './screens/tabs/contacts/DetailsScreen';
 
 const App = () => {
   const {theme} = SchemaStyles();
@@ -30,6 +32,17 @@ const App = () => {
           component={Tabs}
         />
         <Stack.Screen name="Setting" component={Setting} />
+        {/*Contacts*/}
+        <Stack.Screen
+          name="PeersScreen"
+          options={{title: 'Peers', headerLargeTitle: true}}
+          component={PeersScreen}
+        />
+        <Stack.Screen
+          name="DetailsScreen"
+          options={{headerLargeTitle: true}}
+          component={DetailsScreen}
+        />
         <Stack.Screen
           name="SubScreen"
           options={{headerLargeTitle: true}}

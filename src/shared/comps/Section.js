@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {connect} from 'react-redux/lib/exports';
 import SchemaStyles from '../SchemaStyles';
 
 /**
@@ -21,7 +20,7 @@ const Section = ({children, title}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 2,
   },
   titleContainer: {
     marginLeft: 15,
@@ -33,5 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const msp = s => s.cfg;
-export default connect(msp)(Section);
+export default Section;

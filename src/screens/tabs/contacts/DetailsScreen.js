@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
-import {connect} from 'react-redux/lib/exports';
-import SchemaStyles from '../shared/SchemaStyles';
+import SchemaStyles from '../../../shared/SchemaStyles';
 
-const SubScreen = ({navigation}) => {
+const DetailsScreen = ({ssb, feedId}) => {
+  console.log(ssb, feedId);
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
     console.log('enter screen');
@@ -20,17 +20,4 @@ const SubScreen = ({navigation}) => {
   );
 };
 
-const msp = s => {
-  return {
-    ssb: s.ssb.instance,
-    feedId: s.ssb.feedId.id,
-  };
-};
-
-const mdp = d => {
-  return {
-    setDarkMode: darkMode => d({type: 'setDarkMode', payload: darkMode}),
-  };
-};
-
-export default connect(msp, mdp)(SubScreen);
+export default DetailsScreen;
