@@ -64,3 +64,7 @@ buck-out/
 /lib/
 /nodejs-assets/
 /ios/Podfile.lock
+/android/app/release/app-release.apk
+/android/app/src/main/jniLibs/arm64-v8a/libsodium.so
+/android/app/src/main/jniLibs/armeabi-v7a/libsodium.so
+/android/app/release/output.json
