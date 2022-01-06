@@ -1,10 +1,10 @@
 import React from 'react';
-import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux/lib/exports';
 import SchemaStyles, {colorsSchema} from '../../../shared/SchemaStyles';
 import {useTimer} from '../../../shared/Hooks';
 import Section from '../../../shared/comps/Section';
-import {follow} from '../../../remote/ssbOP';
+import PeerItem from './item/PeerItem';
 
 const PeersScreen = ({
   navigation,
@@ -17,7 +17,7 @@ const PeersScreen = ({
   addFollowing,
 }) => {
   const {textHolder} = colorsSchema;
-  const {BG, row, text} = SchemaStyles();
+  const {BG, flex1, row, text} = SchemaStyles();
   const {contactItemContainer, textView, nameTF, descTF} = styles;
   useTimer(refreshStagedAndConnected, 3000);
 
@@ -26,70 +26,25 @@ const PeersScreen = ({
     ssb.peers.connected(setConnectedPeers);
   }
 
-  function connectErrorHandler(e) {
-    console.log('conn error: ', e);
-    alert('connect reject');
-  }
-
-  function connectHandler(v) {
-    console.log('connected: ', v);
-    alert('follow succeed');
-  }
-
-  function fellowErrorHandler(e) {
-    console.log('conn error: ', e);
-    alert(e.value.content.following ? 'followed yet' : 'follow reject');
-  }
-
-  function fellowHandler(v) {
-    addFollowing(v);
-    alert('Following:', v.key);
-  }
-
-  const peerItem = ([address, {type, key, state = ''}], index) => (
-    <View key={index} style={[row, contactItemContainer]}>
-      <View style={[textView]}>
-        <Text style={[nameTF, text]}>{type}</Text>
-        <Text
-          style={[descTF, {color: textHolder, width: 140}]}
-          numberOfLines={1}>
-          {key}
-        </Text>
-        <View style={[row]}>
-          {state === 'connected' || (
-            <Button
-              title={'connect'}
-              onPress={() =>
-                ssb.peers.connect2Peer(address, {}, (e, v) =>
-                  e ? connectErrorHandler(e) : connectHandler(v),
-                )
-              }
-            />
-          )}
-          <Button
-            title={'follow'}
-            onPress={() =>
-              follow(ssb, key, {}, (e, v) =>
-                e ? fellowErrorHandler(e) : fellowHandler(v),
-              )
-            }
-          />
-        </View>
-      </View>
-    </View>
-  );
-
   return (
-    <ScrollView style={BG}>
-      {stagedPeers.length > 0 && (
-        <Section title={'Staged Peers'}>{stagedPeers?.map(peerItem)}</Section>
-      )}
-      {connectedPeers.length > 0 && (
-        <Section title={'connectedPeers'}>
-          {connectedPeers?.map(peerItem)}
-        </Section>
-      )}
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView style={[BG]}>
+        {stagedPeers.length > 0 && (
+          <Section title={'Staged Peers'}>
+            {stagedPeers.map((pObj, i) => (
+              <PeerItem navigation={navigation} pObj={pObj} key={i} />
+            ))}
+          </Section>
+        )}
+        {connectedPeers.length > 0 && (
+          <Section title={'connectedPeers'}>
+            {connectedPeers.map((pObj, i) => (
+              <PeerItem navigation={navigation} pObj={pObj} key={i} />
+            ))}
+          </Section>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

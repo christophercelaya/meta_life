@@ -45,8 +45,7 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
     </View>
   );
 
-  const relations = friendsGraphParse(friendsGraph, feedId);
-  relations[0].map(key => ssb.aboutSelf.get(key, (e, v) => console.log(v)));
+  const relations = friendsGraphParse(friendsGraph, feedId, false);
 
   return (
     <ScrollView style={BG}>
@@ -61,22 +60,22 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
       />
       {relations[0].length > 0 && (
         <Section title={'friends'}>
-          {relations[0].map(key => (
-            <FriendItem fId={key} />
+          {relations[0].map((key, i) => (
+            <FriendItem navigation={navigation} fId={key} key={i} />
           ))}
         </Section>
       )}
       {relations[1].length > 0 && (
         <Section title={'following'}>
-          {relations[1].map(key => (
-            <FriendItem fId={key} />
+          {relations[1].map((key, i) => (
+            <FriendItem navigation={navigation} fId={key} key={i} />
           ))}
         </Section>
       )}
       {relations[2].length > 0 && (
         <Section title={'follower'}>
-          {relations[2].map(key => (
-            <FriendItem fId={key} />
+          {relations[2].map((key, i) => (
+            <FriendItem navigation={navigation} fId={key} key={i} />
           ))}
         </Section>
       )}

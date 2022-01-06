@@ -40,7 +40,7 @@ const App = () => {
         />
         <Stack.Screen
           name="DetailsScreen"
-          options={{headerLargeTitle: true}}
+          options={{title: 'Peers', headerLargeTitle: true}}
           component={DetailsScreen}
         />
         <Stack.Screen

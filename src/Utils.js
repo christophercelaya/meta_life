@@ -13,7 +13,7 @@ export const friendParser = graph => {
  * @param id
  * @returns {[][]} friends, following, follower, block, blocked, other
  */
-export const friendsGraphParse = (graph, id) => {
+export const friendsGraphParse = (graph, id, includeFriend = true) => {
   let following = [],
     follower = [],
     block = [],
@@ -39,5 +39,12 @@ export const friendsGraphParse = (graph, id) => {
     });
   });
   friends = following.filter(v => follower.indexOf(v) > -1);
+  // kick out friend element(s)
+  if (!includeFriend) {
+    following = following.filter(v => friends.indexOf(v) === -1);
+    follower = follower.filter(v => friends.indexOf(v) === -1);
+  }
   return [friends, following, follower, block, blocked, other];
 };
+
+export const mutualFriend = (fA, fB) => fA.filter(v => fB.indexOf(v) > -1);
