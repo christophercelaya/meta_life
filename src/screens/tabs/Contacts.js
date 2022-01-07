@@ -75,7 +75,7 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
       {relations[2].length > 0 && (
         <Section title={'follower'}>
           {relations[2].map((key, i) => (
-            <FriendItem navigation={navigation} fId={key} key={i} />
+            <FriendItem navigation={navigation} fId={key} />
           ))}
         </Section>
       )}

@@ -10,7 +10,8 @@ import {connect} from 'react-redux/lib/exports';
 import SchemaStyles from './shared/SchemaStyles';
 import Setting from './screens/tabs/profiles/Setting';
 import PeersScreen from './screens/tabs/contacts/PeersScreen';
-import DetailsScreen from './screens/tabs/contacts/DetailsScreen';
+import PeerDetailsScreen from './screens/tabs/contacts/PeerDetailsScreen';
+import MessageDetailsScreen from './screens/tabs/messages/MessageDetailsScreen';
 
 const App = () => {
   const {theme} = SchemaStyles();
@@ -35,19 +36,21 @@ const App = () => {
         {/*Contacts*/}
         <Stack.Screen
           name="PeersScreen"
-          options={{title: 'Peers', headerLargeTitle: true}}
+          //fixme: large title causes twinkle unusually
+          options={{title: 'Peers' /*, headerLargeTitle: true*/}}
           component={PeersScreen}
         />
         <Stack.Screen
-          name="DetailsScreen"
-          options={{title: 'Peers', headerLargeTitle: true}}
-          component={DetailsScreen}
+          name="MessageDetailsScreen"
+          options={{title: 'Message' /*headerLargeTitle: true*/}}
+          component={MessageDetailsScreen}
         />
         <Stack.Screen
-          name="SubScreen"
-          options={{headerLargeTitle: true}}
-          component={SubScreen}
+          name="PeerDetailsScreen"
+          options={{title: 'Peers' /*headerLargeTitle: true*/}}
+          component={PeerDetailsScreen}
         />
+        <Stack.Screen name="SubScreen" options={{}} component={SubScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

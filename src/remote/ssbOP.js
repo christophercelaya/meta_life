@@ -42,6 +42,29 @@ export const reqBlobsGet = (ssb, cb) =>
   reverse: true,
   threadMaxSize: 3,
 })(null, (e,v)=>console.log(v))*/
+
+// resp:
+//     messages: Array(1)
+// 0:
+// key: "%gOvTXcdNCr6YDyArcf62M9oieBhIm8JMG0lw89x06PI=.sha256"
+// timestamp: 1641517803516
+// value:
+//     author: "@dxKK+CtJygjzASfR1KNMpYTYlgHbIKtWzADyxbNJANY=.ed25519"
+// content:
+//     contact: "@W6Y3xpNCeSbEo3CKg030p3HdxDXHrpdxEbWdXMsTSyI=.ed25519"
+// following: true
+// type: "contact"
+// __proto__: Object
+// hash: "sha256"
+// previous: "%5kEJx3O1Eol61uHQaxn3QONEsCJc4FjI89umcTlrAKs=.sha256"
+// sequence: 5
+// signature: "YYq4GdPvg8zN19P1kJKb45DxTaLhpIKui/YV2PSyM+VEYQpXYJEew/V6Oee1xJYqSTaAYXPHXuoD6lFIGkaCCw==.sig.ed25519"
+// timestamp: 1641517803509
+
+/*ssb.threads.private({
+  reverse: true,
+  threadMaxSize: 3,
+})(null, (e,v)=>console.log(v))*/
 // about self
 /*ssb.aboutSelf.get('@g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=.ed25519',(e, v)=>console.log(v))*/
 /*ssb.aboutSelf.stream({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"})(null, (e,v)=>console.log(v))*/

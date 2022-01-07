@@ -10,7 +10,7 @@ const iconDic = {
   nftIcon: require('../../../../assets/image/contacts/nft_icon.png'),
 };
 
-const FriendItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
+const MessageItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
   // check cached
@@ -22,7 +22,7 @@ const FriendItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
   });
   const {name = '', description = '', image = ''} = peerInfoDic[fId] || {};
   return (
-    <Pressable onPress={() => navigation.navigate('PeerDetailsScreen', fId)}>
+    <Pressable onPress={() => navigation.navigate('MessageDetailsScreen', fId)}>
       <View style={[item, row, flex1]}>
         <Image
           height={60}
@@ -83,4 +83,4 @@ const mdp = d => {
   };
 };
 
-export default connect(msp, mdp)(FriendItem);
+export default connect(msp, mdp)(MessageItem);

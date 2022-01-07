@@ -14,7 +14,7 @@ import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import {friendsGraphParse, mutualFriend} from '../../../Utils';
 import useDocumentTitle from '@react-navigation/native/src/useDocumentTitle';
 
-const DetailsScreen = ({
+const MessageDetailsScreen = ({
   navigation,
   route: {params: fId},
   ssb,
@@ -37,6 +37,9 @@ const DetailsScreen = ({
     [myFriends] = friendsGraphParse(friendsGraph, selfFeedId),
     mutual = mutualFriend(friends, myFriends);
 
+  useEffect(() => {
+    navigation.setOptions({title: name || fId});
+  });
   useDocumentTitle();
 
   return (
@@ -110,4 +113,4 @@ const mdp = d => {
   };
 };
 
-export default connect(msp, mdp)(DetailsScreen);
+export default connect(msp, mdp)(MessageDetailsScreen);

@@ -10,6 +10,8 @@ import {
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
+import {useNavigationState} from '@react-navigation/native';
+import MessageItem from './messages/item/MessageItem';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -18,27 +20,28 @@ const iconDic = {
   tt: require('../../assets/image/profiles/Twitter.png'),
 };
 
-const DATA_sn = [{name: 'Christopher', icon: iconDic.photo}];
-const DATA_contact = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'Maud Newman',
-    desc: "Hey! How's it going?",
-    icon: iconDic.photo,
-  },
-];
+let intervalId = NaN;
 
-const Messages = ({
-  navigation,
-  stagePeers,
-  setStagePeers,
-  connectedPeers,
-  setConnectedPeers,
-}) => {
+const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
   const {textHolder} = colorsSchema;
   const {FG, BG, row, text, alignItemsCenter, marginTop10} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
-  const {ssb} = window;
+
+  // refresh peers when tab index is 2 (contacts screen)
+  const index = useNavigationState(state => state.index);
+  if (index === 1 && isNaN(intervalId)) {
+    intervalId = setInterval(refreshPrivateMessage, 5000);
+  } else if (index !== 2 && !isNaN(intervalId)) {
+    clearInterval(intervalId);
+    intervalId = NaN;
+  }
+
+  function refreshPrivateMessage() {
+    ssb.threads.private({
+      reverse: true,
+      threadMaxSize: 3,
+    })(null, (e, v) => setPrivateMsg(v));
+  }
 
   const snItem = ({item: {name, icon}}) => (
     <View
@@ -66,20 +69,9 @@ const Messages = ({
   return (
     <ScrollView style={BG}>
       <SearchBar style={[searchBar]} />
-      <View style={[marginTop10]} />
-      <View style={[FG]}>
-        <FlatList
-          keyExtractor={(item, index) => index}
-          data={DATA_sn}
-          contentContainerStyle={[FG]}
-          renderItem={snItem}
-          horizontal={true}
-          ItemSeparatorComponent={null}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      <View style={[marginTop10]} />
-      {DATA_contact.map(recentItem)}
+      {privateMsg.messages.map((msg, i) => (
+        <MessageItem key={i} navigation={navigation} msg={msg} />
+      ))}
     </ScrollView>
   );
 };
@@ -104,12 +96,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const msp = s => s.msg;
+const msp = s => {
+  return {
+    ssb: s.ssb.instance,
+    feedId: s.ssb.feedId.id,
+    privateMsg: s.msg.privateMsg,
+  };
+};
 
 const mdp = d => {
   return {
-    setStagePeers: v => d({type: 'setStagePeers', payload: v}),
-    setConnectedPeers: v => d({type: 'setConnectedPeers', payload: v}),
+    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
   };
 };
 

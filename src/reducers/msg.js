@@ -3,16 +3,16 @@
  */
 
 const msgInitState = {
-  stagedPeers: [],
-  connectedPeers: [],
+  privateMsg: [],
+  publicMsg: [],
 };
 
 export const msgReducer = (state = msgInitState, {type, payload}) => {
   switch (type) {
-    case 'setStagePeers':
-      return {...state, stagedPeers: payload};
-    case 'setConnectedPeers':
-      return {...state, connectedPeers: payload};
+    case 'setPrivateMsg':
+      return {...state, privateMsg: payload};
+    case 'setPublicMsg':
+      return {...state, publicMsg: payload};
     default:
       return state;
   }
