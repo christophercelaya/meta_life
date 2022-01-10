@@ -69,9 +69,10 @@ const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
   return (
     <ScrollView style={BG}>
       <SearchBar style={[searchBar]} />
-      {privateMsg.messages.map((msg, i) => (
-        <MessageItem key={i} navigation={navigation} msg={msg} />
-      ))}
+      {privateMsg &&
+        privateMsg.messages.map((msg, i) => (
+          <MessageItem key={i} navigation={navigation} msg={msg} />
+        ))}
     </ScrollView>
   );
 };

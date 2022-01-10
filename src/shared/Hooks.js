@@ -5,9 +5,15 @@ import React, {useEffect} from 'react';
  * @param tickCallback with tick calling
  * @param interval default 1000
  */
-export function useTimer(tickCallback, interval = 1000, deps = []) {
+export function useTimer(
+  tickCallback,
+  interval = 1000,
+  deps = [],
+  initCall = true,
+) {
   let tick = 0;
   useEffect(() => {
+    initCall && tickCallback(tick++);
     const intervalId = setInterval(() => {
       tickCallback(tick++);
     }, interval);

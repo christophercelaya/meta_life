@@ -10,19 +10,25 @@ const iconDic = {
   nftIcon: require('../../../../assets/image/contacts/nft_icon.png'),
 };
 
-const MessageItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
+const MessageItem = ({
+  navigation,
+  ssb,
+  peerInfoDic,
+  msg: {
+    key,
+    value: {
+      author,
+      timestamp,
+      content: {type, text: contentText},
+    },
+  },
+}) => {
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
-  // check cached
-  useEffect(() => {
-    console.log('check info');
-    //fixme: won't sync change if cached
-    peerInfoDic.hasOwnProperty(fId) ||
-      ssb.aboutSelf.get(fId, (e, v) => v.name && addPeerInfo([fId, v]));
-  });
-  const {name = '', description = '', image = ''} = peerInfoDic[fId] || {};
+  const {name = '', description = '', image = ''} = peerInfoDic[author] || {};
   return (
-    <Pressable onPress={() => navigation.navigate('MessageDetailsScreen', fId)}>
+    <Pressable
+      onPress={() => navigation.navigate('MessageDetailsScreen', author)}>
       <View style={[item, row, flex1]}>
         <Image
           height={60}
@@ -32,9 +38,9 @@ const MessageItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
         />
         <View style={[textContainer]}>
           <Text numberOfLines={1} style={[title, text]}>
-            {name || fId}
+            {contentText}
           </Text>
-          {description !== '' && <Text style={[desc]}>bio: {description}</Text>}
+          <Text style={[desc]}>{timestamp}</Text>
         </View>
       </View>
     </Pressable>

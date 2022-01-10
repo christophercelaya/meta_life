@@ -47,7 +47,9 @@ const PeerItem = ({
   }
 
   return (
-    <Pressable key={key} onPress={() => navigation.navigate('DetailsScreen')}>
+    <Pressable
+      key={key}
+      onPress={() => navigation.navigate('PeerDetailsScreen')}>
       <View style={[item, row, flex1]}>
         <Image
           height={60}
