@@ -15,7 +15,7 @@ export const colorsBasics = {
   lighter: '#F3F3F3',
   light: '#DAE1E7',
   dark: '#444',
-  darker: '#222',
+  darker: '#111717',
   black: '#000',
 };
 
@@ -23,7 +23,7 @@ export const defaultTheme = {
   dark: false,
   colors: {
     background: colorsBasics.lighter,
-    border: colorsBasics.lighter,
+    border: colorsBasics.white,
     card: colorsBasics.white,
     notification: colorsBasics.white,
     primary: colorsBasics.primary,
@@ -35,8 +35,8 @@ export const darkTheme = {
   dark: true,
   colors: {
     background: colorsBasics.black,
-    border: colorsBasics.black,
-    card: colorsBasics.black,
+    border: colorsBasics.darker,
+    card: colorsBasics.darker,
     notification: colorsBasics.black,
     primary: colorsBasics.primary,
     text: colorsBasics.light,
@@ -53,7 +53,7 @@ const stylesDefault = StyleSheet.create({
   text: {
     color: colorsBasics.black,
   },
-  searchBG: {
+  input: {
     backgroundColor: '#F1F1F2',
   },
   placeholderTextColor: {color: '#B6B7B9'},
@@ -69,8 +69,8 @@ const stylesDark = StyleSheet.create({
   text: {
     color: colorsBasics.white,
   },
-  searchBG: {
-    backgroundColor: '#111717',
+  input: {
+    backgroundColor: '#282C2D',
   },
   placeholderTextColor: {color: '#7C7E82'},
 });

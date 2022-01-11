@@ -40,9 +40,7 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
   return (
     <SafeAreaView style={[flex1]}>
       <StatusBar barStyle={barStyle} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={marginTop10}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={FG}>
           <Button
             title={'SubScreen'}

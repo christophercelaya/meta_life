@@ -11,19 +11,26 @@ import {
 import SchemaStyles from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
+import {privateMsgFilter} from '../../../Utils';
+import MsgInput from './MsgInput';
+import {placeholderTextColor} from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedTextInputPropTypes';
 
 const MessageDetailsScreen = ({
   navigation,
-  route: {params: fId},
+  privateMsg,
+  route: {params: author},
   ssb,
   peerInfoDic,
 }) => {
   const iconDic = {
     peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
   };
-  const {row, flex1, text, input} = SchemaStyles(),
-    {head, textContainer, item, title, desc, inputTextS} = styles,
-    {name = '', description = '', image = ''} = peerInfoDic[fId] || {};
+
+  const msgArray = privateMsgFilter(privateMsg, author);
+
+  const {row, flex1, text} = SchemaStyles(),
+    {head, textContainer, item, title, desc} = styles,
+    {name = '', description = '', image = ''} = peerInfoDic[author] || {};
 
   const headerRight = () => (
     <Image
@@ -36,42 +43,28 @@ const MessageDetailsScreen = ({
 
   useEffect(() => {
     navigation.setOptions({
-      title: name || fId,
+      title: name || author,
       headerRight,
     });
   });
 
-  // const inputAccessoryViewID = 'uniqueID';
-  const initialText = '';
-  const [inputText, setInputText] = useState(initialText);
+  function sendHandler(content) {
+    // ssb.post({});
+  }
 
   return (
     <SafeAreaView style={[flex1]}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={[item, row, flex1]}>
+      <ScrollView style={[flex1]}>
+        <View style={[item, row]}>
           <View style={[textContainer]}>
-            <Text numberOfLines={1} style={[title, text]}>
-              {name || fId}
+            <Text style={[title, text]}>
+              message content message content message content
             </Text>
-            {description !== '' && (
-              <Text style={[desc]}>bio: {description}</Text>
-            )}
+            {description !== '' && <Text style={[desc]}>time stemp</Text>}
           </View>
         </View>
       </ScrollView>
-      <ScrollView keyboardDismissMode="interactive">
-        <TextInput
-          style={[inputTextS, input]}
-          // inputAccessoryViewID={inputAccessoryViewID}
-          onChangeText={setInputText}
-          value={inputText}
-          placeholder={'Write a comment …'}
-        />
-      </ScrollView>
-      {/*if custom ui use in ios*/}
-      {/*<InputAccessoryView nativeID={inputAccessoryViewID}>*/}
-      {/*  <Button onPress={() => setInputText(initialText)} title="Clear text" />*/}
-      {/*</InputAccessoryView>*/}
+      <MsgInput sendHandler={sendHandler} />
     </SafeAreaView>
   );
 };

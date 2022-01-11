@@ -8,7 +8,7 @@ const Login = ({navigation, name, setName}) => {
   const [nick, setNick] = useState('');
   const [pwd, setPwd] = useState('');
   // style & colors
-  const {barStyle, BG, FG, flex1, input, text, marginTop10} = SchemaStyles();
+  const {barStyle, BG, FG, flex1, inputBG, text, marginTop10} = SchemaStyles();
   const {textHolder} = colorsSchema;
 
   return (
@@ -17,13 +17,13 @@ const Login = ({navigation, name, setName}) => {
       <View style={[FG, flex1, marginTop10]}>
         <View>
           <TextInput
-            style={[input, text]}
+            style={[inputBG, text]}
             placeholder={'User Name'}
             placeholderTextColor={textHolder}
             onChangeText={setNick}
           />
           <TextInput
-            style={[input, text]}
+            style={[inputBG, text]}
             placeholder={'Password'}
             secureTextEntry={true}
             placeholderTextColor={textHolder}
