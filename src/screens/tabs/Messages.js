@@ -40,7 +40,7 @@ const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
     ssb.threads.private({
       reverse: true,
       threadMaxSize: 3,
-    })(null, (e, v) => setPrivateMsg(v));
+    })(null, (e, v) => (e ? console.warn(e) : setPrivateMsg(v)));
   }
 
   const snItem = ({item: {name, icon}}) => (

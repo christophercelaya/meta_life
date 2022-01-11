@@ -47,7 +47,14 @@ const MessageDetailsScreen = ({
   });
 
   function sendHandler(content) {
-    // ssb.post({});
+    ssb.publish(
+      {
+        type: 'post',
+        text: content,
+        recps: [author],
+      },
+      (e, v) => (e ? console.warn(e) : console.log(v)),
+    );
   }
 
   return (

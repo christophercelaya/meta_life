@@ -38,7 +38,7 @@ const KeyboardAvoidingComponent = ({sendHandler}) => {
             />
           </View>
           <Pressable
-            onPress={content => {
+            onPress={() => {
               sendHandler(content);
               setContent('');
             }}>

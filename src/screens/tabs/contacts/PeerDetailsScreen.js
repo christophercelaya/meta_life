@@ -13,6 +13,7 @@ import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import {friendsGraphParse, mutualFriend} from '../../../Utils';
 import useDocumentTitle from '@react-navigation/native/src/useDocumentTitle';
+import RoundBtn from '../../../shared/comps/RoundBtn';
 
 const PeerDetailsScreen = ({
   navigation,
@@ -64,6 +65,10 @@ const PeerDetailsScreen = ({
         <Text style={[desc]}>following:{following.length}</Text>
         <Text style={[desc]}>follower:{follower.length}</Text>
         <Text style={[desc]}>mutual:{mutual.length}</Text>
+        <RoundBtn
+          title={'chat'}
+          press={() => navigation.navigate('MessageDetailsScreen', fId)}
+        />
       </ScrollView>
     </SafeAreaView>
   );
