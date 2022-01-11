@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import SchemaStyles from '../../../shared/SchemaStyles';
+import nativeDeviceInfo from 'react-native/Libraries/Utilities/NativeDeviceInfo';
 
 const iconDic = {
   iconSend: require('../../../assets/image/messages/Message_icon_send.png'),
@@ -20,8 +21,10 @@ const KeyboardAvoidingComponent = ({sendHandler}) => {
       SchemaStyles(),
     {inner, round, textInput, sender} = styles;
   const [content, setContent] = useState('');
+  const {isIPhoneX_deprecated} = nativeDeviceInfo.getConstants();
   return (
     <KeyboardAvoidingView
+      keyboardVerticalOffset={isIPhoneX_deprecated ? 94 : 64}
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <Pressable onPress={Keyboard.dismiss}>
         <View style={[FG, row, alignItemsCenter, inner]}>

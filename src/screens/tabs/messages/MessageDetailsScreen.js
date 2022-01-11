@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import SchemaStyles from '../../../shared/SchemaStyles';
@@ -13,7 +12,6 @@ import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import {privateMsgFilter} from '../../../Utils';
 import MsgInput from './MsgInput';
-import {placeholderTextColor} from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedTextInputPropTypes';
 
 const MessageDetailsScreen = ({
   navigation,
@@ -28,7 +26,7 @@ const MessageDetailsScreen = ({
 
   const msgArray = privateMsgFilter(privateMsg, author);
 
-  const {row, flex1, text} = SchemaStyles(),
+  const {BG, FG, row, flex1, text} = SchemaStyles(),
     {head, textContainer, item, title, desc} = styles,
     {name = '', description = '', image = ''} = peerInfoDic[author] || {};
 
@@ -53,8 +51,8 @@ const MessageDetailsScreen = ({
   }
 
   return (
-    <SafeAreaView style={[flex1]}>
-      <ScrollView style={[flex1]}>
+    <SafeAreaView style={[flex1, FG]}>
+      <ScrollView style={[flex1, BG]}>
         <View style={[item, row]}>
           <View style={[textContainer]}>
             <Text style={[title, text]}>
