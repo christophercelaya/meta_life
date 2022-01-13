@@ -83,6 +83,7 @@ export default {
     stop: 'sync',
     changes: 'source',
   },
+  //read: https://github.com/ssbc/ssb-threads
   private: {
     publish: 'async',
     unbox: 'sync',

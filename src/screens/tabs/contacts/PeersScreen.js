@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
-    feedId: s.ssb.feedId.id,
+    feedId: s.ssb.feedId,
     stagedPeers: s.contacts.stagedPeers,
     setStagedPeers: s.contacts.setStagedPeers,
     connectedPeers: s.contacts.connectedPeers,

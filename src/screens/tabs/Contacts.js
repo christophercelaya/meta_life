@@ -25,6 +25,7 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
   // refresh peers when tab index is 2 (contacts screen)
   const index = useNavigationState(state => state.index);
   if (index === 2 && isNaN(intervalId)) {
+    refreshFriendsGraph();
     intervalId = setInterval(refreshFriendsGraph, 5000);
   } else if (index !== 2 && !isNaN(intervalId)) {
     clearInterval(intervalId);
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
-    feedId: s.ssb.feedId.id,
+    feedId: s.ssb.feedId,
     friendsGraph: s.contacts.friendsGraph,
   };
 };

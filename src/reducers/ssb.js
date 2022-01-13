@@ -25,7 +25,7 @@ const ssbInitState = {
 export const ssbReducer = (state = ssbInitState, {type, payload}) => {
   switch (type) {
     case 'setInstance':
-      return {...state, instance: payload, feedId: {id: payload.id}};
+      return {...state, instance: payload, feedId: payload.id};
     case 'setFeedId':
       return {...state, feedId: payload};
     case 'delete':

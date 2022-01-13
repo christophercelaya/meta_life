@@ -63,7 +63,7 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
             }
           />
         </View>
-        <Text style={{color: colorsSchema.primary}}>id: {feedId.id}</Text>
+        <Text style={{color: colorsSchema.primary}}>id: {feedId}</Text>
         <Text selectable={true} style={{color: colorsBasics.light}}>
           {opLog}
         </Text>

@@ -36,7 +36,7 @@
     "buffer": "^6.0.3",
     "nodejs-mobile-react-native": "^0.6.4",
     "react": "17.0.2",
-    "react-native": "0.66.3",
+    "react-native": "0.66.4",
     "react-native-device-info": "^8.4.5",
     "react-native-i18n": "^2.0.15",
     "react-native-os-staltz": "^2.2.1",

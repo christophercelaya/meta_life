@@ -4,6 +4,7 @@
 
 import fs = require('fs');
 import path = require('path');
+
 const mkdirp = require('mkdirp');
 const caps = require('ssb-caps');
 const ssbKeys = require('ssb-keys');
@@ -17,7 +18,9 @@ import oneTimeFixes = require('./one-time-fixes');
 if (!process.env.APP_DATA_DIR || !process.env.SSB_DIR) {
   throw new Error('misconfigured default paths for the backend');
 }
-if (!fs.existsSync(process.env.SSB_DIR)) mkdirp.sync(process.env.SSB_DIR);
+if (!fs.existsSync(process.env.SSB_DIR)) {
+  mkdirp.sync(process.env.SSB_DIR);
+}
 
 oneTimeFixes().then(() => {
   const KEYS_PATH = path.join(process.env.SSB_DIR!, 'secret');

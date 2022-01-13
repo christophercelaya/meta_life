@@ -18,6 +18,7 @@ const MessageDetailsScreen = ({
   privateMsg,
   route: {params: author},
   ssb,
+  feedId,
   peerInfoDic,
 }) => {
   const iconDic = {
@@ -51,7 +52,7 @@ const MessageDetailsScreen = ({
       {
         type: 'post',
         text: content,
-        recps: [author],
+        recps: [author, feedId],
       },
       (e, v) => (e ? console.warn(e) : console.log(v)),
     );
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
+    feedId: s.ssb.feedId,
     peerInfoDic: s.contacts.peerInfoDic,
     privateMsg: s.msg.privateMsg,
   };

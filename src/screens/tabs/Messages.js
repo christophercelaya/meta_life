@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
@@ -22,16 +15,16 @@ const iconDic = {
 
 let intervalId = NaN;
 
-const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
+const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
   const {textHolder} = colorsSchema;
-  const {FG, BG, row, text, alignItemsCenter, marginTop10} = SchemaStyles();
+  const {FG, row, text, alignItemsCenter} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
 
-  // refresh peers when tab index is 2 (contacts screen)
   const index = useNavigationState(state => state.index);
   if (index === 1 && isNaN(intervalId)) {
+    refreshPrivateMessage();
     intervalId = setInterval(refreshPrivateMessage, 5000);
-  } else if (index !== 2 && !isNaN(intervalId)) {
+  } else if (index !== 1 && !isNaN(intervalId)) {
     clearInterval(intervalId);
     intervalId = NaN;
   }
@@ -40,7 +33,11 @@ const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
     ssb.threads.private({
       reverse: true,
       threadMaxSize: 3,
-    })(null, (e, v) => (e ? console.warn(e) : setPrivateMsg(v)));
+    })(null, (e, v) =>
+      e
+        ? console.log('refresh private message error:', e)
+        : addPrivateMsg(v, feedId),
+    );
   }
 
   const snItem = ({item: {name, icon}}) => (
@@ -69,9 +66,9 @@ const Messages = ({navigation, ssb, privateMsg, setPrivateMsg}) => {
   return (
     <ScrollView style={FG}>
       <SearchBar style={[searchBar]} />
-      {privateMsg &&
-        privateMsg.messages.map((msg, i) => (
-          <MessageItem key={i} navigation={navigation} msg={msg} />
+      {privateMsg.length > 0 &&
+        privateMsg.map((msg, i) => (
+          <MessageItem key={i} navigation={navigation} msg={msg.messages[0]} />
         ))}
     </ScrollView>
   );
@@ -100,14 +97,14 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
-    feedId: s.ssb.feedId.id,
+    feedId: s.ssb.feedId,
     privateMsg: s.msg.privateMsg,
   };
 };
 
 const mdp = d => {
   return {
-    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
+    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };
 
