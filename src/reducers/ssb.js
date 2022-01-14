@@ -3,23 +3,7 @@
  */
 const ssbInitState = {
   instance: null,
-  feedId: {id: ''},
-  info: {
-    lastSessionTimestamp: 0,
-    preferredReactions: [],
-    selfAvatarUrl: '',
-    reason: 'connection-attempt',
-    displayFeedId: '',
-    about: {},
-    aliases: [],
-    following: null,
-    followers: null,
-    followsYou: null,
-    youFollow: null,
-    youBlock: null,
-    connection: undefined,
-    getFeedReadable: null,
-  },
+  feedId: '',
 };
 
 export const ssbReducer = (state = ssbInitState, {type, payload}) => {

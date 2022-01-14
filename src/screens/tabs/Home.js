@@ -12,7 +12,7 @@ import SchemaStyles, {
   colorsSchema,
 } from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
-import {reqStartSSB} from '../../remote/ssbOP';
+import {reqStartSSB} from '../../remote/ssb/ssbOP';
 
 const Home = ({navigation, feedId, followers, setInstance}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
@@ -72,7 +72,12 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
   );
 };
 
-const msp = s => s.ssb;
+const msp = s => {
+  return {
+    ssb: s.ssb.instance,
+    feedId: s.ssb.feedId,
+  };
+};
 
 const mdp = d => {
   return {

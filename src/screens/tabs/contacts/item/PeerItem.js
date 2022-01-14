@@ -3,7 +3,7 @@ import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles from '../../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
-import {follow} from '../../../../remote/ssbOP';
+import {follow} from '../../../../remote/ssb/ssbOP';
 
 const PeerItem = ({
   navigation,
