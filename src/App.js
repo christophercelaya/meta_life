@@ -7,10 +7,7 @@ import Login from './screens/log/Login';
 import SignUp from './screens/log/SignUp';
 import SubScreen from './screens/SubScreen';
 import {connect} from 'react-redux/lib/exports';
-import SchemaStyles, {setDarkMode} from './shared/SchemaStyles';
-import {getLanguages} from 'react-native-i18n';
-import {useI18n} from './shared/Hooks';
-import {useEffect} from 'react';
+import SchemaStyles from './shared/SchemaStyles';
 import Setting from './screens/tabs/profiles/Setting';
 
 const App = ({lang}) => {
