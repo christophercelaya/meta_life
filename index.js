@@ -5,29 +5,21 @@ import React from 'react';
 import App from './src/App';
 import {persistor, store} from './src/store/configureStore';
 import {PersistGate} from 'redux-persist/integration/react';
+import {initWeb3} from './src/remote/Wallet';
+import './global';
 
 // setTimeout(() => {
 //     nodejs.start('loader.js');
 // }, 1);
 
-setTimeout(() => {}, 2);
+setTimeout(initWeb3, 2);
 
-// setTimeout(() => {
-//   nodejs.start('loader.js');
-// }, 1);
-
-setTimeout(() => {
-  // todo: web3
-}, 2);
-
-const WrappedApp = () => {
-  return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  );
-};
+const WrappedApp = () => (
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>
+);
 
 AppRegistry.registerComponent(appName, () => WrappedApp);
