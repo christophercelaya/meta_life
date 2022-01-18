@@ -1,4 +1,10 @@
 import {combineReducers} from 'redux';
+import {ssbReducer} from './ssb';
+import {msgReducer} from './msg';
+import {contactsReducer} from './contacts';
+import {walletReducer} from './wallet';
+import {daoReducer} from './dao';
+import {nftReducer} from './nft';
 
 export const cfgInitState = {lang: 'en', darkMode: true};
 export const cfgReducer = (state = cfgInitState, {type, payload}) => {
@@ -14,36 +20,14 @@ export const cfgReducer = (state = cfgInitState, {type, payload}) => {
   }
 };
 
-export const userInitState = {name: 'nick'};
-export const userReducer = (state = userInitState, {type, payload}) => {
-  switch (type) {
-    case 'set':
-      return {...state, name: payload};
-    case 'delete':
-      return userInitState;
-    default:
-      return state;
-  }
-};
-
-const daoInitValue = [];
-const daoReducer = (state = daoInitValue, {type, payload}) => {
-  switch (type) {
-    case 'add':
-      return state.concat(payload);
-    case 'remove':
-      return state;
-    case 'reset':
-      return daoInitValue;
-    default:
-      return state;
-  }
-};
-
 const reducer = combineReducers({
   cfg: cfgReducer,
-  user: userReducer,
+  wallet: walletReducer,
+  ssb: ssbReducer,
+  msg: msgReducer,
+  contacts: contactsReducer,
   dao: daoReducer,
+  nft: nftReducer,
 });
 
 export default reducer;

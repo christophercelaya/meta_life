@@ -5,9 +5,9 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  View,
 } from 'react-native';
 import SchemaStyles from '../../../shared/SchemaStyles';
+import Card from './Card';
 
 const iconDic = {
   BG: require('../../../assets/image/profiles/Profiles_backgroud.png'),
@@ -32,6 +32,9 @@ const HeaderProfiles = ({navigation}) => {
         }}>
         <Image source={iconDic.icon_setting} />
       </Pressable>
+      <Card
+        style={[alignItemsCenter, {position: 'absolute', bottom: -108.5}]}
+      />
     </ImageBackground>
   );
 };

@@ -13,9 +13,9 @@ import SearchBar from '../../shared/comps/SearchBar';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
-  fb: require('../../assets/image/profiles/Facebook.png'),
-  nf: require('../../assets/image/profiles/NewFriends.png'),
-  tt: require('../../assets/image/profiles/Twitter.png'),
+  fb: require('../../assets/image/contacts/Facebook.png'),
+  nf: require('../../assets/image/contacts/NewFriends.png'),
+  tt: require('../../assets/image/contacts/Twitter.png'),
 };
 
 const DATA_sn = [
