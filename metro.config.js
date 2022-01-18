@@ -5,8 +5,6 @@
  * @format
  */
 
-const extraNodeModules = require('node-libs-browser');
-
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -15,8 +13,5 @@ module.exports = {
         inlineRequires: true,
       },
     }),
-  },
-  extraNodeModules: {
-    extraNodeModules,
   },
 };

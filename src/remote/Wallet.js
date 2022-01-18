@@ -8,12 +8,10 @@ const rpcUrl = 'https=//jsonapi1.smartmesh.cn',
   symbol = 'SMT',
   BEUrl = 'https://spectrum.pub/';
 // axios.defaults.baseURL = 'https://api.example.com';
-// import Web3 from 'web3';
 
 // const web3 = new Web3(Web3.givenProvider);
 
 export const initWeb3 = () => {
-  console.log('web3 ready');
   // const web3 = new Web3(Web3.providers.HttpProvider(rpcUrl));
   // web3.eth.getBlock('latest').then(console.log);
   // web3.eth
