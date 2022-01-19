@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "nAndp": "npm install && npx pod-install",
+    "cleanAndInstall": "rm -rf node_modules && rm -rf ios/Podfile.lock",
+    "nAndpAndh": "npm install && npx pod-install && rn-nodeify --hack --install",
     "android": "react-native run-android",
+    "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
     "ios": "react-native run-ios",
     "ios iPhone": "react-native run-ios --device \"iPhone\"",
     "start": "react-native start",
@@ -51,7 +53,10 @@
     "url": "^0.10.3",
     "util": "^0.10.4",
     "vm-browserify": "0.0.4",
-    "web3": "^1.6.1"
+    "web3": "^1.7.0"
+  },
+  "optionalDependencies": {
+    "react-native-keychain": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

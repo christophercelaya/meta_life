@@ -6,7 +6,7 @@ import React from 'react';
 import App from './src/App';
 import {persistor, store} from './src/store/configureStore';
 import {PersistGate} from 'redux-persist/integration/react';
-import {initWeb3} from './src/remote/Wallet';
+import {initWeb3} from './src/remote/WalletOP';
 
 // setTimeout(() => {
 //     nodejs.start('loader.js');

@@ -8,18 +8,35 @@ const rpcUrl = 'https://jsonapi1.smartmesh.cn',
   chainID = '20180430',
   symbol = 'SMT',
   BEUrl = 'https://spectrum.pub/';
-let web3;
+// const ethRpcUrl = 'https://jsonapi1.smartmesh.cn',
+//   chainID = '20180430',
+//   symbol = 'SMT',
+//   BEUrl = 'https://spectrum.pub/';
+let speWeb3, ethWeb3;
 export const initWeb3 = () => {
-  const provider = new Web3.providers.HttpProvider(rpcUrl, {});
-  web3 = new Web3(provider);
-  web3.eth.getBlock('latest').then(console.log);
+  const speProvider = new Web3.providers.HttpProvider(rpcUrl, {});
+  // const ethProvider = new Web3.providers.HttpProvider(rpcUrl, {});
+  speWeb3 = new Web3(speProvider);
+  // ethWeb3 = new Web3(ethProvider);
+
+  //test
+  speWeb3.eth.getBlock('latest').then(console.log);
+};
+
+export const accountsOP = (opType, pk = '') => {
+  switch (opType) {
+    case 'create':
+      return speWeb3.eth.accounts.create();
+    case 'createByPk':
+      return speWeb3.eth.accounts.privateKeyToAccount(pk);
+  }
 };
 
 export const getBalance = (
   pk = '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
   cb = null,
 ) =>
-  web3.eth
+  speWeb3.eth
     .getBalance(pk)
     .then(cb)
     .catch(error => console.warn);
@@ -28,8 +45,8 @@ export const doTransaction = (
   pk = '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
   cb = null,
 ) =>
-  web3.eth
-    .getBalance(pk)
+  speWeb3.eth
+    .sendTransaction({}, cb)
     .then(cb)
     .catch(error => console.warn);
 
