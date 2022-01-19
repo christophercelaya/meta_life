@@ -4,20 +4,34 @@
 
 import Web3 from 'web3';
 
-// const web3 = new Web3(Web3.givenProvider);
-const rpcUrl = 'https=//jsonapi1.smartmesh.cn',
+const rpcUrl = 'https://jsonapi1.smartmesh.cn',
   chainID = '20180430',
   symbol = 'SMT',
   BEUrl = 'https://spectrum.pub/';
-
+let web3;
 export const initWeb3 = () => {
   const provider = new Web3.providers.HttpProvider(rpcUrl, {});
-  const web3 = new Web3(provider);
+  web3 = new Web3(provider);
   web3.eth.getBlock('latest').then(console.log);
-  // web3.eth
-  //   .getBalance('0x407d73d8a49eeb85d32cf465507dd71d507100c1')
-  //   .then(console.log);
 };
+
+export const getBalance = (
+  pk = '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+  cb = null,
+) =>
+  web3.eth
+    .getBalance(pk)
+    .then(cb)
+    .catch(error => console.warn);
+
+export const doTransaction = (
+  pk = '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+  cb = null,
+) =>
+  web3.eth
+    .getBalance(pk)
+    .then(cb)
+    .catch(error => console.warn);
 
 // privateKey: '05aec557911fa0c26eef81ad2b04243eed35292a8ebf7105493845ae98ff3f61';
 // Spectrum的调用方法完全遵循Ethereum的标准：
