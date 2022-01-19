@@ -4,4 +4,4 @@ npx pod-install
 npm i --save-dev rn-nodeify@latest
 rn-nodeify --hack --install
 
-import './shim.js' @ index.js
+import './shim.js' in top @ index.js
