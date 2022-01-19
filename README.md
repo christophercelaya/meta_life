@@ -4,7 +4,7 @@ second: "hack-nodeify"
 "start"
 "ios" or "android"
 
-P.S.
+P.S. todo: 
 react-native link react-native-os
 react-native link react-native-tcp
 react-native link react-native-udp
