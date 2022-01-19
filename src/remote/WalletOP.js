@@ -21,6 +21,8 @@ export const initWeb3 = () => {
 
   //test
   speWeb3.eth.getBlock('latest').then(console.log);
+
+  getBalance('0x407d73d8a49eeb85d32cf465507dd71d507100c1', console.log);
 };
 
 export const accountsOP = (opType, pk = '') => {

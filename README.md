@@ -1,7 +1,10 @@
-npm i --save react-native-crypto
-npm i --save react-native-randombytes
-npx pod-install
-npm i --save-dev rn-nodeify@latest
-rn-nodeify --hack --install
+option[if reinstall]: "clean" 
+first: "npmAndPod"
+second: "hack-nodeify"
+"start"
+"ios" or "android"
 
-import './shim.js' in top @ index.js
+P.S.
+react-native link react-native-os
+react-native link react-native-tcp
+react-native link react-native-udp
