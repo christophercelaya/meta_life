@@ -1,8 +1,11 @@
-option[if reinstall]: "clean" 
 first: "npmAndPod"
 second: "hack-nodeify"
 "start"
 "ios" or "android"
+
+reinstall:
+past to package.json from packageBackup.json,
+then run "clean", go to first step, and so on.
 
 P.S. todo: 
 react-native link react-native-os
