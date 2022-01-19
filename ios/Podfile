@@ -12,6 +12,8 @@ target 'meta_life' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-randombytes', :path => '../node_modules/react-native-randombytes'
+
   target 'meta_lifeTests' do
     inherit! :complete
     # Pods for testing
