@@ -4,12 +4,6 @@
 
 import Web3 from 'web3';
 
-const rpcUrl = 'https=//jsonapi1.smartmesh.cn',
-  chainID = '20180430',
-  symbol = 'SMT',
-  BEUrl = 'https://spectrum.pub/';
-// axios.defaults.baseURL = 'https://api.example.com';
-
 // const web3 = new Web3(Web3.givenProvider);
 const rpcUrl = 'https=//jsonapi1.smartmesh.cn',
   chainID = '20180430',
