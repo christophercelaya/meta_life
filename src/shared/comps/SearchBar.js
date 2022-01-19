@@ -11,24 +11,17 @@ const iconDic = {
 };
 
 const SearchBar = ({style}) => {
-  const {
-    FG,
-    row,
-    alignItemsCenter,
-    flex1,
-    searchBG,
-    text,
-    placeholderTextColor,
-  } = SchemaStyles();
-  const {container, img, input, clear} = styles;
+  const {FG, row, alignItemsCenter, flex1, input, text, placeholderTextColor} =
+    SchemaStyles();
+  const {container, img, inputS, clear} = styles;
 
   const [KW, setKW] = useState('');
   return (
     <View style={[FG]}>
-      <View style={[style, row, alignItemsCenter, searchBG, container]}>
+      <View style={[style, row, alignItemsCenter, input, container]}>
         <Image style={[img]} source={iconDic.iconSearch} />
         <TextInput
-          style={[flex1, input, text]}
+          style={[flex1, input, inputS, text]}
           placeholder={'Search'}
           value={KW}
           onChangeText={setKW}
@@ -51,7 +44,7 @@ const styles = StyleSheet.create({
   img: {
     marginLeft: 10,
   },
-  input: {
+  inputS: {
     marginLeft: 10,
     fontSize: 15,
   },

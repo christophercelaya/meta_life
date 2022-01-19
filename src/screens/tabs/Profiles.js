@@ -1,19 +1,13 @@
 import React, {useEffect} from 'react';
-import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Switch,
-  View,
-} from 'react-native';
+import {Button, ScrollView, Switch, View} from 'react-native';
 import SchemaStyles from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import ControllerItem from '../../shared/comps/ControllerItem';
 import I18n from '../../i18n/I18n';
+import Card from './profiles/Card';
 
 const Profiles = ({navigation, darkMode, setDarkMode, lang, setLang}) => {
-  const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
+  const {barStyle, FG, flex1, marginTop10, alignItemsCenter} = SchemaStyles();
   useEffect(() => {
     // console.log('subscribe');
     return () => {
@@ -22,32 +16,9 @@ const Profiles = ({navigation, darkMode, setDarkMode, lang, setLang}) => {
   }, []);
 
   return (
-    <SafeAreaView style={[flex1]}>
-      <StatusBar barStyle={barStyle} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={marginTop10}>
-        <View style={FG}>
-          <Button
-            title={'SubScreen'}
-            onPress={() => navigation.navigate('SubScreen')}
-          />
-          <Button title={'Logout'} onPress={() => navigation.replace('Guid')} />
-          <ControllerItem title={'Dark mode'}>
-            <Switch
-              value={darkMode}
-              onValueChange={() => setDarkMode(!darkMode)}
-            />
-          </ControllerItem>
-          <ControllerItem title={'En / Zh'}>
-            <Switch
-              value={lang !== 'en'}
-              onValueChange={() => setLang(lang === 'en' ? 'zh' : 'en')}
-            />
-          </ControllerItem>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" style={marginTop10}>
+      <View style={FG} />
+    </ScrollView>
   );
 };
 

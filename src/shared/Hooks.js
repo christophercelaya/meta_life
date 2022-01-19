@@ -1,19 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 /**
  * Created on 11/5/21 by lonmee
  * @param tickCallback with tick calling
  * @param interval default 1000
  */
-export function useTimer(tickCallback, interval = 1000) {
-  const [tick, setTick] = useState(0);
+export function useTimer(
+  tickCallback,
+  interval = 1000,
+  deps = [],
+  initCall = true,
+) {
+  let tick = 0;
   useEffect(() => {
+    initCall && tickCallback(tick++);
     const intervalId = setInterval(() => {
-      setTick(tick + 1);
-      tickCallback(tick);
+      tickCallback(tick++);
     }, interval);
-    return () => {
+    console.log('useTimer -> set interval:', intervalId);
+    return function () {
       clearInterval(intervalId);
+      console.log('useTimer -> clear interval:', intervalId);
     };
-  });
+  }, deps);
 }
