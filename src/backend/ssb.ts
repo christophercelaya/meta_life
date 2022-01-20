@@ -4,7 +4,6 @@
 
 import fs = require('fs');
 import path = require('path');
-
 const mkdirp = require('mkdirp');
 const caps = require('ssb-caps');
 const ssbKeys = require('ssb-keys');
@@ -35,8 +34,7 @@ oneTimeFixes().then(() => {
       maxCpuWait: 80, // ms
       maxCpuMaxPause: 120, // ms
       automigrate: true,
-      dangerouslyKillFlumeWhenMigrated:
-        process.env.MANYVERSE_PLATFORM === 'mobile',
+      dangerouslyKillFlumeWhenMigrated: true,
     },
     blobs: {
       sympathy: 2,

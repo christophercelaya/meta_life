@@ -200,6 +200,7 @@ export default {
     updateBlobsPurge: 'sync',
     updateShowFollows: 'sync',
     updateDetailedLogs: 'sync',
+    updateAllowCheckingNewVersion: 'sync',
   },
   syncing: {
     migrating: 'source',
