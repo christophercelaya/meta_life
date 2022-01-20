@@ -1,5 +1,3 @@
-npm install
-npm uninstall react-native-tcp react-native-udp
-npx pod-install
+npmAndPod -> start -> ios/android
 
 TcpSockets, react-native-udp are already pod in cocoaAsyncSocket
