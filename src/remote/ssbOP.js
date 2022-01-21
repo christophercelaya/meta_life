@@ -67,7 +67,7 @@ export const reqBlobsGet = (ssb, cb) =>
 })(null, (e,v)=>console.log(v))*/
 // about self
 /*ssb.aboutSelf.get('@g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=.ed25519',(e, v)=>console.log(v))*/
-/*ssb.aboutSelf.stream({id:"@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519"})(null, (e,v)=>console.log(v))*/
+/*ssb.aboutSelf.stream('@g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=.ed25519')(null, (e,v)=>console.log(v))*/
 /* sink */
 // ssb.blobs.add()
 

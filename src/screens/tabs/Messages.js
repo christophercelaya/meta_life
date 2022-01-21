@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
@@ -40,6 +40,8 @@ const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
     );
   }
 
+  const testHandler = () => {};
+
   const snItem = ({item: {name, icon}}) => (
     <View
       style={[{marginHorizontal: 10, marginVertical: 20}, alignItemsCenter]}>
@@ -70,6 +72,7 @@ const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
         privateMsg.map((msg, i) => (
           <MessageItem key={i} navigation={navigation} msg={msg.messages[0]} />
         ))}
+      <Button title={'Test'} onPress={testHandler} />
     </ScrollView>
   );
 };
