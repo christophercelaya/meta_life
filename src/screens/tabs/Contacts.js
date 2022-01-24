@@ -11,6 +11,7 @@ import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
 import Section from '../../shared/comps/Section';
+import WebView from 'react-native-webview';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -83,7 +84,17 @@ const Contacts = ({navigation}) => {
   );
   const contactItem = ({id, name, desc, icon}, index) => (
     <View key={index} style={[row, contactItemContainer]}>
-      <Image source={icon} />
+      {/*<Image source={icon} />*/}
+      <WebView
+        containerStyle={{width: 100, height: 300}}
+        scalesPageToFit={false}
+        source={{uri: 'https://demo.readyplayer.me/avatar'}}
+        onMessage={event => {
+          alert(
+            `Avatar 3D model can be downloaded from: ${event.nativeEvent.data}`,
+          );
+        }}
+      />
       <View style={[textView]}>
         <Text style={[nameTF, text]}>{name}</Text>
         <Text style={[descTF, {color: textHolder}]}>{desc}</Text>
