@@ -5,6 +5,7 @@ import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
 import {useNavigationState} from '@react-navigation/native';
 import MessageItem from './messages/item/MessageItem';
+import {keys} from '../../../nodejs-assets/nodejs-project/index';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -23,7 +24,7 @@ const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
   const index = useNavigationState(state => state.index);
   if (index === 1 && isNaN(intervalId)) {
     refreshPrivateMessage();
-    intervalId = setInterval(refreshPrivateMessage, 5000);
+    intervalId = setInterval(refreshPrivateMessage, 1000);
   } else if (index !== 1 && !isNaN(intervalId)) {
     clearInterval(intervalId);
     intervalId = NaN;
@@ -68,10 +69,13 @@ const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
   return (
     <ScrollView style={FG}>
       <SearchBar style={[searchBar]} />
-      {privateMsg.length > 0 &&
-        privateMsg.map((msg, i) => (
-          <MessageItem key={i} navigation={navigation} msg={msg.messages[0]} />
-        ))}
+      {Object.keys(privateMsg).forEach(key => (
+        <MessageItem
+          key={key}
+          navigation={navigation}
+          msg={privateMsg[key].contents}
+        />
+      ))}
       <Button title={'Test'} onPress={testHandler} />
     </ScrollView>
   );
@@ -107,7 +111,7 @@ const msp = s => {
 
 const mdp = d => {
   return {
-    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
+    addPrivateMsg: (v, fId) => d({type: 'addPrivateMsg', payload: v, fId}),
   };
 };
 
