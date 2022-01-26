@@ -71,6 +71,8 @@ export const reqBlobsGet = (ssb, cb) =>
 /* sink */
 // ssb.blobs.add()
 
+// ssb.threads.thread({root:'%pLd9INBWxz95rvQMmnCqYgJwk6UgRTK04sdCzG+Xlww=.sha256',private:true})(null,(e,v)=>console.log(v))
+
 // profile
 /*ssb.publishUtilsBack.publishAbout({type: 'about',
   about: "@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519",
@@ -101,4 +103,41 @@ export const reqStartSSB = setInstance => {
   channel.post('identity', 'CREATE');
   // rn.send('RESTORE: word0 word1...');
   // channel.post('identity', 'RESTORE: word0 word1...');
+};
+
+export const addPublicUpdatesListener = (ssb, cb = null) => {
+  ssb.threads.publicUpdates({
+    reverse: true,
+    threadMaxSize: 1,
+  })(null, (e, v) => {
+    if (e) {
+      console.log('add public updates listener error:', e);
+    } else {
+      console.log('public msg update with: ', v);
+      cb && cb(v);
+      // addPublicUpdatesListener(ssb, cb);
+    }
+  });
+};
+
+export const addPrivateUpdatesListener = (ssb, cb = null) => {
+  ssb.threads.privateUpdates({
+    reverse: true,
+    threadMaxSize: 1,
+  })(null, (e, v) => {
+    if (e) {
+      console.log('add private updates listener error:', e);
+    } else {
+      console.log('private msg update with: ', v);
+      cb && cb(v);
+      addPrivateUpdatesListener(ssb, cb);
+    }
+  });
+};
+
+export const loadMsg = (ssb, msgKey, isPrivate = false, cb = null) => {
+  ssb.threads.thread({
+    root: msgKey,
+    private: isPrivate,
+  })(null, (e, v) => (e ? console.warn(e) : cb ? cb(v) : console.log(v)));
 };

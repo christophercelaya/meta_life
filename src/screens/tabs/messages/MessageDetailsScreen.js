@@ -10,8 +10,8 @@ import {
 import SchemaStyles from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
-import {privateMsgFilter} from '../../../filters/ContactsFilters';
 import MsgInput from './MsgInput';
+import {privateMsgParser} from '../../../filters/MsgFilters';
 
 const MessageDetailsScreen = ({
   navigation,
@@ -25,7 +25,9 @@ const MessageDetailsScreen = ({
     peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
   };
 
-  const msgArray = privateMsgFilter(privateMsg, author);
+  const msgArray = privateMsg.messages
+    ? privateMsgParser(privateMsg.messages, author)
+    : {};
 
   const {BG, FG, row, flex1, text} = SchemaStyles(),
     {head, textContainer, item, title, desc} = styles,
@@ -62,12 +64,13 @@ const MessageDetailsScreen = ({
     <SafeAreaView style={[flex1, FG]}>
       <ScrollView style={[flex1, BG]}>
         <View style={[item, row]}>
-          <View style={[textContainer]}>
-            <Text style={[title, text]}>
-              message content message content message content
-            </Text>
-            {description !== '' && <Text style={[desc]}>time stemp</Text>}
-          </View>
+          {privateMsg.messages &&
+            privateMsg.messages.map(v => (
+              <View key={v.key} style={[textContainer]}>
+                <Text style={[title, text]}>{v.value.content.text}</Text>
+                <Text style={[desc]}>{v.value.content.timestamp}</Text>
+              </View>
+            ))}
         </View>
       </ScrollView>
       <MsgInput sendHandler={sendHandler} />

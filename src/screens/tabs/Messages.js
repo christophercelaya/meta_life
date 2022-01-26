@@ -6,6 +6,7 @@ import SearchBar from '../../shared/comps/SearchBar';
 import {useNavigationState} from '@react-navigation/native';
 import MessageItem from './messages/item/MessageItem';
 import {privateMsgParser} from '../../filters/MsgFilters';
+import {addPrivateUpdatesListener} from '../../remote/ssbOP';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -30,78 +31,9 @@ const Messages = ({
   const {textHolder} = colorsSchema;
   const {FG, row, text, alignItemsCenter} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
-  const parsedPMsg = privateMsgParser(privateMsg.messages);
-
-  useEffect(() => {
-    refreshPrivateMessage('all');
-    refreshPrivateMessage();
-  }, []);
-
-  // updates
-  // const index = useNavigationState(state => state.index);
-  // if (index === 1 && isNaN(intervalId)) {
-  //   refreshPrivateMessage();
-  //   intervalId = setInterval(refreshPrivateMessage, 1000);
-  // } else if (index !== 1 && !isNaN(intervalId)) {
-  //   clearInterval(intervalId);
-  //   intervalId = NaN;
-  // }
-
-  /**
-   * init load
-   * @param type
-   */
-  function refreshPrivateMessage(type = null) {
-    switch (type) {
-      case 'all':
-        ssb.threads.public({
-          reverse: true,
-          threadMaxSize: 10,
-        })(null, (e, v) =>
-          e
-            ? console.log('refresh private message error:', e)
-            : setPublicMsg((window.msgs = v)),
-        );
-        ssb.threads.private({
-          reverse: true,
-          threadMaxSize: 10,
-        })(null, (e, v) =>
-          e
-            ? console.log('refresh private message error:', e)
-            : setPrivateMsg((window.pmsgs = v)),
-        );
-        break;
-      default:
-        ssb.threads.publicUpdates({
-          reverse: true,
-          threadMaxSize: 3,
-        })(null, (e, v) =>
-          e
-            ? console.log('refresh private message error:', e)
-            : addPublicMsg(v),
-        );
-        ssb.threads.privateUpdates({
-          reverse: true,
-          threadMaxSize: 3,
-        })(
-          null,
-          (e, v) =>
-            e
-              ? console.log('refresh private message error:', e)
-              : console.log('addPrivateMsg:', v),
-          // : addPrivateMsg(v),
-        );
-    }
-  }
-
-  const pMsgHandler = () => {
-    ssb.threads.publicUpdates({
-      reverse: true,
-      threadMaxSize: 3,
-    })(null, (e, v) =>
-      e ? console.log('refresh private message error:', e) : addPublicMsg(v),
-    );
-  };
+  const parsedPMsg = privateMsg.messages
+    ? privateMsgParser(privateMsg.messages)
+    : {};
 
   const testHandler = () => {};
 

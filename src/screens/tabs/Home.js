@@ -12,9 +12,21 @@ import SchemaStyles, {
   colorsSchema,
 } from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
-import {reqStartSSB} from '../../remote/ssbOP';
+import {
+  addPrivateUpdatesListener,
+  addPublicUpdatesListener,
+  loadMsg,
+  reqStartSSB,
+} from '../../remote/ssbOP';
 
-const Home = ({navigation, feedId, followers, setInstance}) => {
+const Home = ({
+  navigation,
+  feedId,
+  followers,
+  setInstance,
+  addPublicMsg,
+  addPrivateMsg,
+}) => {
   const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
   const [opLog, setOpLog] = useState('');
   useEffect(() => {
@@ -31,6 +43,13 @@ const Home = ({navigation, feedId, followers, setInstance}) => {
                 JSON.stringify(v) +
                 '\n'),
             ),
+      );
+      // listening for public & private msg
+      addPublicUpdatesListener(ssb, key =>
+        loadMsg(ssb, key, false, addPublicMsg),
+      );
+      addPrivateUpdatesListener(ssb, key =>
+        loadMsg(ssb, key, true, addPrivateMsg),
       );
       // getMnemonic
       ssb.keysUtils.getMnemonic((e, v) => setOpLog(opLogCache + v + '\n'));
@@ -82,6 +101,10 @@ const msp = s => {
 const mdp = d => {
   return {
     setInstance: instance => d({type: 'setInstance', payload: instance}),
+    setPublicMsg: v => d({type: 'setPublicMsg', payload: v}),
+    addPublicMsg: v => d({type: 'addPublicMsg', payload: v}),
+    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
+    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };
 
