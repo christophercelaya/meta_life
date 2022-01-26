@@ -3,8 +3,8 @@ import React from 'react';
 import SchemaStyles from '../SchemaStyles';
 
 const HeaderLargeTitle = ({options: {title}, btnIcon, btnHandler}) => {
-  const {text, row, alignItemsCenter, justifySpaceBetween} = SchemaStyles();
-  const {container, header, headerTitle} = styles;
+  const {text, row, alignItemsCenter, justifySpaceBetween} = SchemaStyles(),
+    {container, header, headerTitle} = styles;
   return (
     <View style={[container]}>
       <View style={[header, row, alignItemsCenter, justifySpaceBetween]}>

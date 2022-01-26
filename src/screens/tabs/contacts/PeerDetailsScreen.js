@@ -11,7 +11,10 @@ import {
 import SchemaStyles from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
-import {friendsGraphParse, mutualFriend} from '../../../Utils';
+import {
+  friendsGraphParse,
+  mutualFriend,
+} from '../../../filters/ContactsFilters';
 import useDocumentTitle from '@react-navigation/native/src/useDocumentTitle';
 import RoundBtn from '../../../shared/comps/RoundBtn';
 

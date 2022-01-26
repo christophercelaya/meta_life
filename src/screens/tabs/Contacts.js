@@ -4,7 +4,7 @@ import SchemaStyles from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import Section from '../../shared/comps/Section';
 import {useNavigationState} from '@react-navigation/native';
-import {friendsGraphParse} from '../../Utils';
+import {friendsGraphParse} from '../../filters/ContactsFilters';
 import SearchBar from '../../shared/comps/SearchBar';
 import FriendItem from './contacts/item/FriendItem';
 

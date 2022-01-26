@@ -12,8 +12,8 @@ const iconDic = {
 
 const SearchBar = ({style}) => {
   const {FG, row, alignItemsCenter, flex1, input, text, placeholderTextColor} =
-    SchemaStyles();
-  const {container, img, inputS, clear} = styles;
+      SchemaStyles(),
+    {container, img, inputS, clear} = styles;
 
   const [KW, setKW] = useState('');
   return (

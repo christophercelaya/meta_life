@@ -5,8 +5,8 @@ import HeaderLargeTitle from './HeaderLargeTitle';
 import {SearchBar} from 'react-native-screens';
 
 const HeaderSearch = props => {
-  const {} = SchemaStyles();
-  const {container} = styles;
+  const {} = SchemaStyles(),
+    {container} = styles;
   return (
     <View style={[container]}>
       <HeaderLargeTitle {...props} />

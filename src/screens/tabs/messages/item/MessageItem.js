@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles from '../../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
@@ -15,12 +15,9 @@ const MessageItem = ({
   ssb,
   peerInfoDic,
   msg: {
-    key,
-    value: {
-      author,
-      timestamp,
-      content: {type, text: contentText},
-    },
+    author,
+    timestamp,
+    content: {type, text: contentText},
   },
 }) => {
   const {row, flex1, text} = SchemaStyles();

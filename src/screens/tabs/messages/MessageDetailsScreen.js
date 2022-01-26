@@ -10,7 +10,7 @@ import {
 import SchemaStyles from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
-import {privateMsgFilter} from '../../../Utils';
+import {privateMsgFilter} from '../../../filters/ContactsFilters';
 import MsgInput from './MsgInput';
 
 const MessageDetailsScreen = ({

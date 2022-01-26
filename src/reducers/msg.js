@@ -7,26 +7,20 @@ const msgInitState = {
   publicMsg: {},
 };
 
-export const msgReducer = (state = msgInitState, {type, payload, fId}) => {
+export const msgReducer = (state = msgInitState, {type, payload}) => {
   switch (type) {
+    case 'setPrivateMsg':
+      return {...state, privateMsg: payload};
     case 'addPrivateMsg':
-      const {sequence, author, timestamp, content} = payload.messages[0].value,
-        key = author === fId ? content.recps[1] : author,
-        temp = {};
-      temp[key] = [content];
-      return {
-        ...state,
-        privateMsg:
-          state.privateMsg && state.privateMsg.hasOwnProperty(key)
-            ? timestamp > state.privateMsg[key].timestamp
-              ? {timestamp, contents: state.privateMsg[key].concat([content])}
-              : state
-            : {...temp},
-      };
+      return state;
     case 'clearPrivateMsg':
       return {...state, privateMsg: {}};
     case 'setPublicMsg':
       return {...state, publicMsg: payload};
+    case 'addPublicMsg':
+      return state;
+    case 'clearPublicMsg':
+      return {...state, privateMsg: {}};
     default:
       return state;
   }

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
 import {useNavigationState} from '@react-navigation/native';
 import MessageItem from './messages/item/MessageItem';
-import {keys} from '../../../nodejs-assets/nodejs-project/index';
+import {privateMsgParser} from '../../filters/MsgFilters';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -16,30 +16,92 @@ const iconDic = {
 
 let intervalId = NaN;
 
-const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
+const Messages = ({
+  navigation,
+  ssb,
+  feedId,
+  privateMsg,
+  setPrivateMsg,
+  addPrivateMsg,
+  publicMsg,
+  setPublicMsg,
+  addPublicMsg,
+}) => {
   const {textHolder} = colorsSchema;
   const {FG, row, text, alignItemsCenter} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
+  const parsedPMsg = privateMsgParser(privateMsg.messages);
 
-  const index = useNavigationState(state => state.index);
-  if (index === 1 && isNaN(intervalId)) {
+  useEffect(() => {
+    refreshPrivateMessage('all');
     refreshPrivateMessage();
-    intervalId = setInterval(refreshPrivateMessage, 1000);
-  } else if (index !== 1 && !isNaN(intervalId)) {
-    clearInterval(intervalId);
-    intervalId = NaN;
+  }, []);
+
+  // updates
+  // const index = useNavigationState(state => state.index);
+  // if (index === 1 && isNaN(intervalId)) {
+  //   refreshPrivateMessage();
+  //   intervalId = setInterval(refreshPrivateMessage, 1000);
+  // } else if (index !== 1 && !isNaN(intervalId)) {
+  //   clearInterval(intervalId);
+  //   intervalId = NaN;
+  // }
+
+  /**
+   * init load
+   * @param type
+   */
+  function refreshPrivateMessage(type = null) {
+    switch (type) {
+      case 'all':
+        ssb.threads.public({
+          reverse: true,
+          threadMaxSize: 10,
+        })(null, (e, v) =>
+          e
+            ? console.log('refresh private message error:', e)
+            : setPublicMsg((window.msgs = v)),
+        );
+        ssb.threads.private({
+          reverse: true,
+          threadMaxSize: 10,
+        })(null, (e, v) =>
+          e
+            ? console.log('refresh private message error:', e)
+            : setPrivateMsg((window.pmsgs = v)),
+        );
+        break;
+      default:
+        ssb.threads.publicUpdates({
+          reverse: true,
+          threadMaxSize: 3,
+        })(null, (e, v) =>
+          e
+            ? console.log('refresh private message error:', e)
+            : addPublicMsg(v),
+        );
+        ssb.threads.privateUpdates({
+          reverse: true,
+          threadMaxSize: 3,
+        })(
+          null,
+          (e, v) =>
+            e
+              ? console.log('refresh private message error:', e)
+              : console.log('addPrivateMsg:', v),
+          // : addPrivateMsg(v),
+        );
+    }
   }
 
-  function refreshPrivateMessage() {
-    ssb.threads.private({
+  const pMsgHandler = () => {
+    ssb.threads.publicUpdates({
       reverse: true,
       threadMaxSize: 3,
     })(null, (e, v) =>
-      e
-        ? console.log('refresh private message error:', e)
-        : addPrivateMsg(v, feedId),
+      e ? console.log('refresh private message error:', e) : addPublicMsg(v),
     );
-  }
+  };
 
   const testHandler = () => {};
 
@@ -69,13 +131,10 @@ const Messages = ({navigation, ssb, feedId, privateMsg, addPrivateMsg}) => {
   return (
     <ScrollView style={FG}>
       <SearchBar style={[searchBar]} />
-      {Object.keys(privateMsg).forEach(key => (
-        <MessageItem
-          key={key}
-          navigation={navigation}
-          msg={privateMsg[key].contents}
-        />
-      ))}
+      {privateMsg.messages &&
+        privateMsg.messages.map(({key, value}) => (
+          <MessageItem key={key} navigation={navigation} msg={value} />
+        ))}
       <Button title={'Test'} onPress={testHandler} />
     </ScrollView>
   );
@@ -106,12 +165,16 @@ const msp = s => {
     ssb: s.ssb.instance,
     feedId: s.ssb.feedId,
     privateMsg: s.msg.privateMsg,
+    publicMsg: s.msg.publicMsg,
   };
 };
 
 const mdp = d => {
   return {
-    addPrivateMsg: (v, fId) => d({type: 'addPrivateMsg', payload: v, fId}),
+    setPublicMsg: v => d({type: 'setPublicMsg', payload: v}),
+    addPublicMsg: v => d({type: 'addPublicMsg', payload: v}),
+    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
+    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };
 

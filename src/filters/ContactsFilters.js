@@ -1,9 +1,3 @@
-/** messages **/
-export const privateMsgFilter = (msg, author) => {
-  // todo:implement of private msg by author
-};
-
-/** contacts **/
 export const friendParser = graph => {
   let fArr = [],
     bArr = [];
