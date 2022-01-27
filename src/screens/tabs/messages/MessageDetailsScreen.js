@@ -11,27 +11,24 @@ import SchemaStyles from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import MsgInput from './MsgInput';
-import {privateMsgParser} from '../../../filters/MsgFilters';
+import {sendMsg} from '../../../remote/ssbOP';
+
+const iconDic = {
+  peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
+};
 
 const MessageDetailsScreen = ({
   navigation,
-  privateMsg,
-  route: {params: author},
+  route: {
+    params: {recp, msgArr},
+  },
   ssb,
   feedId,
   peerInfoDic,
 }) => {
-  const iconDic = {
-    peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
-  };
-
-  const msgArray = privateMsg.messages
-    ? privateMsgParser(privateMsg.messages, author)
-    : {};
-
   const {BG, FG, row, flex1, text} = SchemaStyles(),
     {head, textContainer, item, title, desc} = styles,
-    {name = '', description = '', image = ''} = peerInfoDic[author] || {};
+    {name = '', description = '', image = ''} = peerInfoDic[recp] || {};
 
   const headerRight = () => (
     <Image
@@ -44,34 +41,28 @@ const MessageDetailsScreen = ({
 
   useEffect(() => {
     navigation.setOptions({
-      title: name || author,
+      title: name || recp,
       headerRight,
     });
   });
 
   function sendHandler(content) {
-    ssb.publish(
-      {
-        type: 'post',
-        text: content,
-        recps: [author, feedId],
-      },
-      (e, v) => (e ? console.warn(e) : console.log(v)),
-    );
+    sendMsg(ssb, content, [recp, feedId]);
   }
 
   return (
     <SafeAreaView style={[flex1, FG]}>
       <ScrollView style={[flex1, BG]}>
-        <View style={[item, row]}>
-          {privateMsg.messages &&
-            privateMsg.messages.map(v => (
-              <View key={v.key} style={[textContainer]}>
-                <Text style={[title, text]}>{v.value.content.text}</Text>
-                <Text style={[desc]}>{v.value.content.timestamp}</Text>
+        {msgArr.map(({key, value: {author, content, timestamp}}) => (
+          <View key={key} style={[textContainer]}>
+            <View style={[item, row]}>
+              <View style={[]}>
+                <Text style={[desc]}>{author.substr(0, 8)}</Text>
+                <Text style={[title, text]}>{content.text}</Text>
               </View>
-            ))}
-        </View>
+            </View>
+          </View>
+        ))}
       </ScrollView>
       <MsgInput sendHandler={sendHandler} />
     </SafeAreaView>

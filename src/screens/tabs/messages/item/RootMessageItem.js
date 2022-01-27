@@ -10,22 +10,25 @@ const iconDic = {
   nftIcon: require('../../../../assets/image/contacts/nft_icon.png'),
 };
 
-const MessageItem = ({
-  navigation,
-  ssb,
-  peerInfoDic,
-  msg: {
-    author,
-    timestamp,
-    content: {type, text: contentText},
-  },
-}) => {
+const RootMessageItem = ({navigation, ssb, feedId, peerInfoDic, msgArr}) => {
+  const {
+      rootKey,
+      value: {
+        author,
+        content: {recps},
+      },
+    } = msgArr[0],
+    recp = author === feedId ? recps[1] : author,
+    lastMsg = msgArr[msgArr.length - 1];
+
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
-  const {name = '', description = '', image = ''} = peerInfoDic[author] || {};
+  const {name = '', description = '', image = ''} = peerInfoDic[recp] || {};
   return (
     <Pressable
-      onPress={() => navigation.navigate('MessageDetailsScreen', author)}>
+      onPress={() =>
+        navigation.navigate('MessageDetailsScreen', {rootKey, recp, msgArr})
+      }>
       <View style={[item, row, flex1]}>
         <Image
           height={60}
@@ -35,9 +38,9 @@ const MessageItem = ({
         />
         <View style={[textContainer]}>
           <Text numberOfLines={1} style={[title, text]}>
-            {contentText}
+            {lastMsg.value.content.text}
           </Text>
-          <Text style={[desc]}>{timestamp}</Text>
+          <Text style={[desc]}>{lastMsg.timestamp}</Text>
         </View>
       </View>
     </Pressable>
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
 const msp = s => {
   return {
     ssb: s.ssb.instance,
+    feedId: s.ssb.feedId,
     peerInfoDic: s.contacts.peerInfoDic,
   };
 };
@@ -86,4 +90,4 @@ const mdp = d => {
   };
 };
 
-export default connect(msp, mdp)(MessageItem);
+export default connect(msp, mdp)(RootMessageItem);

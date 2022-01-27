@@ -115,7 +115,7 @@ export const addPublicUpdatesListener = (ssb, cb = null) => {
     } else {
       console.log('public msg update with: ', v);
       cb && cb(v);
-      // addPublicUpdatesListener(ssb, cb);
+      addPublicUpdatesListener(ssb, cb);
     }
   });
 };
@@ -133,6 +133,16 @@ export const addPrivateUpdatesListener = (ssb, cb = null) => {
       addPrivateUpdatesListener(ssb, cb);
     }
   });
+};
+
+export const sendMsg = (ssb, content, reps = null) => {
+  const opt = {type: 'post', text: content};
+  reps && (opt.reps = reps);
+  ssb.publish(opt, (e, v) =>
+    e
+      ? console.warn(e)
+      : console.log((reps ? 'private' : 'public') + ' msg sent:', v),
+  );
 };
 
 export const loadMsg = (ssb, msgKey, isPrivate = false, cb = null) => {

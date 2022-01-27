@@ -26,8 +26,9 @@ const Home = ({
   setInstance,
   addPublicMsg,
   addPrivateMsg,
+  setPrivateMsg,
 }) => {
-  const {barStyle, FG, flex1, marginTop10} = SchemaStyles();
+  const {barStyle, FG, flex1} = SchemaStyles();
   const [opLog, setOpLog] = useState('');
   useEffect(() => {
     let opLogCache: '';
@@ -49,7 +50,7 @@ const Home = ({
         loadMsg(ssb, key, false, addPublicMsg),
       );
       addPrivateUpdatesListener(ssb, key =>
-        loadMsg(ssb, key, true, addPrivateMsg),
+        loadMsg(ssb, key, true, setPrivateMsg),
       );
       // getMnemonic
       ssb.keysUtils.getMnemonic((e, v) => setOpLog(opLogCache + v + '\n'));

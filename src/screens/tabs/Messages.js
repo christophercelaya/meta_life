@@ -1,12 +1,10 @@
-import React, {useEffect} from 'react';
-import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
-import {useNavigationState} from '@react-navigation/native';
-import MessageItem from './messages/item/MessageItem';
+import RootMessageItem from './messages/item/RootMessageItem';
 import {privateMsgParser} from '../../filters/MsgFilters';
-import {addPrivateUpdatesListener} from '../../remote/ssbOP';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -63,11 +61,13 @@ const Messages = ({
   return (
     <ScrollView style={FG}>
       <SearchBar style={[searchBar]} />
-      {privateMsg.messages &&
-        privateMsg.messages.map(({key, value}) => (
-          <MessageItem key={key} navigation={navigation} msg={value} />
-        ))}
-      <Button title={'Test'} onPress={testHandler} />
+      {Object.keys(privateMsg).map(key => (
+        <RootMessageItem
+          key={key}
+          navigation={navigation}
+          msgArr={privateMsg[key]}
+        />
+      ))}
     </ScrollView>
   );
 };
