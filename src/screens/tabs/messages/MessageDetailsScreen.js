@@ -11,7 +11,7 @@ import SchemaStyles, {colorsBasics} from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import MsgInput from './MsgInput';
-import {loadMsg, sendMsg} from '../../../remote/ssbOP';
+import {sendMsg} from '../../../remote/ssbOP';
 
 const iconDic = {
   peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
