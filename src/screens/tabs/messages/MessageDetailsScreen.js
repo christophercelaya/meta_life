@@ -11,7 +11,7 @@ import SchemaStyles, {colorsBasics} from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import MsgInput from './MsgInput';
-import {sendMsg} from '../../../remote/ssbOP';
+import {loadMsg, sendMsg} from '../../../remote/ssbOP';
 
 const iconDic = {
   peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
@@ -25,6 +25,7 @@ const MessageDetailsScreen = ({
   feedId,
   peerInfoDic,
   privateMsg,
+  setPrivateMsg,
   addPrivateMsg,
 }) => {
   const {BG, FG, row, flex1} = SchemaStyles(),
@@ -49,9 +50,10 @@ const MessageDetailsScreen = ({
 
   function sendHandler(content) {
     // fixme: {key: key || msg.key, msg} not sure
-    sendMsg(ssb, content, [recp, feedId], msg =>
-      addPrivateMsg({key: key || msg.key, msg}),
-    );
+    sendMsg(ssb, content, [recp, feedId]);
+    // sendMsg(ssb, content, [recp, feedId], msg =>
+    //   addPrivateMsg({key: key || msg.key, msg}),
+    // );
   }
 
   return (
@@ -129,6 +131,7 @@ const msp = s => {
 const mdp = d => {
   return {
     addPeerInfo: v => d({type: 'addPeerInfo', payload: v}),
+    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
     addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };

@@ -135,14 +135,14 @@ export const addPrivateUpdatesListener = (ssb, cb = null) => {
   });
 };
 
-export const sendMsg = (ssb, content, reps = null, cb = null) => {
+export const sendMsg = (ssb, content, recps = null, cb = null) => {
   const opt = {type: 'post', text: content};
-  reps && (opt.reps = reps);
+  recps && (opt.recps = recps);
   ssb.publish(opt, (e, v) => {
     if (e) {
       console.warn('send message error: ', e);
     } else {
-      console.log((reps ? 'private' : 'public') + ' msg sent:', v);
+      console.log((recps ? 'private' : 'public') + ' msg sent:', v);
       cb && cb(v);
     }
   });

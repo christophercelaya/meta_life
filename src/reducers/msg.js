@@ -4,7 +4,7 @@
 
 const msgInitState = {
   privateMsg: {},
-  publicMsg: {},
+  publicMsg: {messages: [], full: false},
 };
 
 export const msgReducer = (state = msgInitState, {type, payload}) => {
