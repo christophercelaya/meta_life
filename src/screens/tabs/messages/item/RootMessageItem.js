@@ -12,23 +12,18 @@ const iconDic = {
 
 const RootMessageItem = ({navigation, ssb, feedId, peerInfoDic, msgArr}) => {
   const {
-      rootKey,
-      value: {
-        author,
-        content: {recps},
-      },
+      key,
+      value: {author, content},
     } = msgArr[0],
-    recp = author === feedId ? recps[1] : author,
+    rep = (content.reps || content.recps).filter(value => value !== feedId)[0],
     lastMsg = msgArr[msgArr.length - 1];
 
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
-  const {name = '', description = '', image = ''} = peerInfoDic[recp] || {};
+  const {name = '', description = '', image = ''} = peerInfoDic[rep] || {};
   return (
     <Pressable
-      onPress={() =>
-        navigation.navigate('MessageDetailsScreen', {rootKey, recp, msgArr})
-      }>
+      onPress={() => navigation.navigate('MessageDetailsScreen', {key, rep})}>
       <View style={[item, row, flex1]}>
         <Image
           height={60}

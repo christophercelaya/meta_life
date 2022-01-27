@@ -70,7 +70,9 @@ const PeerDetailsScreen = ({
         <Text style={[desc]}>mutual:{mutual.length}</Text>
         <RoundBtn
           title={'chat'}
-          press={() => navigation.navigate('MessageDetailsScreen', fId)}
+          press={() =>
+            navigation.navigate('MessageDetailsScreen', {key: '', recp: fId})
+          }
         />
       </ScrollView>
     </SafeAreaView>

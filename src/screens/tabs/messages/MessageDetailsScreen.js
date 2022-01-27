@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import SchemaStyles from '../../../shared/SchemaStyles';
+import SchemaStyles, {colorsBasics} from '../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
 import MsgInput from './MsgInput';
@@ -16,18 +16,19 @@ import {sendMsg} from '../../../remote/ssbOP';
 const iconDic = {
   peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
 };
-
 const MessageDetailsScreen = ({
   navigation,
   route: {
-    params: {recp, msgArr},
+    params: {key, recp},
   },
   ssb,
   feedId,
   peerInfoDic,
+  privateMsg,
+  addPrivateMsg,
 }) => {
-  const {BG, FG, row, flex1, text} = SchemaStyles(),
-    {head, textContainer, item, title, desc} = styles,
+  const {BG, FG, row, flex1} = SchemaStyles(),
+    {head, itemContainer, item, itemLeft, itemRight, title, desc} = styles,
     {name = '', description = '', image = ''} = peerInfoDic[recp] || {};
 
   const headerRight = () => (
@@ -47,22 +48,26 @@ const MessageDetailsScreen = ({
   });
 
   function sendHandler(content) {
-    sendMsg(ssb, content, [recp, feedId]);
+    // fixme: {key: key || msg.key, msg} not sure
+    sendMsg(ssb, content, [recp, feedId], msg =>
+      addPrivateMsg({key: key || msg.key, msg}),
+    );
   }
 
   return (
     <SafeAreaView style={[flex1, FG]}>
-      <ScrollView style={[flex1, BG]}>
-        {msgArr.map(({key, value: {author, content, timestamp}}) => (
-          <View key={key} style={[textContainer]}>
-            <View style={[item, row]}>
-              <View style={[]}>
-                <Text style={[desc]}>{author.substr(0, 8)}</Text>
-                <Text style={[title, text]}>{content.text}</Text>
+      <ScrollView style={[flex1, BG]} showsVerticalScrollIndicator={false}>
+        {privateMsg[key] &&
+          privateMsg[key].map(({key, value: {author, content, timestamp}}) => (
+            <View
+              key={key}
+              style={[itemContainer, author === feedId ? itemLeft : itemRight]}>
+              <View style={[item]}>
+                <Text style={[title]}>{content.text}</Text>
+                {/*<Text style={[desc]}>{timestamp}</Text>*/}
               </View>
             </View>
-          </View>
-        ))}
+          ))}
       </ScrollView>
       <MsgInput sendHandler={sendHandler} />
     </SafeAreaView>
@@ -74,19 +79,33 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  itemContainer: {
+    marginHorizontal: 15,
+    marginVertical: 12,
+    borderBottomStartRadius: 12,
+    borderBottomEndRadius: 12,
+    maxWidth: 293,
+  },
+  itemLeft: {
+    alignSelf: 'flex-start',
+    borderTopEndRadius: 12,
+    backgroundColor: colorsBasics.white,
+  },
+  itemRight: {
+    alignSelf: 'flex-end',
+    borderTopStartRadius: 12,
+    backgroundColor: colorsBasics.primary,
+  },
   item: {
-    height: 80,
     marginVertical: 8,
     marginHorizontal: 16,
   },
-  textContainer: {
-    marginHorizontal: 15,
-    marginVertical: 12,
-  },
   title: {
+    maxWidth: 246,
     fontFamily: 'Helvetica',
-    fontSize: 17,
-    width: 240,
+    fontSize: 14,
+    color: 'black',
+    marginVertical: 8,
   },
   desc: {
     marginTop: 4,
@@ -110,6 +129,7 @@ const msp = s => {
 const mdp = d => {
   return {
     addPeerInfo: v => d({type: 'addPeerInfo', payload: v}),
+    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };
 

@@ -4,7 +4,6 @@ import SchemaStyles, {colorsSchema} from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import SearchBar from '../../shared/comps/SearchBar';
 import RootMessageItem from './messages/item/RootMessageItem';
-import {privateMsgParser} from '../../filters/MsgFilters';
 
 const iconDic = {
   photo: require('../../assets/image/profiles/photo.png'),
@@ -12,8 +11,6 @@ const iconDic = {
   nf: require('../../assets/image/profiles/NewFriends.png'),
   tt: require('../../assets/image/profiles/Twitter.png'),
 };
-
-let intervalId = NaN;
 
 const Messages = ({
   navigation,
@@ -29,11 +26,6 @@ const Messages = ({
   const {textHolder} = colorsSchema;
   const {FG, row, text, alignItemsCenter} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
-  const parsedPMsg = privateMsg.messages
-    ? privateMsgParser(privateMsg.messages)
-    : {};
-
-  const testHandler = () => {};
 
   const snItem = ({item: {name, icon}}) => (
     <View
