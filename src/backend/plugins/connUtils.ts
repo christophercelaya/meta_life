@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import {Callback} from './helpers/types';
+import {Peer as PeerKV} from 'ssb-conn-query/lib/types';
+import ConnDB = require('ssb-conn-db');
 import {FeedId} from 'ssb-typescript';
 const pull = require('pull-stream');
 const blobIdToUrl = require('ssb-serve-blobs/id-to-url');
@@ -16,10 +18,10 @@ interface AboutSelf {
 }
 
 function augmentPeerWithExtras(
-  kv: any,
-  connDB: any,
+  kv: PeerKV,
+  connDB: ConnDB,
   aboutSelf: AboutSelf,
-): any {
+): PeerKV {
   const [addr, peer] = kv;
   if (!peer.key) return kv;
   const output = aboutSelf.getProfile(peer.key);
@@ -31,14 +33,14 @@ function augmentPeerWithExtras(
 }
 
 function augmentPeersWithExtras(ssb: any) {
-  return (kvs: Array<any>, cb: Callback<Array<any>>) => {
+  return (kvs: Array<PeerKV>, cb: Callback<Array<PeerKV>>) => {
     let done = false;
     ssb.db.onDrain('aboutSelf', () => {
       if (!done) {
         done = true;
         const aboutSelf = ssb.db.getIndex('aboutSelf');
         const connDB = ssb.conn.db();
-        const newKVs = kvs.map(kv =>
+        const newKVs = kvs.map((kv) =>
           augmentPeerWithExtras(kv, connDB, aboutSelf),
         );
         cb(null, newKVs);
@@ -47,7 +49,7 @@ function augmentPeersWithExtras(ssb: any) {
   };
 }
 
-function removeOlderDuplicates(kvs: Array<any>) {
+function removeOlderDuplicates(kvs: Array<PeerKV>) {
   // Only allow those that don't have a newer duplicate
   return kvs.filter(([_addr1, peer1]) => {
     const newerDuplicate = kvs.find(([_addr2, peer2]) => {

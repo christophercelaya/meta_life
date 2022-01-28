@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const pathToIndexJs = process.argv[2];
 if (process.argv.length !== 3) {
-  console.error('Usage:\n\tnode analyse-backend-bundle.js <path-to-ssbOP.js>');
+  console.error('Usage:\n\tnode analyse-backend-bundle.js <path-to-index.js>');
   process.exit(1);
 }
 

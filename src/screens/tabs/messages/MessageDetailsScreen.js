@@ -49,11 +49,12 @@ const MessageDetailsScreen = ({
   });
 
   function sendHandler(content) {
-    // fixme: {key: key || msg.key, msg} not sure
-    sendMsg(ssb, content, [recp, feedId]);
-    // sendMsg(ssb, content, [recp, feedId], msg =>
-    //   addPrivateMsg({key: key || msg.key, msg}),
-    // );
+    sendMsg(ssb, {
+      type: 'post',
+      rootKey: key,
+      text: content,
+      recps: [recp, feedId],
+    });
   }
 
   return (

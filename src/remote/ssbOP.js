@@ -124,6 +124,7 @@ export const addPrivateUpdatesListener = (ssb, cb = null) => {
   ssb.threads.privateUpdates({
     reverse: true,
     threadMaxSize: 1,
+    includeSelf: true,
   })(null, (e, v) => {
     if (e) {
       console.log('add private updates listener error:', e);
@@ -135,14 +136,12 @@ export const addPrivateUpdatesListener = (ssb, cb = null) => {
   });
 };
 
-export const sendMsg = (ssb, content, recps = null, cb = null) => {
-  const opt = {type: 'post', text: content};
-  recps && (opt.recps = recps);
+export const sendMsg = (ssb, opt, cb = null) => {
   ssb.publish(opt, (e, v) => {
     if (e) {
       console.warn('send message error: ', e);
     } else {
-      console.log((recps ? 'private' : 'public') + ' msg sent:', v);
+      console.log((opt.recps ? 'private' : 'public') + ' msg sent:', v);
       cb && cb(v);
     }
   });

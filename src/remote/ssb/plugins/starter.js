@@ -31,11 +31,3 @@ export const peers = {
     };
   },
 };
-
-// multiserver
-// 'net:10.13.230.224:8008~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=;'
-// 'net:169.254.53.98:8008~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=;'
-// 'net:169.254.36.247:8008~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=;'
-// 'ws://10.13.230.224:8989~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=;'
-// 'ws://169.254.53.98:8989~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA=;'
-// 'ws://169.254.36.247:8989~shs:g5SfLiisL76D4vO866reU8ioE5deSGOD0CpLq2vw0AA='
