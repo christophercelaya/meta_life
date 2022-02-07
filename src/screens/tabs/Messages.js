@@ -14,8 +14,6 @@ const iconDic = {
 
 const Messages = ({
   navigation,
-  ssb,
-  feedId,
   privateMsg,
   setPrivateMsg,
   addPrivateMsg,
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
 
 const msp = s => {
   return {
-    feedId: s.ssb.feedId,
+    feedId: s.user.feedId,
     privateMsg: s.msg.privateMsg,
     publicMsg: s.msg.publicMsg,
   };
