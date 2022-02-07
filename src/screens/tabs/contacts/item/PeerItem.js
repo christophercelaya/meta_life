@@ -20,11 +20,11 @@ const PeerItem = ({
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
   // check cached
-  useEffect(() => {
-    console.log('check info');
-    peerInfoDic.hasOwnProperty(key) ||
-      ssb.aboutSelf.get(key, (e, v) => v.name && addPeerInfo([key, v]));
-  });
+  // useEffect(() => {
+  //   console.log('check info');
+  //   peerInfoDic.hasOwnProperty(key) ||
+  //     ssb.aboutSelf.get(key, (e, v) => v.name && addPeerInfo([key, v]));
+  // });
 
   const {name = '', description = '', image = ''} = peerInfoDic[key] || {};
   function connectErrorHandler(e) {

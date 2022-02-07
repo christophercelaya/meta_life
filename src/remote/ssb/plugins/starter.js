@@ -6,8 +6,10 @@ export const starter = {
   name: 'starter',
   init: ssb => {
     return {
-      greet: cb => ssb.publish({tye: 'post', text: 'Hello world!'}, cb),
-      start: cb => ssb.conn.start(cb),
+      start: cb =>
+        ssb.conn.start((e, v) => {
+          cb(e, v);
+        }),
     };
   },
 };

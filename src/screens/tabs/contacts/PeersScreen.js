@@ -22,8 +22,12 @@ const PeersScreen = ({
   useTimer(refreshStagedAndConnected, 3000);
 
   function refreshStagedAndConnected() {
-    ssb.peers.staged(setStagedPeers);
-    ssb.peers.connected(setConnectedPeers);
+    ssb.conn.stagedPeers()(null, (e, v) =>
+      e ? console.error(e) : setStagedPeers(v),
+    );
+    ssb.conn.peers()(null, (e, v) =>
+      e ? console.error(e) : setConnectedPeers(v),
+    );
   }
 
   return (

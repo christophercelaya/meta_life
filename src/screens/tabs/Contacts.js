@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FlatList, Image, ScrollView, StyleSheet, View} from 'react-native';
 import SchemaStyles from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
@@ -35,10 +35,6 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
   function refreshFriendsGraph() {
     ssb.friends.graph((e, v) => (e ? console.warn(e) : setFriendsGraph(v)));
   }
-
-  useEffect(() => {
-    ssb.peers.stage((e, v) => (e ? console.warn(e) : console.log('staged')));
-  }, []);
 
   const snItem = ({item: {icon}}) => (
     <View style={item}>

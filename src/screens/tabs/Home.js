@@ -19,20 +19,15 @@ import {
   reqStartSSB,
 } from '../../remote/ssbOP';
 
-const Home = ({
-  navigation,
-  feedId,
-  setInstance,
-  addPublicMsg,
-  setPrivateMsg,
-}) => {
+const Home = ({navigation, feedId, setFeedId, addPublicMsg, setPrivateMsg}) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   const [opLog, setOpLog] = useState('');
   useEffect(() => {
     let opLogCache: '';
     reqStartSSB(ssb => {
-      setInstance((window.ssb = ssb));
-      ssb.starter.start((e, v) =>
+      window.ssb = ssb;
+      ssb.whoami((e, v) => setFeedId(v.id));
+      ssb.conn.start((e, v) => {
         e
           ? setOpLog(opLog + 'ssb server connect error: ' + e)
           : setOpLog(
@@ -41,8 +36,9 @@ const Home = ({
                 'ssb server connected with:  ' +
                 JSON.stringify(v) +
                 '\n'),
-            ),
-      );
+            );
+        // ssb.conn.stage((e, v) => console.log(v ? 'staging' : 'staged'));
+      });
       // listening for public & private msg
       addPublicUpdatesListener(ssb, key =>
         loadMsg(ssb, key, false, addPublicMsg),
@@ -76,14 +72,13 @@ const Home = ({
 
 const msp = s => {
   return {
-    ssb: s.ssb.instance,
-    feedId: s.ssb.feedId,
+    feedId: s.user.feedId,
   };
 };
 
 const mdp = d => {
   return {
-    setInstance: instance => d({type: 'setInstance', payload: instance}),
+    setFeedId: v => d({type: 'setFeedId', payload: v}),
     setPublicMsg: v => d({type: 'setPublicMsg', payload: v}),
     addPublicMsg: v => d({type: 'addPublicMsg', payload: v}),
     setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
