@@ -22,10 +22,8 @@ import {
 const Home = ({
   navigation,
   feedId,
-  followers,
   setInstance,
   addPublicMsg,
-  addPrivateMsg,
   setPrivateMsg,
 }) => {
   const {barStyle, FG, flex1} = SchemaStyles();
@@ -65,22 +63,6 @@ const Home = ({
           <Button
             title={'SubScreen'}
             onPress={() => navigation.navigate('SubScreen')}
-          />
-          <Button
-            title={'Change name: "dev"'}
-            onPress={() =>
-              window.ssb.aboutSelf.stream(
-                {
-                  id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
-                },
-                {
-                  id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
-                  name: 'dev',
-                  description: 'bio',
-                  imageUrl: 'xxx',
-                },
-              )(null, (e, v) => console.log(v))
-            }
           />
         </View>
         <Text style={{color: colorsSchema.primary}}>id: {feedId}</Text>

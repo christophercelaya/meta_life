@@ -71,6 +71,18 @@ export const reqBlobsGet = (ssb, cb) =>
 /* sink */
 // ssb.blobs.add()
 
+// ssb.aboutSelf.stream(
+//     {
+//       id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
+//     },
+//     {
+//       id: '@XiFWjglNO9yTW3YPp1M6J6/46T4zBFh3RxeBlagpmAc=.ed25519',
+//       name: 'dev',
+//       description: 'bio',
+//       imageUrl: 'xxx',
+//     },
+// )(null, (e, v) => console.log(v))
+
 // ssb.threads.thread({root:'%pLd9INBWxz95rvQMmnCqYgJwk6UgRTK04sdCzG+Xlww=.sha256',private:true})(null,(e,v)=>console.log(v))
 
 // profile
