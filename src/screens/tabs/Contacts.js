@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
 
 const msp = s => {
   return {
-    ssb: s.ssb.instance,
-    feedId: s.ssb.feedId,
+    feedId: s.user.feedId,
     friendsGraph: s.contacts.friendsGraph,
   };
 };

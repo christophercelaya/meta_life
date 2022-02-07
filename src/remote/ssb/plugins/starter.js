@@ -6,7 +6,7 @@ export const starter = {
   name: 'starter',
   init: ssb => {
     return {
-      start: cb =>
+      startAndStage: cb =>
         ssb.conn.start((e, v) => {
           cb(e, v);
         }),

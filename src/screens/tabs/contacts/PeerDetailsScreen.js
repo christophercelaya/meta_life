@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
 
 const msp = s => {
   return {
-    ssb: s.ssb.instance,
-    selfFeedId: s.ssb.selfFeedId,
+    selfFeedId: s.user.feedId,
     friendsGraph: s.contacts.friendsGraph,
     peerInfoDic: s.contacts.peerInfoDic,
   };

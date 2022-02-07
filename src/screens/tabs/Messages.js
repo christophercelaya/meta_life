@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
 
 const msp = s => {
   return {
-    ssb: s.ssb.instance,
     feedId: s.ssb.feedId,
     privateMsg: s.msg.privateMsg,
     publicMsg: s.msg.publicMsg,

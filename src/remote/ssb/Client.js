@@ -4,5 +4,6 @@
 
 import ssbClient from 'react-native-ssb-client';
 import manifest from './manifest';
-
-export const makeClient = () => ssbClient(manifest).callPromise();
+import {peers, starter} from './plugins/starter';
+export const makeClient = () =>
+  ssbClient(manifest).use(starter).use(peers).callPromise();

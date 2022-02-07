@@ -22,8 +22,7 @@ const SubScreen = ({navigation}) => {
 
 const msp = s => {
   return {
-    ssb: s.ssb.instance,
-    feedId: s.ssb.feedId,
+    feedId: s.user.feedId,
   };
 };
 

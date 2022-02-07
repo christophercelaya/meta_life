@@ -95,6 +95,9 @@ export const reqBlobsGet = (ssb, cb) =>
 // isFollowing
 /*ssb.friends.isFollowing({source:"@XKv0b06yUZ30Va8RZAnijtMl3MdrDgHX677yTE6cFDY=.ed25519",dest:"@azYm7/Ae3TPvpQynRPsc+Wc8TbGOlQoiipfQfM6PIxQ=.ed25519"},(e,v)=>console.log(v))*/
 
+// getMnemonic
+// ssb.keysUtils.getMnemonic((e, v) => setOpLog(v + '\n'));
+
 /* duplex */
 export const ping = ssb =>
   ssb.conn.ping()(null, (e, v) => (e ? console.error(e) : console.log(v)));
@@ -165,3 +168,5 @@ export const loadMsg = (ssb, msgKey, isPrivate = false, cb = null) => {
     private: isPrivate,
   })(null, (e, v) => (e ? console.warn(e) : cb ? cb(v) : console.log(v)));
 };
+
+export const ssbInstance = {};
