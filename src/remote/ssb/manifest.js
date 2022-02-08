@@ -1,6 +1,10 @@
 /**
  * Created on 09 Dec 2021 by lonmee
  */
+// https://github.com/ssb-js/secret-stack
+// https://github.com/ssb-js/multiserver
+// https://github.com/staltz/react-native-ssb-client
+// https://github.com/pull-stream/pull-stream
 export default {
   // Secure Scuttlebutt
   auth: 'async',

@@ -13,40 +13,29 @@ import SchemaStyles, {
 } from '../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import * as ssbOP from '../../remote/ssbOP';
-import {reqStartSSB} from '../../remote/ssbOP';
+import {
+  addPrivateUpdatesListener,
+  addPublicUpdatesListener,
+  loadMsg,
+  reqStartSSB,
+} from '../../remote/ssbOP';
 
 const Home = ({navigation, feedId, setFeedId, addPublicMsg, setPrivateMsg}) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
     window.ssb
-      ? (ssbOP.ssb = window.ssb)
+      ? console.log((ssbOP.ssb = window.ssb))
       : reqStartSSB(ssb => {
-          window.ssb = ssbOP.ssb = ssb;
+          window.ssb = ssb;
           // set feedId
           setFeedId(ssb.id);
           // start & stage self
-          ssb.starter.startAndStage((e, v) =>
-            console.log(v ? 'start' : 'started yet'),
-          );
-          // ssb.conn.start((e, v) => {
-          //   e
-          //     ? setOpLog(opLog + 'ssb server connect error: ' + e)
-          //     : setOpLog(
-          //         (opLogCache =
-          //           opLog +
-          //           'ssb server connected with:  ' +
-          //           JSON.stringify(v) +
-          //           '\n'),
-          //       );
-          // ssb.conn.stage((e, v) => console.log(v ? 'staging' : 'staged'));
-          // });
+          // ssb.starter.startAndStage((e, v) =>
+          //   console.log(v ? 'start' : 'started yet'),
+          // );
           // listening for public & private msg
-          // addPublicUpdatesListener(ssb, key =>
-          //   loadMsg(ssb, key, false, addPublicMsg),
-          // );
-          // addPrivateUpdatesListener(ssb, key =>
-          //   loadMsg(ssb, key, true, setPrivateMsg),
-          // );
+          // addPublicUpdatesListener(key => loadMsg(key, false, addPublicMsg));
+          // addPrivateUpdatesListener(key => loadMsg(key, true, setPrivateMsg));
         });
   }, []);
 

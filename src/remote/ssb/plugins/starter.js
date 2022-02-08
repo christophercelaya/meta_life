@@ -6,10 +6,12 @@ export const starter = {
   name: 'starter',
   init: ssb => {
     return {
-      startAndStage: cb =>
+      startAndStage: cb => {
         ssb.conn.start((e, v) => {
           cb(e, v);
-        }),
+        });
+        ssb.conn.stage((e, v) => console.log(v ? 'stage' : 'staged yet'));
+      },
     };
   },
 };

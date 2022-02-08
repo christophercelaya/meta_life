@@ -114,7 +114,7 @@ export const reqStartSSB = setInstance => {
     msg =>
       msg === 'IDENTITY_READY' &&
       makeClient()
-        .then(setInstance)
+        .then(value => setInstance((ssb = value)))
         .catch(error => console.error('ssb start error: ' + error)),
   );
   channel.post('identity', 'CREATE');
@@ -122,7 +122,7 @@ export const reqStartSSB = setInstance => {
   // channel.post('identity', 'RESTORE: word0 word1...');
 };
 
-export const addPublicUpdatesListener = (cb = null) => {
+export const addPublicUpdatesListener = cb => {
   ssb.threads.publicUpdates({
     reverse: true,
     threadMaxSize: 1,
@@ -137,7 +137,7 @@ export const addPublicUpdatesListener = (cb = null) => {
   });
 };
 
-export const addPrivateUpdatesListener = (cb = null) => {
+export const addPrivateUpdatesListener = cb => {
   ssb.threads.privateUpdates({
     reverse: true,
     threadMaxSize: 1,
