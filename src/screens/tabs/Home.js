@@ -30,9 +30,9 @@ const Home = ({navigation, feedId, setFeedId, addPublicMsg, setPrivateMsg}) => {
           // set feedId
           setFeedId(ssb.id);
           // start & stage self
-          // ssb.starter.startAndStage((e, v) =>
-          //   console.log(v ? 'start' : 'started yet'),
-          // );
+          ssb.starter.startAndStage((e, v) =>
+            console.log(v ? 'start' : 'started yet'),
+          );
           // listening for public & private msg
           // addPublicUpdatesListener(key => loadMsg(key, false, addPublicMsg));
           // addPrivateUpdatesListener(key => loadMsg(key, true, setPrivateMsg));
