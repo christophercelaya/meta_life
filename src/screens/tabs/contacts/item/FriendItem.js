@@ -3,7 +3,7 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles from '../../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
-import {ssbInstance} from '../../../../remote/ssbOP';
+import * as ssbOP from '../../../../remote/ssbOP';
 
 const iconDic = {
   peerIcon: require('../../../../assets/image/contacts/peer_icon.png'),
@@ -11,7 +11,7 @@ const iconDic = {
   nftIcon: require('../../../../assets/image/contacts/nft_icon.png'),
 };
 
-const FriendItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
+const FriendItem = ({navigation, fId, peerInfoDic, addPeerInfo}) => {
   const {row, flex1, text} = SchemaStyles();
   const {head, textContainer, item, title, desc} = styles;
   // check cached
@@ -19,7 +19,7 @@ const FriendItem = ({navigation, fId, ssb, peerInfoDic, addPeerInfo}) => {
     console.log('check info');
     //fixme: won't sync change if cached
     peerInfoDic.hasOwnProperty(fId) ||
-      ssb.aboutSelf.get(fId, (e, v) => v.name && addPeerInfo([fId, v]));
+      ssbOP.ssb.aboutSelf.get(fId, (e, v) => v.name && addPeerInfo([fId, v]));
   });
   const {name = '', description = '', image = ''} = peerInfoDic[fId] || {};
   return (

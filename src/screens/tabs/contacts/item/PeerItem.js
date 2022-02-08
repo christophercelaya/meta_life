@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import SchemaStyles from '../../../../shared/SchemaStyles';
 import {connect} from 'react-redux/lib/exports';
 import blobIdToUrl from 'ssb-serve-blobs/id-to-url';
+import * as ssbOP from '../../../../remote/ssbOP';
 import {follow} from '../../../../remote/ssbOP';
 
 const PeerItem = ({
   navigation,
   pObj: [address, {type, key, state = ''}],
-  ssb,
   peerInfoDic,
   addPeerInfo,
 }) => {
@@ -75,7 +75,7 @@ const PeerItem = ({
               <Button
                 title={'connect'}
                 onPress={() =>
-                  ssb.peers.connect2Peer(address, {}, (e, v) =>
+                  ssbOP.ssb.peers.connect2Peer(address, {}, (e, v) =>
                     e ? connectErrorHandler(e) : connectHandler(v),
                   )
                 }
@@ -84,7 +84,7 @@ const PeerItem = ({
             <Button
               title={'follow'}
               onPress={() =>
-                follow(ssb, key, {}, (e, v) =>
+                follow(key, {}, (e, v) =>
                   e ? fellowErrorHandler(e) : fellowHandler(v),
                 )
               }

@@ -49,7 +49,7 @@ const MessageDetailsScreen = ({
   });
 
   function sendHandler(content) {
-    sendMsg(ssb, {
+    sendMsg({
       type: 'post',
       rootKey: key,
       text: content,

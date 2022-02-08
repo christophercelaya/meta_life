@@ -5,26 +5,26 @@ import SchemaStyles, {colorsSchema} from '../../../shared/SchemaStyles';
 import {useTimer} from '../../../shared/Hooks';
 import Section from '../../../shared/comps/Section';
 import PeerItem from './item/PeerItem';
+import * as ssbOP from '../../../remote/ssbOP';
 
 const PeersScreen = ({
   navigation,
-  ssb,
   stagedPeers,
   setStagedPeers,
   connectedPeers,
   setConnectedPeers,
   addFollowing,
 }) => {
-  const {textHolder} = colorsSchema;
-  const {BG, flex1, row, text} = SchemaStyles();
-  const {contactItemContainer, textView, nameTF, descTF} = styles;
+  const {textHolder} = colorsSchema,
+    {BG, flex1, row, text} = SchemaStyles(),
+    {contactItemContainer, textView, nameTF, descTF} = styles;
   useTimer(refreshStagedAndConnected, 3000);
 
   function refreshStagedAndConnected() {
-    ssb.conn.stagedPeers()(null, (e, v) =>
+    ssbOP.ssb.conn.stagedPeers()(null, (e, v) =>
       e ? console.error(e) : setStagedPeers(v),
     );
-    ssb.conn.peers()(null, (e, v) =>
+    ssbOP.ssb.conn.peers()(null, (e, v) =>
       e ? console.error(e) : setConnectedPeers(v),
     );
   }

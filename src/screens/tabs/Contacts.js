@@ -7,7 +7,7 @@ import {useNavigationState} from '@react-navigation/native';
 import {friendsGraphParse} from '../../filters/ContactsFilters';
 import SearchBar from '../../shared/comps/SearchBar';
 import FriendItem from './contacts/item/FriendItem';
-import {ssbInstance} from '../../remote/ssbOP';
+import * as ssbOP from '../../remote/ssbOP';
 
 const iconDic = {
   fb: require('../../assets/image/profiles/Facebook.png'),
@@ -19,7 +19,7 @@ const DATA_sn = [{icon: iconDic.fb}, {icon: iconDic.nf}, {icon: iconDic.tt}];
 
 let intervalId = NaN;
 
-const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
+const Contacts = ({navigation, feedId, setFriendsGraph, friendsGraph}) => {
   const {BG, row, flex1, text} = SchemaStyles();
   const {searchBar, item, key} = styles;
 
@@ -34,7 +34,7 @@ const Contacts = ({navigation, ssb, feedId, setFriendsGraph, friendsGraph}) => {
   }
 
   function refreshFriendsGraph() {
-    ssbInstance.friends.graph((e, v) =>
+    ssbOP.ssb.friends.graph((e, v) =>
       e ? console.warn(e) : setFriendsGraph(v),
     );
   }

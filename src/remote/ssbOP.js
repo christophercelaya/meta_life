@@ -3,33 +3,35 @@
 import nodejs from 'nodejs-mobile-react-native';
 import {makeClient} from './ssb/Client';
 
+export let ssb = null;
+
 const defaultCallBack = (e, v) => (e ? console.warn(e) : console.log(v));
 
-export const status = (ssb, cb) =>
+export const status = cb =>
   ssb.status((e, v) => (e ? console.error(e) : cb(v)));
 // conn
-export const stage = (ssb, cb) =>
+export const stage = cb =>
   ssb.conn.stage((e, v) => (e ? console.error(e) : cb(v)));
-export const connStart = (ssb, cb) =>
+export const connStart = cb =>
   ssb.conn.start((e, v) => (e ? console.error(e) : cb(v)));
 /* async */
-export const follow = (ssb, fid, opts, cb) => {
+export const follow = (fid, opts, cb) => {
   ssb.friends.follow(fid, opts, (e, v) => (e ? console.error(e) : cb(v)));
 };
-export const isFollowing = (ssb, source, dest, cb) => {
+export const isFollowing = (source, dest, cb) => {
   ssb.friends.isFollowing({source, dest}, cb);
 };
-export const connectPeer = ({ssb, address, data}) =>
+export const connectPeer = ({address, data}) =>
   ssb.conn.connect(address, data, (e, v) =>
     e ? console.error(e) : console.log(v),
   );
 
 /* source */
-export const reqStagedPeers = (ssb, cb) =>
+export const reqStagedPeers = cb =>
   ssb.conn.stagedPeers()(null, (e, v) => (e ? console.error(e) : cb(v)));
-export const reqConnectedPeers = (ssb, cb) =>
+export const reqConnectedPeers = cb =>
   ssb.conn.peers()(null, (e, v) => (e ? console.error(e) : cb(v)));
-export const reqBlobsGet = (ssb, cb) =>
+export const reqBlobsGet = cb =>
   ssb.blobs.get()(null, (e, v) => (e ? console.error(e) : cb(v)));
 
 // message
@@ -120,7 +122,7 @@ export const reqStartSSB = setInstance => {
   // channel.post('identity', 'RESTORE: word0 word1...');
 };
 
-export const addPublicUpdatesListener = (ssb, cb = null) => {
+export const addPublicUpdatesListener = (cb = null) => {
   ssb.threads.publicUpdates({
     reverse: true,
     threadMaxSize: 1,
@@ -130,12 +132,12 @@ export const addPublicUpdatesListener = (ssb, cb = null) => {
     } else {
       console.log('public msg update with: ', v);
       cb && cb(v);
-      addPublicUpdatesListener(ssb, cb);
+      addPublicUpdatesListener(cb);
     }
   });
 };
 
-export const addPrivateUpdatesListener = (ssb, cb = null) => {
+export const addPrivateUpdatesListener = (cb = null) => {
   ssb.threads.privateUpdates({
     reverse: true,
     threadMaxSize: 1,
@@ -146,12 +148,12 @@ export const addPrivateUpdatesListener = (ssb, cb = null) => {
     } else {
       console.log('private msg update with: ', v);
       cb && cb(v);
-      addPrivateUpdatesListener(ssb, cb);
+      addPrivateUpdatesListener(cb);
     }
   });
 };
 
-export const sendMsg = (ssb, opt, cb = null) => {
+export const sendMsg = (opt, cb = null) => {
   ssb.publish(opt, (e, v) => {
     if (e) {
       console.warn('send message error: ', e);
@@ -162,11 +164,9 @@ export const sendMsg = (ssb, opt, cb = null) => {
   });
 };
 
-export const loadMsg = (ssb, msgKey, isPrivate = false, cb = null) => {
+export const loadMsg = (msgKey, isPrivate = false, cb = null) => {
   ssb.threads.thread({
     root: msgKey,
     private: isPrivate,
   })(null, (e, v) => (e ? console.warn(e) : cb ? cb(v) : console.log(v)));
 };
-
-export const ssbInstance = {};
