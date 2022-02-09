@@ -24,7 +24,7 @@ const Home = ({navigation, feedId, setFeedId, addPublicMsg, setPrivateMsg}) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
     window.ssb
-      ? console.log((ssbOP.ssb = window.ssb))
+      ? (ssbOP.ssb = window.ssb)
       : reqStartSSB(ssb => {
           window.ssb = ssb;
           // set feedId
@@ -34,8 +34,8 @@ const Home = ({navigation, feedId, setFeedId, addPublicMsg, setPrivateMsg}) => {
             console.log(v ? 'start' : 'started yet'),
           );
           // listening for public & private msg
-          // addPublicUpdatesListener(key => loadMsg(key, false, addPublicMsg));
-          // addPrivateUpdatesListener(key => loadMsg(key, true, setPrivateMsg));
+          addPublicUpdatesListener(key => loadMsg(key, false, addPublicMsg));
+          addPrivateUpdatesListener(key => loadMsg(key, true, setPrivateMsg));
         });
   }, []);
 

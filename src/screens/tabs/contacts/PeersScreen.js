@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux/lib/exports';
 import SchemaStyles, {colorsSchema} from '../../../shared/SchemaStyles';
@@ -6,6 +6,7 @@ import {useTimer} from '../../../shared/Hooks';
 import Section from '../../../shared/comps/Section';
 import PeerItem from './item/PeerItem';
 import * as ssbOP from '../../../remote/ssbOP';
+import {pull} from 'pull-stream';
 
 const PeersScreen = ({
   navigation,
@@ -19,6 +20,21 @@ const PeersScreen = ({
     {BG, flex1, row, text} = SchemaStyles(),
     {contactItemContainer, textView, nameTF, descTF} = styles;
   useTimer(refreshStagedAndConnected, 3000);
+
+  // option: call in pull mode
+  // useEffect(() => {
+  //   console.log('pull staged peers');
+  //   pull(ssbOP.ssb.conn.stagedPeers(), pull.map(throughFun), pull.map(sinkFun));
+  // }, []);
+  //
+  // function throughFun(value) {
+  //   console.log('through:', value);
+  //   return value;
+  // }
+  //
+  // function sinkFun(value) {
+  //   console.log('sink:', value);
+  // }
 
   function refreshStagedAndConnected() {
     ssbOP.ssb.conn.stagedPeers()(null, (e, v) =>
