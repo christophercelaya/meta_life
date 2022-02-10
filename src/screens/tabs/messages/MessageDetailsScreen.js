@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Keyboard,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -16,6 +17,8 @@ import {sendMsg} from '../../../remote/ssbOP';
 const iconDic = {
   peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
 };
+let scrollView;
+
 const MessageDetailsScreen = ({
   navigation,
   route: {
@@ -44,6 +47,8 @@ const MessageDetailsScreen = ({
       title: name || recp,
       headerRight,
     });
+    Keyboard.addListener('keyboardWillShow', scrollToEnd);
+    return () => Keyboard.removeAllListeners('keyboardWillShow');
   });
 
   function sendHandler(content) {
@@ -54,13 +59,27 @@ const MessageDetailsScreen = ({
         text: content,
         recps: [recp, feedId],
       },
-      msg => rootKeyLocal || setRootKeyLocal(msg.key),
+      msg => {
+        rootKeyLocal || setRootKeyLocal(msg.key);
+        scrollToEnd();
+      },
     );
+  }
+
+  function scrollToEnd() {
+    scrollView.scrollToEnd({animated: true});
+    scrollView.flashScrollIndicators();
   }
 
   return (
     <SafeAreaView style={[flex1, FG]}>
-      <ScrollView style={[flex1, BG]} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={ref => {
+          scrollView = ref;
+        }}
+        style={[flex1, BG]}
+        showsVerticalScrollIndicator={false}
+        onContentSizeChange={scrollToEnd}>
         {privateMsg[rootKeyLocal] &&
           privateMsg[rootKeyLocal].map(
             ({key, value: {author, content, timestamp}}) => (
