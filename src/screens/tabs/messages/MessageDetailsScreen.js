@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -38,6 +38,7 @@ const MessageDetailsScreen = ({
     />
   );
 
+  const [rootKeyLocal, setRootKeyLocal] = useState(rootKey);
   useEffect(() => {
     navigation.setOptions({
       title: name || recp,
@@ -46,19 +47,22 @@ const MessageDetailsScreen = ({
   });
 
   function sendHandler(content) {
-    sendMsg({
-      type: 'post',
-      rootKey: rootKey,
-      text: content,
-      recps: [recp, feedId],
-    });
+    sendMsg(
+      {
+        type: 'post',
+        rootKey: rootKey,
+        text: content,
+        recps: [recp, feedId],
+      },
+      msg => rootKeyLocal || setRootKeyLocal(msg.key),
+    );
   }
 
   return (
     <SafeAreaView style={[flex1, FG]}>
       <ScrollView style={[flex1, BG]} showsVerticalScrollIndicator={false}>
-        {privateMsg[rootKey] &&
-          privateMsg[rootKey].map(
+        {privateMsg[rootKeyLocal] &&
+          privateMsg[rootKeyLocal].map(
             ({key, value: {author, content, timestamp}}) => (
               <View
                 key={key}

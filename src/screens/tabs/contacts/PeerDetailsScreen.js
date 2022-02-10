@@ -17,14 +17,15 @@ import {
 } from '../../../filters/ContactsFilters';
 import useDocumentTitle from '@react-navigation/native/src/useDocumentTitle';
 import RoundBtn from '../../../shared/comps/RoundBtn';
+import {findRootKey} from '../../../filters/MsgFilters';
 
 const PeerDetailsScreen = ({
   navigation,
-  route: {params: fId},
-  ssb,
+  route: {params: feedId},
   selfFeedId,
   friendsGraph,
   peerInfoDic,
+  privateMsg,
 }) => {
   const iconDic = {
     peerIcon: require('../../../assets/image/contacts/peer_icon.png'),
@@ -33,18 +34,17 @@ const PeerDetailsScreen = ({
   };
   const {row, flex1, text} = SchemaStyles(),
     {head, textContainer, item, title, desc} = styles,
-    {name = '', description = '', image = ''} = peerInfoDic[fId] || {},
+    {name = '', description = '', image = ''} = peerInfoDic[feedId] || {},
     [friends, following, follower, block, blocked, other] = friendsGraphParse(
       friendsGraph,
-      fId,
+      feedId,
     ),
     [myFriends] = friendsGraphParse(friendsGraph, selfFeedId),
     mutual = mutualFriend(friends, myFriends);
 
   useEffect(() => {
-    navigation.setOptions({title: name || fId});
+    navigation.setOptions({title: name || feedId});
   });
-  useDocumentTitle();
 
   return (
     <SafeAreaView style={[flex1]}>
@@ -58,7 +58,7 @@ const PeerDetailsScreen = ({
           />
           <View style={[textContainer]}>
             <Text numberOfLines={1} style={[title, text]}>
-              {name || fId}
+              {name || feedId}
             </Text>
             {description !== '' && (
               <Text style={[desc]}>bio: {description}</Text>
@@ -71,7 +71,10 @@ const PeerDetailsScreen = ({
         <RoundBtn
           title={'chat'}
           press={() =>
-            navigation.navigate('MessageDetailsScreen', {key: '', recp: fId})
+            navigation.navigate('MessageDetailsScreen', {
+              rootKey: findRootKey(feedId, privateMsg),
+              recp: feedId,
+            })
           }
         />
       </ScrollView>
@@ -113,6 +116,7 @@ const msp = s => {
     selfFeedId: s.user.feedId,
     friendsGraph: s.contacts.friendsGraph,
     peerInfoDic: s.contacts.peerInfoDic,
+    privateMsg: s.msg.privateMsg,
   };
 };
 

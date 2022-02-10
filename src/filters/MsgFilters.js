@@ -1,6 +1,8 @@
-export const privateMsgParser = msgs => {
-  const authors = new Set(msgs.map(v => v.value.author));
-  for (const author of authors) {
+export const findRootKey = (feedId, msgs) => {
+  for (const rootKey in msgs) {
+    if (msgs[rootKey][0].value.content.recps.includes(feedId)) {
+      return rootKey;
+    }
   }
-  return msgs;
+  return '';
 };
