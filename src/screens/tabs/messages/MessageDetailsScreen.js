@@ -19,14 +19,11 @@ const iconDic = {
 const MessageDetailsScreen = ({
   navigation,
   route: {
-    params: {key, recp},
+    params: {rootKey, recp},
   },
-  ssb,
   feedId,
   peerInfoDic,
   privateMsg,
-  setPrivateMsg,
-  addPrivateMsg,
 }) => {
   const {BG, FG, row, flex1} = SchemaStyles(),
     {head, itemContainer, item, itemLeft, itemRight, title, desc} = styles,
@@ -51,7 +48,7 @@ const MessageDetailsScreen = ({
   function sendHandler(content) {
     sendMsg({
       type: 'post',
-      rootKey: key,
+      rootKey: rootKey,
       text: content,
       recps: [recp, feedId],
     });
@@ -60,17 +57,22 @@ const MessageDetailsScreen = ({
   return (
     <SafeAreaView style={[flex1, FG]}>
       <ScrollView style={[flex1, BG]} showsVerticalScrollIndicator={false}>
-        {privateMsg[key] &&
-          privateMsg[key].map(({key, value: {author, content, timestamp}}) => (
-            <View
-              key={key}
-              style={[itemContainer, author === feedId ? itemLeft : itemRight]}>
-              <View style={[item]}>
-                <Text style={[title]}>{content.text}</Text>
-                {/*<Text style={[desc]}>{timestamp}</Text>*/}
+        {privateMsg[rootKey] &&
+          privateMsg[rootKey].map(
+            ({key, value: {author, content, timestamp}}) => (
+              <View
+                key={key}
+                style={[
+                  itemContainer,
+                  author === feedId ? itemLeft : itemRight,
+                ]}>
+                <View style={[item]}>
+                  <Text style={[title]}>{content.text}</Text>
+                  {/*<Text style={[desc]}>{timestamp}</Text>*/}
+                </View>
               </View>
-            </View>
-          ))}
+            ),
+          )}
       </ScrollView>
       <MsgInput sendHandler={sendHandler} />
     </SafeAreaView>
@@ -131,8 +133,6 @@ const msp = s => {
 const mdp = d => {
   return {
     addPeerInfo: v => d({type: 'addPeerInfo', payload: v}),
-    setPrivateMsg: v => d({type: 'setPrivateMsg', payload: v}),
-    addPrivateMsg: v => d({type: 'addPrivateMsg', payload: v}),
   };
 };
 

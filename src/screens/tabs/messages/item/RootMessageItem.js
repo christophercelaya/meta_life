@@ -10,9 +10,14 @@ const iconDic = {
   nftIcon: require('../../../../assets/image/contacts/nft_icon.png'),
 };
 
-const RootMessageItem = ({navigation, ssb, feedId, peerInfoDic, msgArr}) => {
+const RootMessageItem = ({
+  rootKey,
+  navigation,
+  feedId,
+  peerInfoDic,
+  msgArr,
+}) => {
   const {
-      key,
       value: {
         author,
         content: {recps},
@@ -26,7 +31,9 @@ const RootMessageItem = ({navigation, ssb, feedId, peerInfoDic, msgArr}) => {
   const {name = '', description = '', image = ''} = peerInfoDic[recp] || {};
   return (
     <Pressable
-      onPress={() => navigation.navigate('MessageDetailsScreen', {key, recp})}>
+      onPress={() =>
+        navigation.navigate('MessageDetailsScreen', {rootKey, recp})
+      }>
       <View style={[item, row, flex1]}>
         <Image
           height={60}

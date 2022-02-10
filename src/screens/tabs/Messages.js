@@ -12,15 +12,7 @@ const iconDic = {
   tt: require('../../assets/image/profiles/Twitter.png'),
 };
 
-const Messages = ({
-  navigation,
-  privateMsg,
-  setPrivateMsg,
-  addPrivateMsg,
-  publicMsg,
-  setPublicMsg,
-  addPublicMsg,
-}) => {
+const Messages = ({navigation, privateMsg}) => {
   const {textHolder} = colorsSchema;
   const {FG, row, text, alignItemsCenter} = SchemaStyles();
   const {searchBar, contactItemContainer, textView, nameTF, descTF} = styles;
@@ -54,6 +46,7 @@ const Messages = ({
       {Object.keys(privateMsg).map(key => (
         <RootMessageItem
           key={key}
+          rootKey={key}
           navigation={navigation}
           msgArr={privateMsg[key]}
         />

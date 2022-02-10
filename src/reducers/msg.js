@@ -10,21 +10,15 @@ const msgInitState = {
 export const msgReducer = (state = msgInitState, {type, payload}) => {
   switch (type) {
     case 'setPrivateMsg':
-      // return {...state, privateMsg: {}};
-      const msgArr = payload.messages;
-      const rootKey = payload.messages[0].key;
-      const newMsgObj_set = {...state.privateMsg};
-      newMsgObj_set[rootKey] = msgArr;
-      return {...state, privateMsg: newMsgObj_set};
+      return {...state, privateMsg: payload};
     case 'addPrivateMsg':
-      const newMsgObj_add = {};
-      newMsgObj_add[payload.key] = state.privateMsg[payload.key]
-        ? state.privateMsg[payload.key].concat(payload.msg)
-        : [payload.msg];
-      return {
-        ...state,
-        privateMsg: {...state.privateMsg, ...newMsgObj_add},
-      };
+      const msg = payload.messages[0],
+        rootKey = msg.value.content.rootKey || msg.key,
+        newPrivate = {...state.privateMsg};
+      newPrivate[rootKey] = state.privateMsg[rootKey]
+        ? state.privateMsg[rootKey].concat(msg)
+        : [msg];
+      return {...state, privateMsg: newPrivate};
     case 'clearPrivateMsg':
       return {...state, privateMsg: {}};
     case 'setPublicMsg':
