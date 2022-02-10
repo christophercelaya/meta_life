@@ -20,7 +20,14 @@ import {
   reqStartSSB,
 } from '../../remote/ssbOP';
 
-const Home = ({navigation, feedId, setFeedId, addPublicMsg, addPrivateMsg}) => {
+const Home = ({
+  navigation,
+  feedId,
+  setFeedId,
+  addPublicMsg,
+  addPrivateMsg,
+  setPrivateMsg,
+}) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
     window.ssb
@@ -35,7 +42,8 @@ const Home = ({navigation, feedId, setFeedId, addPublicMsg, addPrivateMsg}) => {
           );
           // listening for public & private msg
           addPublicUpdatesListener(key => loadMsg(key, false, addPublicMsg));
-          addPrivateUpdatesListener(key => loadMsg(key, true, addPrivateMsg));
+          // addPrivateUpdatesListener(key => loadMsg(key, true, addPrivateMsg));
+          addPrivateUpdatesListener(key => loadMsg(key, true, setPrivateMsg));
         });
   }, []);
 

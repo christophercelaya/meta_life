@@ -50,7 +50,7 @@ const MessageDetailsScreen = ({
     sendMsg(
       {
         type: 'post',
-        rootKey: rootKey,
+        root: rootKeyLocal,
         text: content,
         recps: [recp, feedId],
       },

@@ -139,8 +139,6 @@ export const addPublicUpdatesListener = cb => {
 
 export const addPrivateUpdatesListener = cb => {
   ssb.threads.privateUpdates({
-    reverse: true,
-    threadMaxSize: 1,
     includeSelf: true,
   })(null, (e, v) => {
     if (e) {
