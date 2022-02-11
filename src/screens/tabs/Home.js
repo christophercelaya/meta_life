@@ -24,12 +24,13 @@ const Home = ({
   navigation,
   feedId,
   setFeedId,
+  publicMsg,
   addPublicMsg,
-  addPrivateMsg,
   setPrivateMsg,
 }) => {
   const {barStyle, FG, flex1} = SchemaStyles();
   useEffect(() => {
+    // ssb initialize
     window.ssb
       ? (ssbOP.ssb = window.ssb)
       : reqStartSSB(ssb => {
@@ -51,12 +52,6 @@ const Home = ({
     <SafeAreaView style={[flex1]}>
       <StatusBar barStyle={barStyle} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={FG}>
-          <Button
-            title={'SubScreen'}
-            onPress={() => navigation.navigate('SubScreen')}
-          />
-        </View>
         <Text style={{color: colorsSchema.primary}}>id: {feedId}</Text>
         <Text selectable={true} style={{color: colorsBasics.light}}>
           {'log holder'}
@@ -69,6 +64,7 @@ const Home = ({
 const msp = s => {
   return {
     feedId: s.user.feedId,
+    publicMsg: s.msg.publicMsg,
   };
 };
 

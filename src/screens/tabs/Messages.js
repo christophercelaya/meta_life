@@ -79,7 +79,6 @@ const msp = s => {
   return {
     feedId: s.user.feedId,
     privateMsg: s.msg.privateMsg,
-    publicMsg: s.msg.publicMsg,
   };
 };
 
