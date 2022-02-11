@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {
   Button,
+  FlatList,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -52,10 +53,18 @@ const Home = ({
     <SafeAreaView style={[flex1]}>
       <StatusBar barStyle={barStyle} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Text style={{color: colorsSchema.primary}}>id: {feedId}</Text>
-        <Text selectable={true} style={{color: colorsBasics.light}}>
-          {'log holder'}
-        </Text>
+        <ScrollView>
+          {publicMsg.map(({key, value: {author, timestamp, content}}) => (
+            <View key={key}>
+              <Text style={{color: colorsSchema.primary}}>
+                author: {author}
+              </Text>
+              <Text selectable={true} style={{color: colorsBasics.light}}>
+                type: {content.type}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
