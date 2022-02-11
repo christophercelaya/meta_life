@@ -134,7 +134,7 @@ const Tabs = ({navigation, darkMode}) => {
         component={Profiles}
         options={{
           title: I18n.t('Profiles'),
-          header: props => HeaderProfiles(props),
+          header: props => <HeaderProfiles props={props} />,
         }}
       />
     </Tab.Navigator>

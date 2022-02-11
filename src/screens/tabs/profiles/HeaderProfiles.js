@@ -7,6 +7,7 @@ import {
   Text,
 } from 'react-native';
 import SchemaStyles from '../../../shared/SchemaStyles';
+import {connect} from 'react-redux/lib/exports';
 
 const iconDic = {
   BG: require('../../../assets/image/profiles/Profiles_backgroud.png'),
@@ -14,14 +15,14 @@ const iconDic = {
   photo: require('../../../assets/image/profiles/photo.png'),
 };
 
-const HeaderProfiles = ({navigation}) => {
+const HeaderProfiles = ({navigation, feedId}) => {
   const {alignItemsCenter, marginTop10} = SchemaStyles();
   const {container, photo, setting, name, at} = styles;
 
   return (
     <ImageBackground style={[container, alignItemsCenter]} source={iconDic.BG}>
       <Image style={[photo]} source={iconDic.photo} />
-      <Text style={[name, marginTop10]}>Blanche Hall</Text>
+      <Text style={[name, marginTop10]}>{feedId}</Text>
       <Text style={[at]}>@jorgecutis</Text>
       <Pressable
         style={[setting]}
@@ -59,4 +60,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HeaderProfiles;
+const msp = s => {
+  return {
+    feedId: s.user.feedId,
+  };
+};
+
+const mdp = d => {
+  return {};
+};
+
+export default connect(msp, mdp)(HeaderProfiles);
