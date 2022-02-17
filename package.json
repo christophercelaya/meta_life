@@ -16,7 +16,7 @@
     "archive-apk": "cp android/app/build/outputs/apk/indie/release/app-indie-release.apk ../apk-archive/manyverse-$(cat package.json | jq -r .version).apk",
     "install-android": "adb install -r android/app/release/app-release.apk",
     "clean-ios": "cd ios && xcodebuild -workspace meta_life.xcworkspace -scheme meta_life clean && cd ..",
-    "build-backend-ios": "./tools/build-backend.mjs --ios",
+    "build-backend-ios": "./tools/build-backend.mjs --ios --verbose",
     "run-ios": "react-native run-ios",
     "run-ios iPhone SE": "react-native run-ios --verbose --device \"Lonmee’s iPhone SE\"",
     "run-ios Lonmee’s iPhone": "react-native run-ios --verbose --device \"Lonmee’s iPhone\"",

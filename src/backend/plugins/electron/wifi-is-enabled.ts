@@ -14,7 +14,8 @@ function wifiIsEnabled() {
       name.startsWith('en') ||
       name.startsWith('wl')
     ) {
-      if (addresses?.some((a) => !a.internal && ip.isPrivate(a.address))) {
+      // @ts-ignore
+      if (addresses.some(a => !a.internal && ip.isPrivate(a.address))) {
         return true;
       }
     }
